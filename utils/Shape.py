@@ -1,4 +1,3 @@
-import math
 class Shape:
     def __init__(self, color='black', rotation=0):
         self.position = (0,0)
