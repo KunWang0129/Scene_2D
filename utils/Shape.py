@@ -1,3 +1,4 @@
+import math
 class Shape:
     def __init__(self, color='black', rotation=0):
         self.position = (0,0)
@@ -9,18 +10,18 @@ class Shape:
 
     def place_shape_local(self, reference_shape, position):
         ref_x, ref_y = reference_shape.position
-        offset = 0
+        offset = (self.dimension + reference_shape.dimension) // 2
         if position == 'left':
-            new_x = ref_x - offset - self.dimension
+            new_x = ref_x - offset
             new_y = ref_y
         elif position == 'right':
-            new_x = ref_x + reference_shape.dimension + offset
+            new_x = ref_x + offset
             new_y = ref_y
         elif position == 'above':
-            new_y = ref_y - offset - self.dimension
+            new_y = ref_y - offset
             new_x = ref_x
         elif position == 'below':
-            new_y = ref_y + reference_shape.dimension + offset
+            new_y = ref_y + offset
             new_x = ref_x
         self.place_shape_global((new_x, new_y))
 
@@ -42,3 +43,4 @@ class Triangle(Shape):
         super().__init__( color, rotation)
         self.size = size
         self.dimension = size
+        # self.height = size * (3 ** 0.5) / 2
