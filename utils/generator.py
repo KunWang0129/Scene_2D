@@ -54,17 +54,18 @@ class Scene2D:
     def run(self, user_input, history=None):
         from tqdm import tqdm
         print("Coming up with candidate scenes ....")
+        codes = SceneGenerator().run(user_input, history=history)
         # codes, feedbacks, scene_graphs = SceneGeneratorWithAutoCorrection().run(user_input, history=history)
 
-        print("Resolving constraints....")
-        for i in tqdm(range(self.MAX_TRIALS)):
-            codes, feedbacks, scene_graphs = ConstraintResolver(codes, feedbacks, scene_graphs).run()
-            if feedbacks == 0:
-                break
+        # print("Resolving constraints....")
+        # for i in tqdm(range(self.MAX_TRIALS)):
+        #     codes, feedbacks, scene_graphs = ConstraintResolver(codes, feedbacks, scene_graphs).run()
+        #     if feedbacks == 0:
+        #         break
         
-        if i == self.MAX_TRIALS-1:
-            print("Failed to generate scene! Please try changing the hyperparamers or the user input.")
-            return None
+        # if i == self.MAX_TRIALS-1:
+        #     print("Failed to generate scene! Please try changing the hyperparamers or the user input.")
+        #     return None
         
         print("Generating final scene....")
         code = exec(codes, export=True)
