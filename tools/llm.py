@@ -33,7 +33,7 @@ class LLM:
         response = self.client.messages.create(
             model="claude-3-haiku-20240307",
             max_tokens=4096,
-            temperature=0.0,
+            temperature=0.2,
             system="You are a large language model based assistant, expert at designing layouts for indoor scenes. Respond only Python code, nothing else",
             messages=self.history
         )
