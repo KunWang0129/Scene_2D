@@ -1,9 +1,7 @@
 import os
 import json
 import numpy as np
-from openai import OpenAI
-from tqdm import tqdm 
-from langchain.embeddings import OpenAIEmbeddings
+from tqdm import tqdm
 from tools.llm import LLM
 from assets.key import api_key
     
