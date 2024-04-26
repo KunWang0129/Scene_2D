@@ -19,7 +19,7 @@ from utils.scene import Scene
 You are a Large Language Model expert at writing code for creating scene layouts. Write Python code to create a different scene layout based on the shapes defined in the API below.
 To help you write the code, you should refer to the following APIs:
 """
-        with open('../assets/api.py', 'r') as file:
+        with open('assets/api.py', 'r') as file:
             self.prompt += file.read()
 
 
@@ -34,7 +34,7 @@ To help you write the code, you should refer to the following APIs:
         self.prompt += "Following is an example that creates a scene with a square with four circles around: \n"
         
         #example_inputs, example_codes = self.retriever.run(input)
-        with open('../examples/1.5.py', 'r') as file:
+        with open('examples/1.5.py', 'r') as file:
             self.prompt += file.read()
         
         # self.prompt += "Following are a few examples of how you should respond: \n"
@@ -60,7 +60,7 @@ To help you write the code, you should refer to the following APIs:
         print(response.content[0].text)
         code = self._sanitize_output(response.content[0].text)
         print(code)
-        with open('../code.py', 'w') as file:
+        with open('code.py', 'w') as file:
             file.write(code)
         #response = self.header + response
         #return response
