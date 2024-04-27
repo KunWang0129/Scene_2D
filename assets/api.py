@@ -29,7 +29,8 @@ Object Access and Manipulation:
 - Methods for moving and rotating shapes are provided to adjust their positions and orientations within the scene.
 
 Constraints:
-- Only basic constraints are shown through shape placement methods. No overlaps or out of bounds constraints are handled explicitly in the API.
+- Only basic constraints are shown through shape placement methods. 
+- No overlaps or out of bounds constraints are handled explicitly in the API.
 
 The general structure of the program is as follows:
 1. Initialize scene with dimensions.
