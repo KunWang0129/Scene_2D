@@ -15,6 +15,12 @@ class SceneGenerator:
         self.prompt = """\nYou are a Large Language Model expert at writing code for creating scene layouts. Write Python code to create a different scene layout based on the shapes defined in the API below.\nTo help you write the code, you should refer to the following APIs:\n"""
         with open("assets/api.py", "r") as file:
             self.prompt += file.read()
+        self.prompt += """\n\nYou are required to write Python code to create a scene layout based on the shapes defined in the API above. The scene should be full and complete, with all the shapes placed in a way that makes the scene look full. Make sure you follow the APIs and structure of the program and add the necessary amount of objects to make it look full."""
+        self.prompt += """Here is the full implementation of the API for your reference: \n"""
+        with open("utils/Scene.py", "r") as file:
+            self.prompt += file.read()
+        with open("utils/Shape.py", "r") as file:
+            self.prompt += file.read()
 
     def _sanitize_output(self, text: str):
         _, after = text.split("```python")
