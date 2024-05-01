@@ -16,7 +16,7 @@ Shape Classes and Initialization:
 
 Shape Positioning:
 - shape.place_shape_global(position): Set global position of the shape.
-- shape.place_shape_local(reference_shape, position): Position the shape relative to another shape (positions include 'left', 'right', 'above', 'below').
+- shape.place_shape_local(reference_shape, position, offset): Position the shape relative to another shape (positions include 'left', 'right', 'above', 'below').
 
 Rendering and Visual Setup:
 - scene.create_background(): Creates a background image for the scene.
@@ -27,10 +27,6 @@ Object Access and Manipulation:
 - Direct scene.shapes for accessing list of shapes.
 - Properties for shapes include color, position, and rotation.
 - Methods for moving and rotating shapes are provided to adjust their positions and orientations within the scene.
-
-Constraints:
-- Only basic constraints are shown through shape placement methods. 
-- No overlaps or out of bounds constraints are handled explicitly in the API.
 
 The general structure of the program is as follows:
 1. Initialize scene with dimensions.
