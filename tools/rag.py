@@ -4,11 +4,14 @@ import numpy as np
 from tqdm import tqdm
 from tools.llm import LLM
 from assets.key import api_key
-    
+from assets.key_embed import api_key as api_key_embed
+from mixedbread_ai.client import MixedbreadAI
+
 class Embedder:
     def __init__(self):
         self.llm = LLM()
-        self.embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
+        # self.embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
+        self.embeddings_model = MixedbreadAI(api_key=api_key_embed)
         # Subject to change
         self.template = "Describe the layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles "
         self.template += """
@@ -25,7 +28,14 @@ A green triangle is placed at the center of the scene. A red triangle is placed 
     def run(self, desc):
         query = f"{self.template}\nDescription: \n{desc}\nYour response:\n"
         response = self.llm.run(query)
-        vector = self.embeddings_model.embed_query(response)  
+        # vector = self.embeddings_model.embed_query(response)
+        vector = self.embeddings_model.embeddings(
+            model='mixedbread-ai/mxbai-embed-large-v1',
+            input=response,
+            normalized=True,
+            encoding_format='float',
+            truncation_strategy='start'
+            )
         return vector    
     
 class CodeRetriever:
