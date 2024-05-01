@@ -45,4 +45,4 @@ scene.add_shape(circle_6)
 
 
 # Render the scene and save it to an image file
-scene.render("3.png")
+scene.render("examples/3.png")

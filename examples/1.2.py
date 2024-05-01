@@ -36,4 +36,4 @@ circle_4.place_shape_local(triangle_1, 'below')
 scene.add_shape(circle_4)
 
 # Render the scene and save it to an image file
-scene.render("1.2.png")
+scene.render("examples/1.2.png")

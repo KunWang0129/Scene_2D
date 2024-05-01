@@ -26,3 +26,6 @@ scene.add_shape(triangle_2)
 triangle_3 = Triangle(100, color='blue')
 triangle_3.place_shape_global((500, 300))
 scene.add_shape(triangle_3)
+
+# Render the scene and save it to an image file
+scene.render("examples/2.png")
