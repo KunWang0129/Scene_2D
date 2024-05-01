@@ -1,9 +1,9 @@
 from utils.Scene import Scene
 from utils.Shape import Circle, Rectangle, Triangle
 
-#@# Prompt
-prompt = 'Create a scene with a green triangle, a red triangle, and a blue triangle.'
-#@#
+##@##
+description = 'Create a scene with a green triangle, a red triangle, and a blue triangle.'
+##@##
 
 # Cream white background color can be represented as a hex color code
 cream_white = '#f5f5dc'  # This is a common representation for cream white

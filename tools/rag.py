@@ -13,19 +13,14 @@ class Embedder:
         self.template = "Describe the layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles "
         self.template += """
 Description: 
-A living room arrangement with a sofa, a coffee table, an armchair and two lamps for lighting.
+Create a scene with an orange circle, and arrange four blue rectangles.
 Your response:
-A sofa is placed against the back wall. There is a coffee table in front of the sofa with a lamp on it. To the right of the coffee table is a single armchair. While to the left of the sofa there is a lamp on an end table.
+A circle is placed in the center of the scene. A blue rectangle is placed to the left of the circle. A blue rectangle is placed to the right of the circle. A blue rectangle is placed above the circle. A blue rectangle is placed below the circle.
 
 Description:
-A bedroom scene with a large bed, two bedside tables, two lamps and a dresser.
+Create a scene with a green triangle, a red triangle, and a blue triangle.
 Your response:
-A large bed is placed against the back wall. Two bedside tables are placed on either side of the bed each with a table lamp on it. An armchair is placed left of the bed, facing the front wall. A dresser is placed against the right and back walls. A chandelier is placed in the center of the room.
-
-Description:
-A living room with sofas, coffee table, armchairs, ottomans, TV cabinet, TV and a chandelier.
-Your response:
-A sofa is placed against the back wall with end tables on either side. There is a plant on each end table. A coffee table is placed in front of the sofa. There are armchairs on either side of the coffee table. A pair of ottomans are placed in front of the coffee table. A TV cabinet is placed against the front wall. A TV is placed on the TV cabinet. A chandelier is placed in the center of the room.
+A green triangle is placed at the center of the scene. A red triangle is placed to the left of the green triangle. A blue triangle is placed to the right of the green triangle.
 """
     def run(self, desc):
         query = f"{self.template}\nDescription: \n{desc}\nYour response:\n"
@@ -36,7 +31,7 @@ A sofa is placed against the back wall with end tables on either side. There is 
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 27)]
+        self.examples = [f'{x}.py' for x in range(1, 3)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
         self.topk = 5
@@ -53,10 +48,10 @@ class CodeRetriever:
             with open(self.data_path + ex, 'r') as f:
                 lines = f.readlines()
             desc = "".join(lines)
-            # first = desc.find('##@##')
-            # second = desc.find('##@##', first+6)
-            # code = desc[first+6:second]
-            # code = desc[second+5:]
+            first = desc.find('##@##')
+            second = desc.find('##@##', first+6)
+            code = desc[first+6:second]
+            code = desc[second+5:]
             code = desc
             vector = self.embd.run(code)
             self.embeddings[ex] = vector
