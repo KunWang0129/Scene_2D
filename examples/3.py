@@ -2,7 +2,7 @@ from utils.Scene import Scene
 from utils.Shape import Circle, Rectangle, Triangle
 
 #@# Prompt
-prompt = 'Create a scene with six circles, each with a different color.'
+prompt = 'Create a scene with five circles, each with a different color.'
 #@#
 
 # Cream white background color can be represented as a hex color code
