@@ -1,50 +1,34 @@
-
 from utils.Scene import Scene
 from utils.Shape import Circle, Rectangle, Triangle
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(1024, 768), bg_color='#f0f8ff')  # Light blue background color
+# Cream white background color can be represented as a hex color code
+cream_white = '#f5f5dc'  # This is a common representation for cream white
 
-# Create and place the shapes
-# 1. A large blue rectangle in the center
-rect_1 = Rectangle(400, 300, color='#add8e6')  # Light blue color
-rect_1.place_shape_global((512, 384))
-scene.add_shape(rect_1)
+# Create a scene with a cream white background
+scene = Scene(size=(1024, 768), bg_color=cream_white)
 
-# 2. Four smaller yellow rectangles around the large rectangle
-rect_2 = Rectangle(150, 100, color='#ffff00')  # Yellow color
-rect_2.place_shape_local(rect_1, 'left')
-scene.add_shape(rect_2)
+# Create orange circles and place them in the scene
+for i in range(10):
+    circle = Circle(50, color='orange')
+    circle.place_shape_global((100 + i * 80, 100 + i * 60))
+    scene.add_shape(circle)
 
-rect_3 = Rectangle(150, 100, color='#ffff00')
-rect_3.place_shape_local(rect_1, 'right')
-scene.add_shape(rect_3)
+# Create blue rectangles and place them around the circles
+rectangle_1 = Rectangle(400, 100, color='blue', rotation=90)
+rectangle_1.place_shape_global((100, 400))
+scene.add_shape(rectangle_1)
 
-rect_4 = Rectangle(100, 150, color='#ffff00')
-rect_4.place_shape_local(rect_1, 'above')
-scene.add_shape(rect_4)
+rectangle_2 = Rectangle(400, 100, color='blue', rotation=90)
+rectangle_2.place_shape_global((900, 400))
+scene.add_shape(rectangle_2)
 
-rect_5 = Rectangle(100, 150, color='#ffff00')
-rect_5.place_shape_local(rect_1, 'below')
-scene.add_shape(rect_5)
+rectangle_3 = Rectangle(800, 100, color='blue', rotation=0)
+rectangle_3.place_shape_global((300, 100))
+scene.add_shape(rectangle_3)
 
-# 3. A green triangle in the top-right corner
-tri_1 = Triangle(200, color='#008000')  # Green color
-tri_1.place_shape_global((900, 100))
-scene.add_shape(tri_1)
+rectangle_4 = Rectangle(800, 100, color='blue', rotation=0)
+rectangle_4.place_shape_global((300, 600))
+scene.add_shape(rectangle_4)
 
-# 4. Three red circles in the bottom-left corner
-circle_1 = Circle(50, color='#ff0000')  # Red color
-circle_1.place_shape_global((200, 600))
-scene.add_shape(circle_1)
-
-circle_2 = Circle(50, color='#ff0000')
-circle_2.place_shape_local(circle_1, 'right')
-scene.add_shape(circle_2)
-
-circle_3 = Circle(50, color='#ff0000')
-circle_3.place_shape_local(circle_2, 'right')
-scene.add_shape(circle_3)
-
-# Render the scene and save it to an image file
-scene.render("scene.png")
+# Render the scene to an image file
+scene.render('scene.png')

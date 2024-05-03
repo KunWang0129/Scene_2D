@@ -7,6 +7,7 @@ from assets.key import api_key
 from assets.key_embed import api_key as api_key_embed
 from mixedbread_ai.client import MixedbreadAI
 
+
 class Embedder:
     def __init__(self):
         self.llm = LLM()
@@ -26,25 +27,36 @@ Your response:
 A green triangle is placed at the center of the scene. A red triangle is placed to the left of the green triangle. A blue triangle is placed to the right of the green triangle.
 """
     def run(self, desc):
+        print('desc:', desc)
         query = f"{self.template}\nDescription: \n{desc}\nYour response:\n"
-        response = self.llm.run(query)
+        # query = f"{desc}"
+        response = self.llm.run_embed(query)
+        response = response.content[0].text
+        print('response:', response)
         # vector = self.embeddings_model.embed_query(response)
-        vector = self.embeddings_model.embeddings(
+        
+        res = self.embeddings_model.embeddings(
             model='mixedbread-ai/mxbai-embed-large-v1',
-            input=response,
-            normalized=True,
+            input=desc,
+            normalized=False,
             encoding_format='float',
             truncation_strategy='start'
             )
+        vector = [entry.embedding for entry in res.data]
         return vector    
+    
+    def _sanitize_output(self, text: str):
+        _, after = text.split("```python")
+        return after.split("```")[0]
+    
     
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 3)]
+        self.examples = [f'{x}.py' for x in range(1, 4)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
-        self.topk = 5
+        self.topk = 2
         if os.path.exists(self.embd_path):
             with open(self.embd_path, 'r') as f:
                 self.embeddings = json.load(f)
@@ -60,8 +72,8 @@ class CodeRetriever:
             desc = "".join(lines)
             first = desc.find('##@##')
             second = desc.find('##@##', first+6)
-            code = desc[first+6:second]
-            code = desc[second+5:]
+            # description = desc[first+6:second]
+            # code = desc[second+5:]
             code = desc
             vector = self.embd.run(code)
             self.embeddings[ex] = vector
@@ -82,13 +94,16 @@ class CodeRetriever:
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
     
     def run(self, query):
-        
+        print('query:', query)
         query_vector = np.array(self.embd.run(query))
         dataset_vectors = np.array(list(self.embeddings.values()))
-        
+        print('query_vector:', query_vector.shape)
+        print('dataset_vectors:', dataset_vectors.shape)
         query_vector /= np.linalg.norm(query_vector)
+        breakpoint()
         dataset_vectors /= np.linalg.norm(dataset_vectors, axis=1)[:, np.newaxis]
-        sims = np.dot(dataset_vectors, query_vector)
+        dataset_vectors = dataset_vectors.squeeze(axis = 1)
+        sims = np.dot(dataset_vectors, query_vector.T).squeeze()
         indices = np.argsort(sims)[-self.topk:]
         top_matches = [self.examples[i] for i in indices]
         

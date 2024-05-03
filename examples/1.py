@@ -35,6 +35,3 @@ scene.add_shape(rectangle_2)
 rectangle_4 = Rectangle(160, 80, color='blue', rotation=0)
 rectangle_4.place_shape_local(circle, 'below')
 scene.add_shape(rectangle_4)
-
-# Render the scene and save it to an image file
-scene.render("1.png")

@@ -40,6 +40,7 @@ You are required to write Python code to create a scene layout based on the shap
 
     def run(self, input, history = None):
         self.init()
+        print('input: ', input)
         example_inputs, example_codes = self.retriever.run(input)
 
         self.prompt += "Following are a few examples of how you should respond: \n"
