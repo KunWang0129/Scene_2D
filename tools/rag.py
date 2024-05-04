@@ -53,7 +53,7 @@ A green triangle is placed at the center of the scene. A red triangle is placed 
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 4)]
+        self.examples = [f'{x}.py' for x in range(1, 11)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
         self.topk = 2

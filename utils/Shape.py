@@ -17,20 +17,21 @@ class Shape:
         self.position = position
         return None
 
-    def place_shape_local(self, reference_shape, position):
+    def place_shape_local(self, reference_shape, position, offset=(10, 10)):
         ref_x, ref_y = reference_shape.position
-        offset = (self.dimension + reference_shape.dimension) // 2
+        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2 + offset[0]
+        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2 + offset[1]
         if position == "left":
-            new_x = ref_x - offset
+            new_x = ref_x - offset_x
             new_y = ref_y
         elif position == "right":
-            new_x = ref_x + offset
+            new_x = ref_x + offset_x
             new_y = ref_y
         elif position == "above":
-            new_y = ref_y - offset
+            new_y = ref_y - offset_y
             new_x = ref_x
         elif position == "below":
-            new_y = ref_y + offset
+            new_y = ref_y + offset_y
             new_x = ref_x
         self.place_shape_global((new_x, new_y))
 
@@ -47,7 +48,7 @@ class Circle(Shape):
         """
         super().__init__(color, rotation)
         self.radius = radius
-        self.dimension = radius * 2
+        self.dimension = (radius * 2, radius * 2)
 
 
 class Rectangle(Shape):
@@ -64,7 +65,7 @@ class Rectangle(Shape):
         super().__init__(color, rotation)
         self.width = width
         self.height = height
-        self.dimension = max(width, height)
+        self.dimension = (width, height)
 
 
 class Triangle(Shape):
@@ -79,5 +80,5 @@ class Triangle(Shape):
         """
         super().__init__(color, rotation)
         self.size = size
-        self.dimension = size
+        self.dimension = (size, size)
         # self.height = size * (3 ** 0.5) / 2
