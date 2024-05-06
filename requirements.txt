@@ -1,5 +1,5 @@
 # meta-ai-api
-anthropic
+# anthropic
 numpy
 mixedbread_ai
 Pillow

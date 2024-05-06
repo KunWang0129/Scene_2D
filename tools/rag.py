@@ -9,12 +9,13 @@ from mixedbread_ai.client import MixedbreadAI
 
 
 class Embedder:
-    def __init__(self):
-        self.llm = LLM()
+    def __init__(self, llm):
+        self.llm = llm
         # self.embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
         self.embeddings_model = MixedbreadAI(api_key=api_key_embed)
         # Subject to change
-        self.template = "Describe the layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles "
+        self.template = "Describe the layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles."
+        self.template_sys = "Always only respond to the last description with at most two sentences."
         self.template += """
 Description: 
 Create a scene with an orange circle, and arrange four blue rectangles.
@@ -27,12 +28,13 @@ Your response:
 A green triangle is placed at the center of the scene. A red triangle is placed to the left of the green triangle. A blue triangle is placed to the right of the green triangle.
 """
     def run(self, desc):
-        print('desc:', desc)
+        # print('desc:', desc)
         query = f"{self.template}\nDescription: \n{desc}\nYour response:\n"
         # query = f"{desc}"
-        response = self.llm.run_embed(query)
-        response = response.content[0].text
-        print('response:', response)
+        query_sys = self.template_sys
+        response = self.llm.run_embed(query, query_sys)
+        response = response[0]['generation']['content']
+
         # vector = self.embeddings_model.embed_query(response)
         
         res = self.embeddings_model.embeddings(
@@ -45,14 +47,11 @@ A green triangle is placed at the center of the scene. A red triangle is placed 
         vector = [entry.embedding for entry in res.data]
         return vector    
     
-    def _sanitize_output(self, text: str):
-        _, after = text.split("```python")
-        return after.split("```")[0]
     
     
 class CodeRetriever:
-    def __init__(self):
-        self.embd = Embedder()
+    def __init__(self, llm):
+        self.embd = Embedder(llm)
         self.examples = [f'{x}.py' for x in range(1, 11)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
@@ -72,10 +71,10 @@ class CodeRetriever:
             desc = "".join(lines)
             first = desc.find('##@##')
             second = desc.find('##@##', first+6)
-            # description = desc[first+6:second]
-            # code = desc[second+5:]
-            code = desc
-            vector = self.embd.run(code)
+
+            description = desc[first+6:second]
+            code = desc[second+5:]
+            vector = self.embd.run(description)
             self.embeddings[ex] = vector
             
         with open(self.embd_path, 'w') as f:
@@ -94,14 +93,13 @@ class CodeRetriever:
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
     
     def run(self, query):
-        print('query:', query)
+
         query_vector = np.array(self.embd.run(query))
         dataset_vectors = np.array(list(self.embeddings.values()))
-        print('query_vector:', query_vector.shape)
-        print('dataset_vectors:', dataset_vectors.shape)
+
         query_vector /= np.linalg.norm(query_vector)
-        breakpoint()
         dataset_vectors /= np.linalg.norm(dataset_vectors, axis=1)[:, np.newaxis]
+        
         dataset_vectors = dataset_vectors.squeeze(axis = 1)
         sims = np.dot(dataset_vectors, query_vector.T).squeeze()
         indices = np.argsort(sims)[-self.topk:]

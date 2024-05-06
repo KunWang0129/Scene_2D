@@ -37,8 +37,7 @@ The general structure of the program is as follows:
 3. Place objects in the scene.
 
 Note: Make sure you follow the above APIs, and structure of the program and add necessary amount of objects to make it look full. 
-"""
-You are required to write Python code to create a scene layout based on the shapes defined in the API above. The scene should be full and complete, with all the shapes placed in a way that makes the scene look full. Make sure you follow the APIs and structure of the program and add the necessary amount of objects to make it look full.Here is the full implementation of the API for your reference: 
+""" Here is the full implementation of the API for your reference: 
 from PIL import Image, ImageDraw
 from utils.Shape import Circle, Rectangle, Triangle
 
@@ -255,20 +254,21 @@ class Shape:
         self.position = position
         return None
 
-    def place_shape_local(self, reference_shape, position):
+    def place_shape_local(self, reference_shape, position, offset=(10, 10)):
         ref_x, ref_y = reference_shape.position
-        offset = (self.dimension + reference_shape.dimension) // 2
+        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2 + offset[0]
+        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2 + offset[1]
         if position == "left":
-            new_x = ref_x - offset
+            new_x = ref_x - offset_x
             new_y = ref_y
         elif position == "right":
-            new_x = ref_x + offset
+            new_x = ref_x + offset_x
             new_y = ref_y
         elif position == "above":
-            new_y = ref_y - offset
+            new_y = ref_y - offset_y
             new_x = ref_x
         elif position == "below":
-            new_y = ref_y + offset
+            new_y = ref_y + offset_y
             new_x = ref_x
         self.place_shape_global((new_x, new_y))
 
@@ -285,7 +285,7 @@ class Circle(Shape):
         """
         super().__init__(color, rotation)
         self.radius = radius
-        self.dimension = radius * 2
+        self.dimension = (radius * 2, radius * 2)
 
 
 class Rectangle(Shape):
@@ -302,7 +302,7 @@ class Rectangle(Shape):
         super().__init__(color, rotation)
         self.width = width
         self.height = height
-        self.dimension = max(width, height)
+        self.dimension = (width, height)
 
 
 class Triangle(Shape):
@@ -317,52 +317,27 @@ class Triangle(Shape):
         """
         super().__init__(color, rotation)
         self.size = size
-        self.dimension = size
+        self.dimension = (size, size)
         # self.height = size * (3 ** 0.5) / 2
 Following are a few examples of how you should respond: 
 
         User Input:
-        cription = 'Create a scene with six circles, each with a different colo
+        cription = 'Create a scene with an orange circle in the midd
         Your Response:
         ```
+
 
 # Cream white background color can be represented as a hex color code
 cream_white = '#f5f5dc'  # This is a common representation for cream white
 
 # Create a scene with a cream white background
-scene = Scene(size=(1024, 768), bg_color=cream_white)
+scene = Scene(size=(1000, 700), bg_color=cream_white)
 
 
-# Create an blue circe, place it and add it to the scene
-circle_1 = Circle(50, color='blue')
-circle_1.place_shape_global((600, 400))
-scene.add_shape(circle_1)
-
-# Create a red circe, place it and add it to the scene
-circle_2 = Circle(50, color='red')
-circle_2.place_shape_global((400, 400))
-scene.add_shape(circle_2)
-
-# Create a green circe, place it and add it to the scene
-circle_3 = Circle(50, color='green')
-circle_3.place_shape_local(circle_1, 'left')
-scene.add_shape(circle_3)
-
-# Create a yellow circe, place it and add it to the scene
-circle_4 = Circle(50, color='yellow')
-circle_4.place_shape_local(circle_2, 'right')
-scene.add_shape(circle_4)
-
-# Create a purple circe, place it and add it to the scene
-circle_5 = Circle(50, color='purple')
-circle_5.place_shape_local(circle_3, 'above')
-scene.add_shape(circle_5)
-
-
-# Create a orange circe, place it and add it to the scene
-circle_6 = Circle(50, color='orange')
-circle_6.place_shape_local(circle_4, 'below')
-scene.add_shape(circle_6)```
+# Create an orange circle, place it, and add it to the scene
+circle = Circle(100, color='orange')
+circle.place_shape_global((500, 350))
+scene.add_shape(circle)```
         
         User Input:
         cription = 'Create a scene with an orange circle, and arrange four blue rectangle
@@ -374,7 +349,7 @@ scene.add_shape(circle_6)```
 cream_white = '#f5f5dc'  # This is a common representation for cream white
 
 # Create a scene with a cream white background
-scene = Scene(size=(1024, 768), bg_color=cream_white)
+scene = Scene(size=(1000, 700), bg_color=cream_white)
 
 
 # Create an orange circle, place it, and add it to the scene
