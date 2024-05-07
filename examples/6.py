@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Rectangle, Triangle
-
 #@# Prompt
 prompt = 'Create a scene with 4 rectangles around a triangle in the center.'
 #@#
@@ -37,5 +34,3 @@ scene.add_shape(rectangle_3)
 rectangle_4 = Rectangle(60, 120, color='purple')
 rectangle_4.place_shape_local(central_triangle, 'right')  # 100 pixels to the right of the triangle
 scene.add_shape(rectangle_4)
-
-scene.render("examples/6.png")

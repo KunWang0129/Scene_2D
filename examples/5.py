@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle, Triangle
-
 #@# Prompt
 prompt = 'Create a scene with a sky blue background, a blue rectangle in the middle surrounded by four yellow smaller rectangles square, a green triangle on the top left with some rotation and a red circle bottom right.'
 #@#
@@ -39,6 +36,3 @@ scene.add_shape(triangle_1)
 circle_1 = Circle(75, color='#FF0000')  # Red
 circle_1.place_shape_global((900, 600))
 scene.add_shape(circle_1)
-
-# Render the scene and save it to an image file
-scene.render("examples/5.png")

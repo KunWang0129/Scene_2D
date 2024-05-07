@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle
-
 #@# Prompt
 prompt = 'Create a scene with a purple square, an orange circle, and a yellow rectangle.'
 #@#
@@ -25,5 +22,3 @@ scene.add_shape(circle_1)
 rectangle_1 = Rectangle(150, 100, color='yellow')
 rectangle_1.place_shape_global((475, 300))
 scene.add_shape(rectangle_1)
-
-scene.render("examples/4.png")

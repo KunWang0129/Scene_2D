@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle, Triangle
-
 #@# Prompt
 prompt = 'Create a scene with five circles, each with a different color.'
 #@#
@@ -42,7 +39,3 @@ scene.add_shape(circle_5)
 circle_6 = Circle(50, color='orange')
 circle_6.place_shape_local(circle_4, 'below')
 scene.add_shape(circle_6)
-
-
-# Render the scene and save it to an image file
-scene.render("examples/3.png")

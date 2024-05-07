@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle, Triangle
-
 #@# Prompt
 prompt = 'Create a scene with a red square, surrounded by four grey circles.'
 #@#
@@ -34,6 +31,3 @@ scene.add_shape(circle_3)
 circle_4 = Circle(50, color='grey')
 circle_4.place_shape_local(triangle_1, 'below')
 scene.add_shape(circle_4)
-
-# Render the scene and save it to an image file
-scene.render("examples/1.2.png")

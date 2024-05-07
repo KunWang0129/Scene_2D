@@ -1,6 +1,3 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle, Triangle
-
 #@# Prompt
 prompt = 'Create a scene with eight triangles, each with a different color.'
 #@#
@@ -52,6 +49,3 @@ scene.add_shape(triangle_7)
 triangle_8 = Triangle(50, color='cyan')
 triangle_8.place_shape_local(triangle_6, 'right')
 scene.add_shape(triangle_8)
-
-# Render the scene and save it to an image file
-scene.render("examples/triangles_scene1.png")

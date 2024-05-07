@@ -33,6 +33,3 @@ scene.add_shape(circle_3)
 circle_4 = Circle(50, color='grey')
 circle_4.place_shape_local(rectangle_1, 'below')
 scene.add_shape(circle_4)
-
-# Render the scene and save it to an image file
-scene.render("examples/1.5.png")
