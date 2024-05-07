@@ -1,3 +1,4 @@
+examples/rendered_scene/*.png
 # Byte-compiled / optimized / DLL files
 .vscode
 __pycache__/
