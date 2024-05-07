@@ -16,4 +16,4 @@ for file_name in example_files:
 
     # Assuming that the 'scene' variable is defined in each file,
     # render the scene and save it as an image
-    image = scene.render(f'examples/{file_name[:-3]}.png')
+    image = scene.render(f'examples/rendered_scene/{file_name[:-3]}.png')
