@@ -1,5 +1,5 @@
 #@# Prompt
-# prompt = 'Create a scnene with mountains, and meadows.'
+# prompt = 'Create a scnene with mountains and meadows.'
 #@#
 
 # Create the Scene object with desired dimensions and background color
