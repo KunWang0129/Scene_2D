@@ -255,21 +255,47 @@ class Shape:
         self.position = position
         return None
 
-    def place_shape_local(self, reference_shape, position):
+    def place_shape_local(self, reference_shape, position, offset=(0, 0)):
+        """
+        Place the shape relative to a reference shape's position.
+
+        This method positions the shape based on a given reference shape and a specified position relative to that reference shape. The shape can be placed to the left, right, above, or below the reference shape. An optional offset can be applied to the final position.
+
+        Parameters:
+        reference_shape : Shape
+            The shape to use as the reference for positioning. It must have `position` and `dimension` attributes.
+        position : str
+            The desired position relative to the reference shape. It can be one of the following:
+            - "left": to place the shape to the left of the reference shape.
+            - "right": to place the shape to the right of the reference shape.
+            - "above": to place the shape above the reference shape.
+            - "below": to place the shape below the reference shape.
+        offset : tuple of int, optional
+            A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
+            The default value is (0, 0).
+
+        Returns:
+        None
+        """
         ref_x, ref_y = reference_shape.position
-        offset = (self.dimension + reference_shape.dimension) // 2
+        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
+        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2
+
         if position == "left":
-            new_x = ref_x - offset
+            new_x = ref_x - offset_x
             new_y = ref_y
         elif position == "right":
-            new_x = ref_x + offset
+            new_x = ref_x + offset_x
             new_y = ref_y
         elif position == "above":
-            new_y = ref_y - offset
+            new_y = ref_y - offset_y
             new_x = ref_x
         elif position == "below":
-            new_y = ref_y + offset
+            new_y = ref_y + offset_y
             new_x = ref_x
+
+        new_x += offset[0]
+        new_y += offset[1]
         self.place_shape_global((new_x, new_y))
 
 
@@ -285,7 +311,7 @@ class Circle(Shape):
         """
         super().__init__(color, rotation)
         self.radius = radius
-        self.dimension = radius * 2
+        self.dimension = (radius * 2, radius * 2)
 
 
 class Rectangle(Shape):
@@ -302,7 +328,7 @@ class Rectangle(Shape):
         super().__init__(color, rotation)
         self.width = width
         self.height = height
-        self.dimension = max(width, height)
+        self.dimension = (width, height)
 
 
 class Triangle(Shape):
@@ -317,89 +343,14 @@ class Triangle(Shape):
         """
         super().__init__(color, rotation)
         self.size = size
-        self.dimension = size
+        self.dimension = (size, size)
         # self.height = size * (3 ** 0.5) / 2
-Following are a few examples of how you should respond: 
 
-        User Input:
-        cription = 'Create a scene with six circles, each with a different colo
-        Your Response:
-        ```
-
-# Cream white background color can be represented as a hex color code
-cream_white = '#f5f5dc'  # This is a common representation for cream white
-
-# Create a scene with a cream white background
-scene = Scene(size=(1024, 768), bg_color=cream_white)
-
-
-# Create an blue circe, place it and add it to the scene
-circle_1 = Circle(50, color='blue')
-circle_1.place_shape_global((600, 400))
-scene.add_shape(circle_1)
-
-# Create a red circe, place it and add it to the scene
-circle_2 = Circle(50, color='red')
-circle_2.place_shape_global((400, 400))
-scene.add_shape(circle_2)
-
-# Create a green circe, place it and add it to the scene
-circle_3 = Circle(50, color='green')
-circle_3.place_shape_local(circle_1, 'left')
-scene.add_shape(circle_3)
-
-# Create a yellow circe, place it and add it to the scene
-circle_4 = Circle(50, color='yellow')
-circle_4.place_shape_local(circle_2, 'right')
-scene.add_shape(circle_4)
-
-# Create a purple circe, place it and add it to the scene
-circle_5 = Circle(50, color='purple')
-circle_5.place_shape_local(circle_3, 'above')
-scene.add_shape(circle_5)
-
-
-# Create a orange circe, place it and add it to the scene
-circle_6 = Circle(50, color='orange')
-circle_6.place_shape_local(circle_4, 'below')
-scene.add_shape(circle_6)```
-        
-        User Input:
-        cription = 'Create a scene with an orange circle, and arrange four blue rectangle
-        Your Response:
-        ```
-
-
-# Cream white background color can be represented as a hex color code
-cream_white = '#f5f5dc'  # This is a common representation for cream white
-
-# Create a scene with a cream white background
-scene = Scene(size=(1024, 768), bg_color=cream_white)
-
-
-# Create an orange circle, place it, and add it to the scene
-circle = Circle(100, color='orange')
-circle.place_shape_global((600, 400))
-scene.add_shape(circle)
-
-# Create blue rectangles, place it around the circle, and add it to the scene
-# The rectangles are placed to the left, right, above, and below the circle
-rectangle_1 = Rectangle(160, 80, color='blue', rotation=90)
-rectangle_1.place_shape_local(circle, 'left')
-scene.add_shape(rectangle_1)
-
-rectangle_3 = Rectangle(160, 80, color='blue', rotation=90)
-rectangle_3.place_shape_local(circle, 'right')
-scene.add_shape(rectangle_3)
-
-rectangle_2 = Rectangle(160, 80, color='blue', rotation=0)
-rectangle_2.place_shape_local(circle, 'above')
-scene.add_shape(rectangle_2)
-
-rectangle_4 = Rectangle(160, 80, color='blue', rotation=0)
-rectangle_4.place_shape_local(circle, 'below')
-scene.add_shape(rectangle_4)```
-        
 User Input: 
-Create a scene with ten orange circle, and arrange four blue rectangles. 
+Create a scene with with the following drawing steps: 
+1. A rectangle is placed in the center of the scene (car body).
+2. Two smaller rectangles are placed on the top of the car body (windows).
+3. Two circles are placed on the bottom of the car body (wheels).
+4. A smaller rectangle is placed at the front of the car body (front bumper).
+5. Another smaller rectangle is placed at the back of the car body (rear bumper). 
 Your Response: 

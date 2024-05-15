@@ -1,42 +1,22 @@
-from utils.Scene import Scene
-from utils.Shape import Circle, Rectangle, Triangle
-
 ##@##
-description = 'Create a scene with an orange circle in the middle'
+description = 'Create a scene with a car.'
 ##@##
-
-
-# Cream white background color can be represented as a hex color code
-cream_white = '#f5f5dc'  # This is a common representation for cream white
 
 # Create a scene with a cream white background
-scene = Scene(size=(1000, 700), bg_color=cream_white)
+scene = Scene(size=(1024, 768))
 
+wheel_back = Circle(50, color='black')
+wheel_back.place_shape_global((370, 475))
+scene.add_shape(wheel_back)
 
-# Create an orange circle, place it, and add it to the scene
-circle = Circle(100, color='orange')
-<<<<<<< HEAD
-circle.place_shape_global((500, 350))
-scene.add_shape(circle)
-=======
-circle.place_shape_global((600, 400))
-scene.add_shape(circle)
+wheel_front = Circle(50, color='black')
+wheel_front.place_shape_global((650, 475))
+scene.add_shape(wheel_front)
 
-# Create blue rectangles, place it around the circle, and add it to the scene
-# The rectangles are placed to the left, right, above, and below the circle
-rectangle_1 = Rectangle(160, 80, color='blue', rotation=90)
-rectangle_1.place_shape_local(circle, 'left')
-scene.add_shape(rectangle_1)
+body = Rectangle(500, 180, color='red')
+body.place_shape_global((512, 384))
+scene.add_shape(body)
 
-rectangle_3 = Rectangle(160, 80, color='blue', rotation=90)
-rectangle_3.place_shape_local(circle, 'right')
-scene.add_shape(rectangle_3)
-
-rectangle_2 = Rectangle(160, 80, color='blue', rotation=0)
-rectangle_2.place_shape_local(circle, 'above')
-scene.add_shape(rectangle_2)
-
-rectangle_4 = Rectangle(160, 80, color='blue', rotation=0)
-rectangle_4.place_shape_local(circle, 'below')
-scene.add_shape(rectangle_4)
->>>>>>> origin/main
+window = Rectangle(100, 60, color='cyan')
+window.place_shape_global((650, 384))
+scene.add_shape(window)

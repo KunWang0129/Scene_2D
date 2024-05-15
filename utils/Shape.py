@@ -17,10 +17,32 @@ class Shape:
         self.position = position
         return None
 
-    def place_shape_local(self, reference_shape, position, offset=(10, 10)):
+    def place_shape_local(self, reference_shape, position, offset=(0, 0)):
+        """
+        Place the shape relative to a reference shape's position.
+
+        This method positions the shape based on a given reference shape and a specified position relative to that reference shape. The shape can be placed to the left, right, above, or below the reference shape. An optional offset can be applied to the final position.
+
+        Parameters:
+        reference_shape : Shape
+            The shape to use as the reference for positioning. It must have `position` and `dimension` attributes.
+        position : str
+            The desired position relative to the reference shape. It can be one of the following:
+            - "left": to place the shape to the left of the reference shape.
+            - "right": to place the shape to the right of the reference shape.
+            - "above": to place the shape above the reference shape.
+            - "below": to place the shape below the reference shape.
+        offset : tuple of int, optional
+            A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
+            The default value is (0, 0).
+
+        Returns:
+        None
+        """
         ref_x, ref_y = reference_shape.position
-        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2 + offset[0]
-        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2 + offset[1]
+        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
+        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2
+
         if position == "left":
             new_x = ref_x - offset_x
             new_y = ref_y
@@ -33,6 +55,9 @@ class Shape:
         elif position == "below":
             new_y = ref_y + offset_y
             new_x = ref_x
+
+        new_x += offset[0]
+        new_y += offset[1]
         self.place_shape_global((new_x, new_y))
 
 

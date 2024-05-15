@@ -1,53 +1,44 @@
 
+from PIL import Image, ImageDraw
+
 from utils.Scene import Scene
 from utils.Shape import Circle, Rectangle, Triangle
 
-# Create a scene with a light blue background
-scene = Scene(size=(1200, 800), bg_color='#ADD8E6')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='lightblue')
 
-# Create a large blue rectangle as the main element
-blue_rect = Rectangle(width=600, height=400, color='#1E90FF')
-blue_rect.place_shape_global((400, 300))
-scene.add_shape(blue_rect)
+# 1. Add a rectangle in the center of the scene (car body)
+car_body = Rectangle(width=300, height=150, color='gray')
+car_body.place_shape_global((400, 300))
+scene.add_shape(car_body)
 
-# Create four smaller yellow rectangles around the blue rectangle
-yellow_rect1 = Rectangle(width=200, height=150, color='#FFFF00')
-yellow_rect1.place_shape_local(blue_rect, 'left')
-scene.add_shape(yellow_rect1)
+# 2. Add two smaller rectangles on top of the car body (windows)
+window1 = Rectangle(width=100, height=50, color='white')
+window1.place_shape_local(car_body, 'above', offset=(0, 20))
+scene.add_shape(window1)
 
-yellow_rect2 = Rectangle(width=200, height=150, color='#FFFF00')
-yellow_rect2.place_shape_local(blue_rect, 'right')
-scene.add_shape(yellow_rect2)
+window2 = Rectangle(width=100, height=50, color='white')
+window2.place_shape_local(car_body, 'above', offset=(0, -20))
+scene.add_shape(window2)
 
-yellow_rect3 = Rectangle(width=200, height=150, color='#FFFF00')
-yellow_rect3.place_shape_local(blue_rect, 'above')
-scene.add_shape(yellow_rect3)
+# 3. Add two circles at the bottom of the car body (wheels)
+wheel1 = Circle(radius=30, color='black')
+wheel1.place_shape_local(car_body, 'below', offset=(-80, 0))
+scene.add_shape(wheel1)
 
-yellow_rect4 = Rectangle(width=200, height=150, color='#FFFF00')
-yellow_rect4.place_shape_local(blue_rect, 'below')
-scene.add_shape(yellow_rect4)
+wheel2 = Circle(radius=30, color='black')
+wheel2.place_shape_local(car_body, 'below', offset=(80, 0))
+scene.add_shape(wheel2)
 
-# Create a green triangle in the center of the scene
-green_triangle = Triangle(size=200, color='#008000')
-green_triangle.place_shape_global((600, 400))
-scene.add_shape(green_triangle)
+# 4. Add a smaller rectangle at the front of the car body (front bumper)
+front_bumper = Rectangle(width=50, height=30, color='gray')
+front_bumper.place_shape_local(car_body, 'left', offset=(0, 0))
+scene.add_shape(front_bumper)
 
-# Create four red circles around the green triangle
-red_circle1 = Circle(radius=50, color='#FF0000')
-red_circle1.place_shape_local(green_triangle, 'left')
-scene.add_shape(red_circle1)
+# 5. Add another smaller rectangle at the back of the car body (rear bumper)
+rear_bumper = Rectangle(width=50, height=30, color='gray')
+rear_bumper.place_shape_local(car_body, 'right', offset=(0, 0))
+scene.add_shape(rear_bumper)
 
-red_circle2 = Circle(radius=50, color='#FF0000')
-red_circle2.place_shape_local(green_triangle, 'right')
-scene.add_shape(red_circle2)
-
-red_circle3 = Circle(radius=50, color='#FF0000')
-red_circle3.place_shape_local(green_triangle, 'above')
-scene.add_shape(red_circle3)
-
-red_circle4 = Circle(radius=50, color='#FF0000')
-red_circle4.place_shape_local(green_triangle, 'below')
-scene.add_shape(red_circle4)
-
-# Render the scene and save it to an image file
-scene.render("scene.png")
+# Render the scene
+scene.render('car_scene.png')

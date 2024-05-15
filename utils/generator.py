@@ -41,16 +41,16 @@ You are required to write Python code to create a scene layout based on the shap
     def run(self, input, history = None):
         self.init()
         print('input: ', input)
-        example_inputs, example_codes = self.retriever.run(input)
-
-        self.prompt += "Following are a few examples of how you should respond: \n"
-        for i in range(len(example_inputs)):
-            self.prompt += f"""
-        User Input:
-        {example_inputs[i]}
-        Your Response:
-        {example_codes[i]}
-        """
+        # example_inputs, example_codes = self.retriever.run(input)
+        #
+        # self.prompt += "Following are a few examples of how you should respond: \n"
+        # for i in range(len(example_inputs)):
+        #     self.prompt += f"""
+        # User Input:
+        # {example_inputs[i]}
+        # Your Response:
+        # {example_codes[i]}
+        # """
         # if history != "\n":
         #     self.prompt += "The following is the history of the user inputs and your responses: \n"
         #     self.prompt += history

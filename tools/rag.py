@@ -14,46 +14,47 @@ class Embedder:
         # self.embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
         self.embeddings_model = MixedbreadAI(api_key=api_key_embed)
         # Subject to change
-        self.template = "Describe the layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles "
+        self.template = "Describe the 2D layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles. I will provide an example, you will have provide only the response in your output, nothing else."
         self.template += """
-Description: 
-Create a scene with an orange circle, and arrange four blue rectangles.
-Your response:
-A circle is placed in the center of the scene. A blue rectangle is placed to the left of the circle. A blue rectangle is placed to the right of the circle. A blue rectangle is placed above the circle. A blue rectangle is placed below the circle.
-
+<example>
 Description:
-Create a scene with a green triangle, a red triangle, and a blue triangle.
+Create a scene with a house.
 Your response:
-A green triangle is placed at the center of the scene. A red triangle is placed to the left of the green triangle. A blue triangle is placed to the right of the green triangle.
+1. A rectangle is placed in the center of the scene (building). 
+2. A triangle is placed above the building (roof). 
+3. Within the building, a smaller rectangle is placed at the bottom (door).
+4. Two smaller blue rectangles are placed above the door (windows).
+</example>
 """
+
     def run(self, desc):
         print('desc:', desc)
-        query = f"{self.template}\nDescription: \n{desc}\nYour response:\n"
+        query = f"{self.template}\nDescription: \n{desc}\nYour response: ?\n"
         # query = f"{desc}"
         response = self.llm.run_embed(query)
         response = response.content[0].text
         print('response:', response)
         # vector = self.embeddings_model.embed_query(response)
-        
+
         res = self.embeddings_model.embeddings(
             model='mixedbread-ai/mxbai-embed-large-v1',
-            input=desc,
+            input=response,
             normalized=False,
             encoding_format='float',
             truncation_strategy='start'
-            )
+        )
         vector = [entry.embedding for entry in res.data]
-        return vector    
-    
+        return vector
+
     def _sanitize_output(self, text: str):
         _, after = text.split("```python")
         return after.split("```")[0]
-    
-    
+
+
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 11)]
+        self.examples = [f'{x}.py' for x in range(1, 2)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
         self.topk = 2
@@ -62,7 +63,7 @@ class CodeRetriever:
                 self.embeddings = json.load(f)
         else:
             self.build()
-            
+
     def build(self):
         print('Building code embeddings')
         self.embeddings = {}
@@ -71,28 +72,28 @@ class CodeRetriever:
                 lines = f.readlines()
             desc = "".join(lines)
             first = desc.find('##@##')
-            second = desc.find('##@##', first+6)
-            # description = desc[first+6:second]
+            second = desc.find('##@##', first + 6)
+            description = desc[first + 6:second]
             # code = desc[second+5:]
-            code = desc
-            vector = self.embd.run(code)
+            # code = desc
+            vector = self.embd.run(description)
             self.embeddings[ex] = vector
-            
+
         with open(self.embd_path, 'w') as f:
             json.dump(self.embeddings, f)
-            
+
     def fetch_example(self, ex):
         with open(self.data_path + ex, 'r') as f:
             lines = f.readlines()
         desc = "".join(lines)
         first = desc.find('##@##')
         add_objs = desc[:first]
-        second = desc.find('##@##', first+6)
-        user_input = desc[first+6:second]
-        code = desc[second+5:]
-        return user_input[3:-4], "```"+code+"```"
+        second = desc.find('##@##', first + 6)
+        user_input = desc[first + 6:second]
+        code = desc[second + 5:]
+        return user_input[3:-4], "```" + code + "```"
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
-    
+
     def run(self, query):
         print('query:', query)
         query_vector = np.array(self.embd.run(query))
@@ -102,14 +103,14 @@ class CodeRetriever:
         query_vector /= np.linalg.norm(query_vector)
         breakpoint()
         dataset_vectors /= np.linalg.norm(dataset_vectors, axis=1)[:, np.newaxis]
-        dataset_vectors = dataset_vectors.squeeze(axis = 1)
+        dataset_vectors = dataset_vectors.squeeze(axis=1)
         sims = np.dot(dataset_vectors, query_vector.T).squeeze()
         indices = np.argsort(sims)[-self.topk:]
         top_matches = [self.examples[i] for i in indices]
-        
-        inputs=[]
+
+        inputs = []
         # add_objs=[]
-        codes=[]
+        codes = []
         for ex in top_matches:
             # user_input, add_obj, code = self.fetch_example(ex)
             user_input, code = self.fetch_example(ex)
