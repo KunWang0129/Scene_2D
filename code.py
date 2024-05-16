@@ -1,44 +1,69 @@
 
-from PIL import Image, ImageDraw
-
-from utils.Scene import Scene
 from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
 
 # Initialize the scene
-scene = Scene(size=(800, 600), bg_color='lightblue')
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# 1. Add a rectangle in the center of the scene (car body)
-car_body = Rectangle(width=300, height=150, color='gray')
-car_body.place_shape_global((400, 300))
-scene.add_shape(car_body)
+# Create the sea
+sea = Rectangle(width=800, height=400, color='blue')
+sea.place_shape_global((400, 300))
+scene.add_shape(sea)
 
-# 2. Add two smaller rectangles on top of the car body (windows)
-window1 = Rectangle(width=100, height=50, color='white')
-window1.place_shape_local(car_body, 'above', offset=(0, 20))
-scene.add_shape(window1)
+# Create the sky
+sky = Rectangle(width=800, height=200, color='lightblue')
+sky.place_shape_global((400, 100))
+scene.add_shape(sky)
 
-window2 = Rectangle(width=100, height=50, color='white')
-window2.place_shape_local(car_body, 'above', offset=(0, -20))
-scene.add_shape(window2)
+# Create the sail
+sail = Triangle(size=200, color='white')
+sail.place_shape_global((400, 500))
+scene.add_shape(sail)
 
-# 3. Add two circles at the bottom of the car body (wheels)
-wheel1 = Circle(radius=30, color='black')
-wheel1.place_shape_local(car_body, 'below', offset=(-80, 0))
-scene.add_shape(wheel1)
+# Create the hull
+hull = Rectangle(width=150, height=80, color='brown')
+hull.place_shape_local(sail, 'below', offset=(0, 20))
+scene.add_shape(hull)
 
-wheel2 = Circle(radius=30, color='black')
-wheel2.place_shape_local(car_body, 'below', offset=(80, 0))
-scene.add_shape(wheel2)
+# Create the oars
+oar1 = Rectangle(width=50, height=20, color='brown')
+oar1.place_shape_local(hull, 'left', offset=(40, 0))
+scene.add_shape(oar1)
 
-# 4. Add a smaller rectangle at the front of the car body (front bumper)
-front_bumper = Rectangle(width=50, height=30, color='gray')
-front_bumper.place_shape_local(car_body, 'left', offset=(0, 0))
-scene.add_shape(front_bumper)
+oar2 = Rectangle(width=50, height=20, color='brown')
+oar2.place_shape_local(hull, 'right', offset=(-40, 0))
+scene.add_shape(oar2)
 
-# 5. Add another smaller rectangle at the back of the car body (rear bumper)
-rear_bumper = Rectangle(width=50, height=30, color='gray')
-rear_bumper.place_shape_local(car_body, 'right', offset=(0, 0))
-scene.add_shape(rear_bumper)
+# Create the sun
+sun = Circle(radius=30, color='yellow')
+sun.place_shape_global((700, 100))
+scene.add_shape(sun)
+
+# Create the clouds
+cloud1 = Circle(radius=40, color='white')
+cloud1.place_shape_global((100, 150))
+scene.add_shape(cloud1)
+
+cloud2 = Circle(radius=50, color='white')
+cloud2.place_shape_global((300, 120))
+scene.add_shape(cloud2)
+
+cloud3 = Circle(radius=30, color='white')
+cloud3.place_shape_global((550, 180))
+scene.add_shape(cloud3)
+
+# Create the waves
+wave1 = Triangle(size=80, color='white')
+wave1.place_shape_global((200, 550))
+scene.add_shape(wave1)
+
+wave2 = Triangle(size=60, color='white')
+wave2.place_shape_global((500, 580))
+scene.add_shape(wave2)
+
+wave3 = Triangle(size=70, color='white')
+wave3.place_shape_global((650, 560))
+scene.add_shape(wave3)
 
 # Render the scene
-scene.render('car_scene.png')
+scene.render(filename='sailing_boat_scene.png')

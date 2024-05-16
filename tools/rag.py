@@ -14,27 +14,35 @@ class Embedder:
         # self.embeddings_model = OpenAIEmbeddings(openai_api_key=api_key)
         self.embeddings_model = MixedbreadAI(api_key=api_key_embed)
         # Subject to change
-        self.template = "Describe the 2D layout of the shapes as a paragraph based on the following description. Especially focus on the shape arrangement. Use only circles, triangles, and rectangles. I will provide an example, you will have provide only the response in your output, nothing else."
-        self.template += """
+        self.template = """Describe the 2D layout of the shapes as a paragraph based on the following description.
+Especially focus on the shape arrangement and describe the drawing steps using only circles, triangles, and rectangles.
+If you are asked to describe a complex object, drawing steps should start go the more general outer shape to the more inner details.
+Feel free to add as many steps as necessary to make the final drawing look realistic.
+Your answer should have only a numbered list of steps and each line ends with what the shapes represent enclosed in parentheses.
+Here is an example:
 <example>
 Description:
 Create a scene with a house.
-Your response:
-1. A rectangle is placed in the center of the scene (building). 
-2. A triangle is placed above the building (roof). 
-3. Within the building, a smaller rectangle is placed at the bottom (door).
-4. Two smaller blue rectangles are placed above the door (windows).
+Your expected response:
+1. A large gray rectangle is placed in the center of the scene (building).
+2. A red triangle is placed above the building, with its base aligned to the top edge of the building (roof).
+3. A smaller dark brown rectangle is placed at the bottom center of the building (door).
+4. Two small blue rectangles are placed symmetrically on either side of the door, near the middle of the building (windows).
+5. A thin, elongated black rectangle is placed vertically in the center of the door (door handle).
 </example>
 """
 
-    def run(self, desc):
-        print('desc:', desc)
-        query = f"{self.template}\nDescription: \n{desc}\nYour response: ?\n"
-        # query = f"{desc}"
-        response = self.llm.run_embed(query)
-        response = response.content[0].text
-        print('response:', response)
-        # vector = self.embeddings_model.embed_query(response)
+    def run(self, desc, write_file=None):
+        if write_file is not None and os.path.exists(write_file):
+            with open(write_file, 'r') as file:
+                response = file.read()
+                print(response)
+        else:
+            query = f"{self.template}\nCan you write the drawing steps for the following description:\n{desc}\n"
+            response = self.llm.run_embed(query)
+            if write_file is not None:
+                with open(write_file, 'w') as file:
+                    file.write(response)
 
         res = self.embeddings_model.embeddings(
             model='mixedbread-ai/mxbai-embed-large-v1',
@@ -44,20 +52,16 @@ Your response:
             truncation_strategy='start'
         )
         vector = [entry.embedding for entry in res.data]
-        return vector
-
-    def _sanitize_output(self, text: str):
-        _, after = text.split("```python")
-        return after.split("```")[0]
+        return vector, response
 
 
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 2)]
+        self.examples = [f'{x}.py' for x in range(1, 6)]
         self.data_path = './examples/'
         self.embd_path = './assets/rag_embeddings.json'
-        self.topk = 2
+        self.topk = 1
         if os.path.exists(self.embd_path):
             with open(self.embd_path, 'r') as f:
                 self.embeddings = json.load(f)
@@ -74,9 +78,11 @@ class CodeRetriever:
             first = desc.find('##@##')
             second = desc.find('##@##', first + 6)
             description = desc[first + 6:second]
+            description = description.replace("description = ", "").replace("'", "")
             # code = desc[second+5:]
             # code = desc
-            vector = self.embd.run(description)
+            outfile = f'{self.data_path}{ex.replace(".", "_")}description.txt'
+            vector, _ = self.embd.run(description, outfile)
             self.embeddings[ex] = vector
 
         with open(self.embd_path, 'w') as f:
@@ -91,31 +97,30 @@ class CodeRetriever:
         second = desc.find('##@##', first + 6)
         user_input = desc[first + 6:second]
         code = desc[second + 5:]
-        return user_input[3:-4], "```" + code + "```"
+        return code
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
 
     def run(self, query):
         print('query:', query)
-        query_vector = np.array(self.embd.run(query))
+        vector, description = self.embd.run(query)
+        query_vector = np.array(vector)
         dataset_vectors = np.array(list(self.embeddings.values()))
         print('query_vector:', query_vector.shape)
         print('dataset_vectors:', dataset_vectors.shape)
         query_vector /= np.linalg.norm(query_vector)
-        breakpoint()
         dataset_vectors /= np.linalg.norm(dataset_vectors, axis=1)[:, np.newaxis]
         dataset_vectors = dataset_vectors.squeeze(axis=1)
         sims = np.dot(dataset_vectors, query_vector.T).squeeze()
         indices = np.argsort(sims)[-self.topk:]
         top_matches = [self.examples[i] for i in indices]
 
-        inputs = []
+        # inputs = []
         # add_objs=[]
         codes = []
         for ex in top_matches:
             # user_input, add_obj, code = self.fetch_example(ex)
-            user_input, code = self.fetch_example(ex)
-            inputs.append(user_input)
+            code = self.fetch_example(ex)
             # add_objs.append(add_obj)
             codes.append(code)
-        return inputs, codes
+        return codes, description
         # return inputs, add_objs, codes

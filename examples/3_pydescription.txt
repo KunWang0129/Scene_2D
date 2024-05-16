@@ -1,0 +1,2 @@
+1. A large white circle is placed in the center of the scene (cloud).
+2. Several smaller white circles are arranged around the larger circle, overlapping slightly to create a fluffy, wispy appearance (cloud details).

@@ -1,0 +1,9 @@
+1. A large brown rectangle is placed in the center of the scene (car body).
+2. Two black circles are placed at the bottom of the car body, one on each side (wheels).
+3. A smaller black rectangle is placed at the front of the car body (front bumper).
+4. A smaller black rectangle is placed at the rear of the car body (rear bumper).
+5. A lightblue rectangle is placed at the top front of the car body (windshield).
+6. A lightblue rectangle is placed at the top rear of the car body (rear window).
+7. A small brown rectangle is placed at the center top of the car body (roof).
+8. A small yellow circle is placed on the front of the car body (headlight).
+9. A small red circle is placed on the rear of the car body (taillight).

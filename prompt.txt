@@ -1,6 +1,5 @@
-
-You are a Large Language Model expert at writing code for creating scene layouts. Write Python code to create a different scene layout based on the shapes defined in the API below.
-To help you write the code, you should refer to the following APIs:
+Write Python code to create a scene layout based on the shapes defined in the API below.
+To write the code, you should refer to the following API:
 """
 Scene Setup:
 - Axes: x (left to right), y (top to bottom).
@@ -38,7 +37,7 @@ The general structure of the program is as follows:
 
 Note: Make sure you follow the above APIs, and structure of the program and add necessary amount of objects to make it look full. 
 """
-You are required to write Python code to create a scene layout based on the shapes defined in the API above. The scene should be full and complete, with all the shapes placed in a way that makes the scene look full. Make sure you follow the APIs and structure of the program and add the necessary amount of objects to make it look full.Here is the full implementation of the API for your reference: 
+Here is the full implementation of the API for your reference:
 from PIL import Image, ImageDraw
 from utils.Shape import Circle, Rectangle, Triangle
 
@@ -346,11 +345,46 @@ class Triangle(Shape):
         self.dimension = (size, size)
         # self.height = size * (3 ** 0.5) / 2
 
-User Input: 
-Create a scene with with the following drawing steps: 
-1. A rectangle is placed in the center of the scene (car body).
-2. Two smaller rectangles are placed on the top of the car body (windows).
-3. Two circles are placed on the bottom of the car body (wheels).
-4. A smaller rectangle is placed at the front of the car body (front bumper).
-5. Another smaller rectangle is placed at the back of the car body (rear bumper). 
-Your Response: 
+Following is a simple example of how to write code in your response:
+
+
+
+# Import necessary classes from the provided API
+from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
+
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='skyblue')
+
+# Create the main cloud body
+main_cloud = Circle(radius=100, color='white')
+main_cloud.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(main_cloud)
+
+# Create the cloud details (smaller circles around the main cloud)
+small_cloud1 = Circle(radius=80, color='white')
+small_cloud1.place_shape_local(main_cloud, 'left', offset=(40, -30))
+scene.add_shape(small_cloud1)
+
+small_cloud2 = Circle(radius=80, color='white')
+small_cloud2.place_shape_local(main_cloud, 'right', offset=(-40, -30))
+scene.add_shape(small_cloud2)
+
+small_cloud3 = Circle(radius=80, color='white')
+small_cloud3.place_shape_local(main_cloud, 'above', offset=(0, 70))
+scene.add_shape(small_cloud3)
+
+# Render the scene to an image file
+scene.render(filename='cloud_scene.png')
+
+
+Now write code to Create a scene with a sailing boat on the sea in a sunny day.
+You should follow these drawing steps:
+1. A large blue rectangle is placed in the center of the scene, representing the sea (sea).
+2. A smaller light blue rectangle is placed at the top of the scene, representing the sky (sky).
+3. A white triangle is placed in the center of the sea, with its base aligned to the bottom edge of the scene (sail).
+4. A brown rectangle is placed below the sail, representing the boat's hull (hull).
+5. Two small brown rectangles are placed symmetrically on either side of the hull, near the middle of the boat (oars).
+6. A small yellow circle is placed at the top of the sail, representing the sun (sun).
+7. Several small white circles are scattered across the sky, representing clouds (clouds).
+8. A few small white triangles are placed in the sea, representing waves (waves).

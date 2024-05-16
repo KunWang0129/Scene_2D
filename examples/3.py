@@ -1,58 +1,31 @@
-<<<<<<< HEAD
-from utils.Scene import Scene
+##@##
+description = 'Create a scene with a cloud.'
+##@##
+
+# Import necessary classes from the provided API
 from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
 
-##@##
-description = 'Create a scene with blue triangle at the top'
-##@##
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-=======
-#@# Prompt
-prompt = 'Create a scene with five circles, each with a different color.'
-#@#
->>>>>>> origin/main
+# Create the main cloud body
+main_cloud = Circle(radius=100, color='white')
+main_cloud.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(main_cloud)
 
-# Cream white background color can be represented as a hex color code
-cream_white = '#f5f5dc'  # This is a common representation for cream white
+# Create the cloud details (smaller circles around the main cloud)
+small_cloud1 = Circle(radius=80, color='white')
+small_cloud1.place_shape_local(main_cloud, 'left', offset=(40, -30))
+scene.add_shape(small_cloud1)
 
-# Create a scene with a cream white background
-scene = Scene(size=(1000, 700), bg_color=cream_white)
+small_cloud2 = Circle(radius=80, color='white')
+small_cloud2.place_shape_local(main_cloud, 'right', offset=(-40, -30))
+scene.add_shape(small_cloud2)
 
-<<<<<<< HEAD
-# Create a blue triangle, place it at the top, and add it to the scene
-triangle = Triangle(200, color='blue')
-triangle.place_shape_global((500, 200))
-scene.add_shape(triangle)
-=======
+small_cloud3 = Circle(radius=80, color='white')
+small_cloud3.place_shape_local(main_cloud, 'above', offset=(0, 70))
+scene.add_shape(small_cloud3)
 
-# Create an blue circe, place it and add it to the scene
-circle_1 = Circle(50, color='blue')
-circle_1.place_shape_global((600, 400))
-scene.add_shape(circle_1)
-
-# Create a red circe, place it and add it to the scene
-circle_2 = Circle(50, color='red')
-circle_2.place_shape_global((400, 400))
-scene.add_shape(circle_2)
-
-# Create a green circe, place it and add it to the scene
-circle_3 = Circle(50, color='green')
-circle_3.place_shape_local(circle_1, 'left')
-scene.add_shape(circle_3)
-
-# Create a yellow circe, place it and add it to the scene
-circle_4 = Circle(50, color='yellow')
-circle_4.place_shape_local(circle_2, 'right')
-scene.add_shape(circle_4)
-
-# Create a purple circe, place it and add it to the scene
-circle_5 = Circle(50, color='purple')
-circle_5.place_shape_local(circle_3, 'above')
-scene.add_shape(circle_5)
-
-
-# Create a orange circe, place it and add it to the scene
-circle_6 = Circle(50, color='orange')
-circle_6.place_shape_local(circle_4, 'below')
-scene.add_shape(circle_6)
->>>>>>> origin/main
+# Render the scene to an image file
+scene.render(filename='cloud_scene.png')

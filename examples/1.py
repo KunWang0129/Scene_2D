@@ -2,21 +2,61 @@
 description = 'Create a scene with a car.'
 ##@##
 
-# Create a scene with a cream white background
-scene = Scene(size=(1024, 768))
+# Import necessary classes from the provided API
+from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
 
-wheel_back = Circle(50, color='black')
-wheel_back.place_shape_global((370, 475))
-scene.add_shape(wheel_back)
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='white')
 
-wheel_front = Circle(50, color='black')
-wheel_front.place_shape_global((650, 475))
-scene.add_shape(wheel_front)
+# Create the car body
+car_body = Rectangle(width=300, height=100, color='brown')
+car_body.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(car_body)
 
-body = Rectangle(500, 180, color='red')
-body.place_shape_global((512, 384))
-scene.add_shape(body)
+# Create the wheels
+front_wheel = Circle(radius=25, color='black')
+front_wheel.place_shape_local(car_body, 'below', offset=(-90, 0))
+scene.add_shape(front_wheel)
 
-window = Rectangle(100, 60, color='cyan')
-window.place_shape_global((650, 384))
-scene.add_shape(window)
+rear_wheel = Circle(radius=25, color='black')
+rear_wheel.place_shape_local(car_body, 'below', offset=(90, 0))
+scene.add_shape(rear_wheel)
+
+# Create the front bumper
+front_bumper = Rectangle(width=10, height=50, color='black')
+front_bumper.place_shape_local(car_body, 'right')
+scene.add_shape(front_bumper)
+
+# Create the rear bumper
+rear_bumper = Rectangle(width=10, height=50, color='black')
+rear_bumper.place_shape_local(car_body, 'left')
+scene.add_shape(rear_bumper)
+
+# Create the windshield
+windshield = Rectangle(width=60, height=30, color='lightblue')
+windshield.place_shape_local(car_body, 'above', offset=(50, 50))
+scene.add_shape(windshield)
+
+# Create the rear window
+rear_window = Rectangle(width=60, height=30, color='lightblue')
+rear_window.place_shape_local(car_body, 'above', offset=(-50, 50))
+scene.add_shape(rear_window)
+
+# Create the roof
+roof = Rectangle(width=80, height=10, color='brown')
+roof.place_shape_local(car_body, 'above')
+scene.add_shape(roof)
+
+# Create the headlight
+headlight = Circle(radius=10, color='yellow')
+headlight.place_shape_local(car_body, 'right')
+scene.add_shape(headlight)
+
+# Create the taillight
+taillight = Circle(radius=10, color='red')
+taillight.place_shape_local(car_body, 'left')
+scene.add_shape(taillight)
+
+# Render the scene to an image file
+scene.render(filename='car_scene.png')

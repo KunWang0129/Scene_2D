@@ -1,90 +1,64 @@
+import time
 import anthropic
 # from meta_ai_api import MetaAI
 from assets.key import api_key
+
+
 class LLM:
-    def __init__(self, single_use=True, system_desc=None, seed=0, mode='accurate'):
+    def __init__(self):
         self.client = anthropic.Anthropic(api_key=api_key)
-        # self.client =  MetaAI(fb_email="brianwang03@gmail.com", fb_password="Wal@12658")
-        # if mode == 'fast':
-        #     self.model = "gpt-3.5-turbo-0125"
-        # elif mode == 'accurate':
-        #     self.model = "gpt-4-0125-preview"
-        # else:
-        #     raise ValueError("Invalid mode. Use 'fast' or 'accurate'")
-        # self.seed=seed
-        # self.single_use= single_use
-        # if system_desc is None:
-        #     self.system_desc = {"role": "user", "content": "You are a large language model based assistant, expert at designing layouts for indoor scenes."}
-        # else:
-        #     self.system_desc = system_desc
-        
         self.reset()
-        
+
     def reset(self):
         self.history = []
-        
+
     def run(self, query):
         curr = {"role": "user", "content": f"{query}"}
 
         self.history.append(curr)
-        # response = self.client.chat.completions.create(
-        #     model=self.model,
-        #     messages=self.history,
-        #     seed=self.seed
-        # )
-        response = self.client.messages.create(
-            model="claude-3-haiku-20240307",
-            max_tokens=4096,
-            temperature=0.2,
-            system="You are a large language model based assistant, expert at designing layouts for indoor scenes. Respond only Python code, nothing else",
-            messages=self.history
-        )
-        print(self.history)
-        # response = self.client.prompt(self.history)
-        
-        # completion_tokens = response.dict()['usage']['completion_tokens']
-        # prompt_tokens = response.dict()['usage']['prompt_tokens']
-        # total_tokens = response.dict()['usage']['total_tokens']
-        # print(f"Total tokens: {total_tokens}, Prompt tokens: {prompt_tokens}, Completion tokens: {completion_tokens}")
-        
-        # response = response.dict()['choices'][0]['message']['content']
-        #
-        # curr = {"role": "assistant", "content": f"{response}"}
-        # self.history.append(curr)
-        # if self.single_use:
-        #     self.reset()
+
+        while True:
+            try:
+                response = self.client.messages.create(
+                    model="claude-3-haiku-20240307",
+                    max_tokens=4096,
+                    temperature=0.2,
+                    system="You are a large language model based assistant, expert at writing code for drawing 2D scene layouts. Respond only Python code, nothing else",
+                    messages=self.history
+                )
+                response = response.content[0].text
+                print(response)
+            except Exception as e:
+                print(e)
+                time.sleep(10)
+                response = ""
+            if response != "":
+                break
+
         return response
-    
+
     def run_embed(self, query):
         self.reset()
         curr = {"role": "user", "content": f"{query}"}
 
         self.history.append(curr)
-        # response = self.client.chat.completions.create(
-        #     model=self.model,
-        #     messages=self.history,
-        #     seed=self.seed
-        # )
 
-        response = self.client.messages.create(
-            model="claude-3-haiku-20240307",
-            max_tokens=4096,
-            temperature=0.2,
-            system="You are a large language model based assistant, expert at designing layouts for indoor scenes. Respond only descriptions of the scene, nothing else",
-            messages=self.history
-        )
-        print(self.history)
-        # response = self.client.prompt(self.history)
-        
-        # completion_tokens = response.dict()['usage']['completion_tokens']
-        # prompt_tokens = response.dict()['usage']['prompt_tokens']
-        # total_tokens = response.dict()['usage']['total_tokens']
-        # print(f"Total tokens: {total_tokens}, Prompt tokens: {prompt_tokens}, Completion tokens: {completion_tokens}")
-        
-        # response = response.dict()['choices'][0]['message']['content']
-        #
-        # curr = {"role": "assistant", "content": f"{response}"}
-        # self.history.append(curr)
-        # if self.single_use:
-        #     self.reset()
+        while True:
+            try:
+                response = self.client.messages.create(
+                    model="claude-3-haiku-20240307",
+                    max_tokens=4096,
+                    temperature=0.2,
+                    system="You are a large language model based assistant, expert at designing 2D layouts scenes.",
+                    messages=self.history
+                )
+                response = response.content[0].text
+                print(response)
+            except Exception as e:
+                print(e)
+                time.sleep(10)
+                response = ""
+            if response != "":
+                break
+
         return response

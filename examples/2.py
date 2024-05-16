@@ -1,42 +1,33 @@
-<<<<<<< HEAD
-from utils.Scene import Scene
+##@##
+description = 'Create a scene with a chair.'
+##@##
+
+# Import necessary classes from the provided API
 from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
 
-##@##
-description = 'Create a scene with a red rectangle to the right'
-##@##
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='white')
 
-=======
-#@# Prompt
-prompt = 'Create a scene with a green triangle, a red triangle, and a blue triangle.'
-#@#
->>>>>>> origin/main
+# Create the seat of the chair
+seat = Rectangle(width=200, height=30, color='brown')
+seat.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(seat)
 
-# Cream white background color can be represented as a hex color code
-cream_white = '#f5f5dc'  # This is a common representation for cream white
+# Create the left leg of the chair
+left_leg = Rectangle(width=10, height=100, color='brown')
+left_leg.place_shape_local(seat, 'below', offset=(-95, 0))  # Positioned at the left edge of the seat
+scene.add_shape(left_leg)
 
-# Create a scene with a cream white background
-scene = Scene(size=(1000, 700), bg_color=cream_white)
+# Create the right leg of the chair
+right_leg = Rectangle(width=10, height=100, color='brown')
+right_leg.place_shape_local(seat, 'below', offset=(95, 0))  # Positioned at the right edge of the seat
+scene.add_shape(right_leg)
 
-<<<<<<< HEAD
-# Create a red rectangle, place it to the right, and add it to the scene
-rectangle = Rectangle(200, 100, color='red')
-rectangle.place_shape_global((800, 400))
-scene.add_shape(rectangle)
-=======
+# Create the backrest of the chair
+backrest = Rectangle(width=10, height=200, color='brown')
+backrest.place_shape_local(seat, 'above', offset=(-95, 0))  # Positioned on top of the seat
+scene.add_shape(backrest)
 
-# Create an green Triangle, place it, and add it to the scene
-triangle_1 = Triangle(100, color='green')
-triangle_1.place_shape_global((600, 400))
-scene.add_shape(triangle_1)
-
-# Create a red Triangle, place it, and add it to the scene
-triangle_2 = Triangle(100, color='red')
-triangle_2.place_shape_global((400, 400))
-scene.add_shape(triangle_2)
-
-# Create a blue Triangle, place it, and add it to the scene
-triangle_3 = Triangle(100, color='blue')
-triangle_3.place_shape_global((500, 300))
-scene.add_shape(triangle_3)
->>>>>>> origin/main
+# Render the scene to an image file
+scene.render(filename='chair_scene.png')

@@ -1,24 +1,28 @@
-#@# Prompt
-prompt = 'Create a scene with a purple square, an orange circle, and a yellow rectangle.'
-#@#
+##@##
+description = 'Create a scene with a table.'
+##@##
 
-# Light gray background color can be represented as a hex color code
-light_gray = '#d3d3d3'  # This is a common representation for light gray
+# Import necessary classes from the provided API
+from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
 
-# Create a scene with a light gray background
-scene = Scene(size=(1024, 768), bg_color=light_gray)
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='white')
 
-# Create a purple Square, place it, and add it to the scene
-square_1 = Rectangle(150, 100, color='purple')
-square_1.place_shape_global((250, 400))
-scene.add_shape(square_1)
+# Create the tabletop
+tabletop = Rectangle(width=400, height=50, color='brown')
+tabletop.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(tabletop)
 
-# Create an orange Circle, place it, and add it to the scene
-circle_1 = Circle(50, color='orange')
-circle_1.place_shape_global((700, 400))
-scene.add_shape(circle_1)
+# Create the left table leg
+left_leg = Rectangle(width=20, height=200, color='brown')
+left_leg.place_shape_local(tabletop, 'below', offset=(-190, 0))  # Positioned at the left edge of the tabletop
+scene.add_shape(left_leg)
 
-# Create a yellow Rectangle, place it, and add it to the scene
-rectangle_1 = Rectangle(150, 100, color='yellow')
-rectangle_1.place_shape_global((475, 300))
-scene.add_shape(rectangle_1)
+# Create the right table leg
+right_leg = Rectangle(width=20, height=200, color='brown')
+right_leg.place_shape_local(tabletop, 'below', offset=(190, 0))  # Positioned at the right edge of the tabletop
+scene.add_shape(right_leg)
+
+# Render the scene to an image file
+scene.render(filename='table_scene.png')
