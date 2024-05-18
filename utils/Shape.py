@@ -19,9 +19,8 @@ class Shape:
 
     def place_shape_local(self, reference_shape, position, offset=(0, 0)):
         """
-        Place the shape relative to a reference shape's position.
-
-        This method positions the shape based on a given reference shape and a specified position relative to that reference shape. The shape can be placed to the left, right, above, or below the reference shape. An optional offset can be applied to the final position.
+        Place the shape adjacent to a reference shape.
+        It can be adjacent in four directions controlled by the position parameter.
 
         Parameters:
         reference_shape : Shape
@@ -34,14 +33,32 @@ class Shape:
             - "below": to place the shape below the reference shape.
         offset : tuple of int, optional
             A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
+            A positive x value moves the shape to the right, a negative x value moves the shape to the left.
+            A positive y value moves the shape down, a negative y value moves the shape up.
+            For example, setting position "below" and offset (0, 10) would move this shape upwards inside reference shape.
             The default value is (0, 0).
 
         Returns:
         None
         """
         ref_x, ref_y = reference_shape.position
+        initial_offset = self.dimension[1]
+        # TODO: replace with simpler code
+        if self.__class__.__name__ == "Triangle":
+            print(f"Initial offset = {initial_offset}")
+            is_above = -1 if position == "above" else 1
+            if position == "above":
+                triangle_offset = (initial_offset * 3 ** 0.5) / 3
+            else:
+                triangle_offset = (initial_offset * 3 ** 0.5) / 2
+            diff = initial_offset - triangle_offset
+            initial_offset += diff * is_above
+            print(f"final offset = {initial_offset}")
+        if reference_shape.__class__.__name__ == "Triangle":
+            ref_y = 0.5 * (ref_y * 3 ** 0.5)
+
         offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
-        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2
+        offset_y = (initial_offset + reference_shape.dimension[1]) // 2
 
         if position == "left":
             new_x = ref_x - offset_x

@@ -256,9 +256,8 @@ class Shape:
 
     def place_shape_local(self, reference_shape, position, offset=(0, 0)):
         """
-        Place the shape relative to a reference shape's position.
-
-        This method positions the shape based on a given reference shape and a specified position relative to that reference shape. The shape can be placed to the left, right, above, or below the reference shape. An optional offset can be applied to the final position.
+        Place the shape adjacent to a reference shape.
+        It can be adjacent in four directions controlled by the position parameter.
 
         Parameters:
         reference_shape : Shape
@@ -271,6 +270,9 @@ class Shape:
             - "below": to place the shape below the reference shape.
         offset : tuple of int, optional
             A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
+            A positive x value moves the shape to the right, a negative x value moves the shape to the left.
+            A positive y value moves the shape down, a negative y value moves the shape up.
+            For example, setting position "below" and offset (0, 10) would move this shape upwards inside reference shape.
             The default value is (0, 0).
 
         Returns:
@@ -354,37 +356,65 @@ from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
 # Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+scene = Scene(size=(800, 600), bg_color='white')
 
-# Create the main cloud body
-main_cloud = Circle(radius=100, color='white')
-main_cloud.place_shape_global((400, 300))  # Center of the scene
-scene.add_shape(main_cloud)
+# Create the car body
+car_body = Rectangle(width=300, height=100, color='brown')
+car_body.place_shape_global((400, 300))  # Center of the scene
+scene.add_shape(car_body)
 
-# Create the cloud details (smaller circles around the main cloud)
-small_cloud1 = Circle(radius=80, color='white')
-small_cloud1.place_shape_local(main_cloud, 'left', offset=(40, -30))
-scene.add_shape(small_cloud1)
+# Create the wheels
+front_wheel = Circle(radius=25, color='black')
+front_wheel.place_shape_local(car_body, 'below', offset=(-90, 0))
+scene.add_shape(front_wheel)
 
-small_cloud2 = Circle(radius=80, color='white')
-small_cloud2.place_shape_local(main_cloud, 'right', offset=(-40, -30))
-scene.add_shape(small_cloud2)
+rear_wheel = Circle(radius=25, color='black')
+rear_wheel.place_shape_local(car_body, 'below', offset=(90, 0))
+scene.add_shape(rear_wheel)
 
-small_cloud3 = Circle(radius=80, color='white')
-small_cloud3.place_shape_local(main_cloud, 'above', offset=(0, 70))
-scene.add_shape(small_cloud3)
+# Create the front bumper
+front_bumper = Rectangle(width=10, height=50, color='black')
+front_bumper.place_shape_local(car_body, 'right')
+scene.add_shape(front_bumper)
+
+# Create the rear bumper
+rear_bumper = Rectangle(width=10, height=50, color='black')
+rear_bumper.place_shape_local(car_body, 'left')
+scene.add_shape(rear_bumper)
+
+# Create the windshield
+windshield = Rectangle(width=60, height=30, color='lightblue')
+windshield.place_shape_local(car_body, 'above', offset=(50, 50))
+scene.add_shape(windshield)
+
+# Create the rear window
+rear_window = Rectangle(width=60, height=30, color='lightblue')
+rear_window.place_shape_local(car_body, 'above', offset=(-50, 50))
+scene.add_shape(rear_window)
+
+# Create the roof
+roof = Rectangle(width=80, height=10, color='brown')
+roof.place_shape_local(car_body, 'above')
+scene.add_shape(roof)
+
+# Create the headlight
+headlight = Circle(radius=10, color='yellow')
+headlight.place_shape_local(car_body, 'right')
+scene.add_shape(headlight)
+
+# Create the taillight
+taillight = Circle(radius=10, color='red')
+taillight.place_shape_local(car_body, 'left')
+scene.add_shape(taillight)
 
 # Render the scene to an image file
-scene.render(filename='cloud_scene.png')
+scene.render(filename='car_scene.png')
 
 
-Now write code to Create a scene with a sailing boat on the sea in a sunny day.
+Now write code to Create a scene with a house with a door, roof, and windows.
 You should follow these drawing steps:
-1. A large blue rectangle is placed in the center of the scene, representing the sea (sea).
-2. A smaller light blue rectangle is placed at the top of the scene, representing the sky (sky).
-3. A white triangle is placed in the center of the sea, with its base aligned to the bottom edge of the scene (sail).
-4. A brown rectangle is placed below the sail, representing the boat's hull (hull).
-5. Two small brown rectangles are placed symmetrically on either side of the hull, near the middle of the boat (oars).
-6. A small yellow circle is placed at the top of the sail, representing the sun (sun).
-7. Several small white circles are scattered across the sky, representing clouds (clouds).
-8. A few small white triangles are placed in the sea, representing waves (waves).
+1. A large gray rectangle is placed in the center of the scene (building).
+2. A red triangle is placed above the building, with its base aligned to the top edge of the building (roof).
+3. A smaller dark brown rectangle is placed at the bottom center of the building (door).
+4. Two small blue rectangles are placed symmetrically on either side of the door, near the middle of the building (windows).
+5. A thin, elongated black rectangle is placed vertically in the center of the door (door handle).
