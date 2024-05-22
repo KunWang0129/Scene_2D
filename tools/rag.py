@@ -34,22 +34,22 @@ Your expected response:
 
     def run(self, desc, write_file=None):
         if write_file is not None and os.path.exists(write_file):
-            with open(write_file, 'r') as file:
+            with open(write_file, "r") as file:
                 response = file.read()
                 print(response)
         else:
             query = f"{self.template}\nCan you write the drawing steps for the following description:\n{desc}\n"
             response = self.llm.run_embed(query)
             if write_file is not None:
-                with open(write_file, 'w') as file:
+                with open(write_file, "w") as file:
                     file.write(response)
 
         res = self.embeddings_model.embeddings(
-            model='mixedbread-ai/mxbai-embed-large-v1',
+            model="mixedbread-ai/mxbai-embed-large-v1",
             input=response,
             normalized=False,
-            encoding_format='float',
-            truncation_strategy='start'
+            encoding_format="float",
+            truncation_strategy="start",
         )
         vector = [entry.embedding for entry in res.data]
         return vector, response
@@ -58,26 +58,28 @@ Your expected response:
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 6)]
-        self.data_path = './examples/'
-        self.embd_path = './assets/rag_embeddings.json'
+        self.examples = [f"{x}.py" for x in range(1, 6)]
+        self.data_path = "./examples/"
+        self.embd_path = "./assets/rag_embeddings.json"
         self.topk = 1
         if os.path.exists(self.embd_path):
-            with open(self.embd_path, 'r') as f:
+            with open(self.embd_path, "r") as f:
                 self.embeddings = json.load(f)
         else:
             self.build()
-
+    def get_examples(self):
+        return self.examples
+    
     def build(self):
-        print('Building code embeddings')
+        print("Building code embeddings")
         self.embeddings = {}
         for ex in tqdm(self.examples):
-            with open(self.data_path + ex, 'r') as f:
+            with open(self.data_path + ex, "r") as f:
                 lines = f.readlines()
             desc = "".join(lines)
-            first = desc.find('##@##')
-            second = desc.find('##@##', first + 6)
-            description = desc[first + 6:second]
+            first = desc.find("##@##")
+            second = desc.find("##@##", first + 6)
+            description = desc[first + 6 : second]
             description = description.replace("description = ", "").replace("'", "")
             # code = desc[second+5:]
             # code = desc
@@ -85,33 +87,33 @@ class CodeRetriever:
             vector, _ = self.embd.run(description, outfile)
             self.embeddings[ex] = vector
 
-        with open(self.embd_path, 'w') as f:
+        with open(self.embd_path, "w") as f:
             json.dump(self.embeddings, f)
 
     def fetch_example(self, ex):
-        with open(self.data_path + ex, 'r') as f:
+        with open(self.data_path + ex, "r") as f:
             lines = f.readlines()
         desc = "".join(lines)
-        first = desc.find('##@##')
+        first = desc.find("##@##")
         add_objs = desc[:first]
-        second = desc.find('##@##', first + 6)
-        user_input = desc[first + 6:second]
-        code = desc[second + 5:]
+        second = desc.find("##@##", first + 6)
+        user_input = desc[first + 6 : second]
+        code = desc[second + 5 :]
         return code
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
 
     def run(self, query):
-        print('query:', query)
+        print("query:", query)
         vector, description = self.embd.run(query)
         query_vector = np.array(vector)
         dataset_vectors = np.array(list(self.embeddings.values()))
-        print('query_vector:', query_vector.shape)
-        print('dataset_vectors:', dataset_vectors.shape)
+        print("query_vector:", query_vector.shape)
+        print("dataset_vectors:", dataset_vectors.shape)
         query_vector /= np.linalg.norm(query_vector)
         dataset_vectors /= np.linalg.norm(dataset_vectors, axis=1)[:, np.newaxis]
         dataset_vectors = dataset_vectors.squeeze(axis=1)
         sims = np.dot(dataset_vectors, query_vector.T).squeeze()
-        indices = np.argsort(sims)[-self.topk:]
+        indices = np.argsort(sims)[-self.topk :]
         top_matches = [self.examples[i] for i in indices]
 
         # inputs = []
