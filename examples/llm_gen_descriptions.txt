@@ -1,0 +1,10 @@
+$$Create a scene with a sun.
+$$Create a scene with a flower.
+$$Create a scene with a boat.
+$$Create a scene with a mountain.
+$$Create a scene with a rainbow.
+$$Create a scene with a bird.
+$$Create a scene with a ball.
+$$Create a scene with a moon.
+$$Create a scene with a star.
+After split: ['Create a scene with a house.', 'Create a scene with a sun.', 'Create a scene with a flower.', 'Create a scene with a boat.', 'Create a scene with a mountain.', 'Create a scene with a rainbow.', 'Create a scene with a bird.', 'Create a scene with a ball.', 'Create a scene with a moon.', 'Create a scene with a star.']
