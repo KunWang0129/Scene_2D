@@ -93,12 +93,14 @@ You should follow these drawing steps:
 
         with open("prompt.txt", "w") as f:
             f.write(self.prompt)
+        with open(f"test_examples/description{index}_{j}.txt", "w") as f:
+            f.write(description)
         llm = LLM()
         response = llm.run(self.prompt)
         code = f"""##@##\ndescription = '{input}'\n##@##\n"""
         code += self._sanitize_output(response)
         
-        with open(f"../examples/code{index}_{j}.py", "w") as file:
+        with open(f"test_examples/{index}_{j}.py", "w") as file:
             file.write(code)
 
     def run(self, input: str = ""):
@@ -106,7 +108,7 @@ You should follow these drawing steps:
 
         if input == "":
             descriptions = self.generate_descriptions()
-            for j in range(1):
+            for j in range(5):
                 for i in range(len(descriptions)):
                     self.generate_code(
                         descriptions[i], len(self.retriever.examples) + i + 1, j

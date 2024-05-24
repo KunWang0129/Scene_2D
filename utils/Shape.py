@@ -36,7 +36,6 @@ class Shape:
         """
 
         ref_x, ref_y = reference_shape.position
-        initial_offset = self.dimension[1]
 
         self_dim = self.dimension
         ref_dim = reference_shape.dimension
