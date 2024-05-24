@@ -1,8 +1,7 @@
 class Shape:
-    def __init__(self, color="black", rotation=0):
+    def __init__(self, color="black"):
         self.position = (0, 0)
         self.color = color
-        self.rotation = rotation  # Rotation in degrees
 
     def place_shape_global(self, position):
         """
@@ -31,6 +30,7 @@ class Shape:
             - "right": to place the shape to the right of the reference shape.
             - "above": to place the shape above the reference shape.
             - "below": to place the shape below the reference shape.
+            - "center": to place the shape at the center of the reference shape.
         offset : tuple of int, optional
             A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
             A positive x value moves the shape to the right, a negative x value moves the shape to the left.
@@ -72,29 +72,31 @@ class Shape:
         elif position == "below":
             new_y = ref_y + offset_y
             new_x = ref_x
-
+        elif position== "center":
+            new_x=ref_x
+            new_y=ref_y
+            
         new_x += offset[0]
         new_y += offset[1]
         self.place_shape_global((new_x, new_y))
 
 
 class Circle(Shape):
-    def __init__(self, radius, color="black", rotation=0):
+    def __init__(self, radius, color="black"):
         """
         This is a constructor for the Circle class which inherits from the Shape class.
 
         Parameters:
         radius (float): The radius of the circle.
         color (str, optional): The color of the circle. Defaults to 'black'.
-        rotation (int, optional): The rotation of the circle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.radius = radius
         self.dimension = (radius * 2, radius * 2)
 
 
 class Rectangle(Shape):
-    def __init__(self, width, height, color="black", rotation=0):
+    def __init__(self, width, height, color="black"):
         """
         This is a constructor for the Rectangle class which inherits from the Shape class.
 
@@ -102,25 +104,23 @@ class Rectangle(Shape):
         width (float): The width of the rectangle.
         height (float): The height of the rectangle.
         color (str, optional): The color of the rectangle. Defaults to 'black'.
-        rotation (int, optional): The rotation of the rectangle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.width = width
         self.height = height
         self.dimension = (width, height)
 
 
 class Triangle(Shape):
-    def __init__(self, size, color="black", rotation=0):
+    def __init__(self, size, color="black"):
         """
         This is a constructor for the Triangle class which inherits from the Shape class.
 
         Parameters:
         size (float): The size of the triangle, which is used as the length of its sides.
         color (str, optional): The color of the triangle. Defaults to 'black'.
-        rotation (int, optional): The rotation of the triangle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.size = size
         self.dimension = (size, size)
         # self.height = size * (3 ** 0.5) / 2
