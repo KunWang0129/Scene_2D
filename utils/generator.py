@@ -28,7 +28,7 @@ To write the code, you should refer to the following API:
         with open("utils/Shape.py", "r") as file:
             self.prompt += file.read()
 
-    def _sanitize_output(self, text: str):
+    def _sanitize_output( self, text: str):
         _, after = text.split("```python")
         return after.split("```")[0]
 
@@ -95,8 +95,10 @@ You should follow these drawing steps:
             f.write(self.prompt)
         llm = LLM()
         response = llm.run(self.prompt)
-        code = self._sanitize_output(response)
-        with open(f"code{index}_{j}.py", "w") as file:
+        code = f"""##@##\ndescription = '{input}'\n##@##\n"""
+        code += self._sanitize_output(response)
+        
+        with open(f"../examples/code{index}_{j}.py", "w") as file:
             file.write(code)
 
     def run(self, input: str = ""):
