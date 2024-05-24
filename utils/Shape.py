@@ -54,26 +54,6 @@ class Shape:
         offset_x = (self_dim[0] + ref_dim[0]) // 2
         offset_y = (self_dim[1] + ref_dim[1]) // 2
 
-
-        # ref_x, ref_y = reference_shape.position
-        # initial_offset = self.dimension[1]
-        # # TODO: replace with simpler code
-        # if self.__class__.__name__ == "Triangle":
-        #     print(f"Initial offset = {initial_offset}")
-        #     is_above = -1 if position == "above" else 1
-        #     if position == "above":
-        #         triangle_offset = (initial_offset * 3 ** 0.5) / 3
-        #     else:
-        #         triangle_offset = (initial_offset * 3 ** 0.5) / 2
-        #     diff = initial_offset - triangle_offset
-        #     initial_offset += diff * is_above
-        #     print(f"final offset = {initial_offset}")
-        # if reference_shape.__class__.__name__ == "Triangle":
-        #     ref_y = 0.5 * (ref_y * 3 ** 0.5)
-
-        # offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
-        # offset_y = (initial_offset + reference_shape.dimension[1]) // 2
-
         if position == "left":
             new_x = ref_x - offset_x
             new_y = ref_y
