@@ -13,52 +13,66 @@ class Shape:
         Returns:
         None
         """
+        
         self.position = position
         return None
 
     def place_shape_local(self, reference_shape, position, offset=(0, 0)):
         """
         Place the shape adjacent to a reference shape.
-        It can be adjacent in four directions controlled by the position parameter.
 
         Parameters:
         reference_shape : Shape
-            The shape to use as the reference for positioning. It must have `position` and `dimension` attributes.
+            The shape to use as the reference for positioning.
         position : str
-            The desired position relative to the reference shape. It can be one of the following:
-            - "left": to place the shape to the left of the reference shape.
-            - "right": to place the shape to the right of the reference shape.
-            - "above": to place the shape above the reference shape.
-            - "below": to place the shape below the reference shape.
-            - "center": to place the shape at the center of the reference shape.
+            The desired position adjacent to the reference shape. Can only be one of: "left", "right", "above", "below", "center".
         offset : tuple of int, optional
             A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
             A positive x value moves the shape to the right, a negative x value moves the shape to the left.
             A positive y value moves the shape down, a negative y value moves the shape up.
-            For example, setting position "below" and offset (0, 10) would move this shape upwards inside reference shape.
-            The default value is (0, 0).
 
         Returns:
         None
         """
+
         ref_x, ref_y = reference_shape.position
         initial_offset = self.dimension[1]
-        # TODO: replace with simpler code
-        if self.__class__.__name__ == "Triangle":
-            print(f"Initial offset = {initial_offset}")
-            is_above = -1 if position == "above" else 1
-            if position == "above":
-                triangle_offset = (initial_offset * 3 ** 0.5) / 3
-            else:
-                triangle_offset = (initial_offset * 3 ** 0.5) / 2
-            diff = initial_offset - triangle_offset
-            initial_offset += diff * is_above
-            print(f"final offset = {initial_offset}")
-        if reference_shape.__class__.__name__ == "Triangle":
-            ref_y = 0.5 * (ref_y * 3 ** 0.5)
 
-        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
-        offset_y = (initial_offset + reference_shape.dimension[1]) // 2
+        self_dim = self.dimension
+        ref_dim = reference_shape.dimension
+        if self.__class__.__name__ == "Triangle":
+            if position == "above":
+                self_dim = (self_dim[0], self_dim[1]/(3**0.5))
+            elif position == "below":
+                self_dim = (self_dim[0], 2*self_dim[1]/(3**0.5))
+        if reference_shape.__class__.__name__ == "Triangle":
+            if position == "above":
+                ref_dim = (ref_dim[0], 2*ref_dim[1]/(3**0.5))
+            elif position == "below":
+                ref_dim = (ref_dim[0], ref_dim[1]/(3**0.5))
+        
+        offset_x = (self_dim[0] + ref_dim[0]) // 2
+        offset_y = (self_dim[1] + ref_dim[1]) // 2
+
+
+        # ref_x, ref_y = reference_shape.position
+        # initial_offset = self.dimension[1]
+        # # TODO: replace with simpler code
+        # if self.__class__.__name__ == "Triangle":
+        #     print(f"Initial offset = {initial_offset}")
+        #     is_above = -1 if position == "above" else 1
+        #     if position == "above":
+        #         triangle_offset = (initial_offset * 3 ** 0.5) / 3
+        #     else:
+        #         triangle_offset = (initial_offset * 3 ** 0.5) / 2
+        #     diff = initial_offset - triangle_offset
+        #     initial_offset += diff * is_above
+        #     print(f"final offset = {initial_offset}")
+        # if reference_shape.__class__.__name__ == "Triangle":
+        #     ref_y = 0.5 * (ref_y * 3 ** 0.5)
+
+        # offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
+        # offset_y = (initial_offset + reference_shape.dimension[1]) // 2
 
         if position == "left":
             new_x = ref_x - offset_x
@@ -75,9 +89,13 @@ class Shape:
         elif position== "center":
             new_x=ref_x
             new_y=ref_y
+        else:
+            print("Invalid Position!")
+            print(position)
             
         new_x += offset[0]
         new_y += offset[1]
+
         self.place_shape_global((new_x, new_y))
 
 
@@ -123,4 +141,3 @@ class Triangle(Shape):
         super().__init__(color)
         self.size = size
         self.dimension = (size, size)
-        # self.height = size * (3 ** 0.5) / 2
