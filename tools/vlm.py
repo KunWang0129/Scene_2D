@@ -34,30 +34,22 @@ class VLM:
             content.append(image_ref)
             content.append(image_query)
 
-        prompt = f"""You have perfect vision and pay great attention to big picture and detail which makes you 
-an expert at ranking the images that are most similar to the provided description of the scene in the image. 
-The images are drawings of 2D scenes made using simple shapes. 
-You will be provided a description and based on that come up with criteria to evaluate the visual features in the image.
-Then analyze each image in detail according to the defined criteria.
-Here is the description: {description} 
-Can you rank the provided images based on how closely they match the description?
-You should provide the ranking in a comma separated list of image reference numbers where 
-the image that most closely matches the description comes first. 
-An example response format for the ranking of 5 images is: <answer>1,3,4,5,2</answer>
-Before providing the ranking, think step by step in <thinking> tags .""" 
         
-        chatgpt_prompt = f"""You have exceptional vision and a keen eye for detail, making you an expert at evaluating and ranking images based on how well they match a given description. The images you'll be evaluating are 2D drawings composed of simple shapes.
+        prompt = f"""You have exceptional vision and a keen eye for detail, making 
+you an expert at evaluating and ranking images based on how well they match a given description.
+The images you'll be evaluating are 2D drawings composed of simple shapes.
 Given a description of a scene and will need to establish criteria for assessing the visual features in each image.
 Here is the description: {description}
-Please rank the provided images according to how closely they align with the description. Provide your ranking in a comma-separated list of image reference numbers, with the image that best matches the description listed first.
+Please rank the provided images according to how closely they align with the description. 
+Provide your ranking in a comma-separated list of image reference numbers, with the image that best matches the description listed first.
 The response format for ranking five images is: <answer>1,3,2,5,4</answer>
-Before providing the ranking, analyze each image in detail according to the defined criteria, and document your thought process within <thinking> tags."""
+Before providing the ranking, analyze each image in detail according to the 
+defined criteria, and document your thought process within <thinking> tags."""
 
 
         task_description = {
                 "type": "text",
-                # "text": prompt
-                "text": chatgpt_prompt
+                "text": prompt
         }
         
         content.append(task_description)
