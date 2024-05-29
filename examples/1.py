@@ -33,30 +33,9 @@ rear_bumper = Rectangle(width=10, height=50, color='black')
 rear_bumper.place_shape_local(car_body, 'left')
 scene.add_shape(rear_bumper)
 
-# Create the windshield
-windshield = Rectangle(width=60, height=30, color='lightblue')
-windshield.place_shape_local(car_body, 'above', offset=(50, 50))
-scene.add_shape(windshield)
-
-# Create the rear window
-rear_window = Rectangle(width=60, height=30, color='lightblue')
-rear_window.place_shape_local(car_body, 'above', offset=(-50, 50))
-scene.add_shape(rear_window)
-
 # Create the roof
 roof = Rectangle(width=80, height=10, color='brown')
 roof.place_shape_local(car_body, 'above')
 scene.add_shape(roof)
 
-# Create the headlight
-headlight = Circle(radius=10, color='yellow')
-headlight.place_shape_local(car_body, 'right')
-scene.add_shape(headlight)
-
-# Create the taillight
-taillight = Circle(radius=10, color='red')
-taillight.place_shape_local(car_body, 'left')
-scene.add_shape(taillight)
-
-# Render the scene to an image file
-scene.render(filename='car_scene.png')
+scene.render(filename='output.png')

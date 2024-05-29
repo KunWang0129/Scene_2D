@@ -33,7 +33,7 @@ To write the code, you should refer to the following API:
         self.init()
         example_codes, description = self.retriever.run(input)
 
-        self.prompt += "\nFollowing is a simple example of how to write code in your response:\n"
+        self.prompt += "\nFollowing are a few simple examples of how to write code in your response:\n"
         for i in range(len(example_codes)):
             self.prompt += f"\n{example_codes[i]}\n"
 

@@ -1,0 +1,7 @@
+1. A large gray rectangle is placed in the center of the scene, representing the road (road).
+2. Two smaller gray rectangles are placed on either side of the road, representing the edges of the road (road edges).
+3. A light blue rectangle is placed at the top of the scene, representing the sky (sky).
+4. Several small, fluffy white shapes are scattered across the blue rectangle, representing clouds (clouds).
+5. A small black rectangle is placed at the bottom center of the road, representing the center line (road center line).
+6. Three smaller rectangles in different colors (red, blue, and green) are placed on the road, representing the cars (cars).
+7. The cars are positioned at different points along the road, creating the illusion of movement (car positions).

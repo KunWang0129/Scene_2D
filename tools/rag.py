@@ -32,14 +32,20 @@ Your expected response:
 </example>
 """
 
-    def run(self, desc, write_file=None):
+    def run(self, desc, write_file=None, generate=True):
+        
         if write_file is not None and os.path.exists(write_file):
             with open(write_file, 'r') as file:
                 response = file.read()
                 print(response)
-        else:
+        elif generate:
             query = f"{self.template}\nCan you write the drawing steps for the following description:\n{desc}\n"
             response = self.llm.run_embed(query)
+            if write_file is not None:
+                with open(write_file, 'w') as file:
+                    file.write(response)
+        else:
+            response = desc
             if write_file is not None:
                 with open(write_file, 'w') as file:
                     file.write(response)
@@ -58,15 +64,27 @@ Your expected response:
 class CodeRetriever:
     def __init__(self):
         self.embd = Embedder()
-        self.examples = [f'{x}.py' for x in range(1, 6)]
+        self.use_expanded = True
         self.data_path = './examples/'
-        self.embd_path = './assets/rag_embeddings.json'
-        self.topk = 1
+        self.topk = 2
+
+        if self.use_expanded:
+            self.embd_path = './assets/rag_embeddings_expanded.json'
+        else:
+            self.embd_path = './assets/rag_embeddings.json'
+
         if os.path.exists(self.embd_path):
             with open(self.embd_path, 'r') as f:
                 self.embeddings = json.load(f)
+            self.num_examples = len(self.embeddings)
+            self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
         else:
+            self.num_examples = 5
+            self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
             self.build()
+
+        
+        
 
     def build(self):
         print('Building code embeddings')
@@ -100,6 +118,23 @@ class CodeRetriever:
         return code
         # return user_input[3:-4], "```"+add_objs+"```", "```"+code+"```"
 
+    def add_example(self, input, desc, code):
+        self.num_examples += 1
+        ex = f'{self.num_examples}.py'
+        # if os.path.exists(self.data_path + ex) == False:
+        code = "##@##\n" + "description =" + input + "\n##@##\n" + code
+        with open(self.data_path + ex, "w") as file:
+            file.write(code)
+        description = desc
+        # code = desc[second+5:]
+        # code = desc
+        outfile = f'{self.data_path}{ex.replace(".", "_")}description.txt'
+        vector, _ = self.embd.run(description, outfile, generate=False)
+        self.embeddings[ex] = vector
+        with open(self.embd_path, 'w') as f:
+            json.dump(self.embeddings, f)
+        
+
     def run(self, query):
         print('query:', query)
         vector, description = self.embd.run(query)
@@ -113,10 +148,10 @@ class CodeRetriever:
         sims = np.dot(dataset_vectors, query_vector.T).squeeze()
         indices = np.argsort(sims)[-self.topk:]
         top_matches = [self.examples[i] for i in indices]
-
         # inputs = []
         # add_objs=[]
         codes = []
+        
         for ex in top_matches:
             # user_input, add_obj, code = self.fetch_example(ex)
             code = self.fetch_example(ex)

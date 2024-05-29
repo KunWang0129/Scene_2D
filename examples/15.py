@@ -1,0 +1,154 @@
+##@##
+description =Create a scene with three cars driving on a road under a cloudy sky.
+##@##
+
+from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
+
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='white')
+
+# Create the road
+road = Rectangle(width=600, height=300, color='gray')
+road.place_shape_global((400, 300))
+scene.add_shape(road)
+
+# Create the road edges
+road_edge_left = Rectangle(width=100, height=300, color='gray')
+road_edge_left.place_shape_global((150, 300))
+scene.add_shape(road_edge_left)
+
+road_edge_right = Rectangle(width=100, height=300, color='gray')
+road_edge_right.place_shape_global((650, 300))
+scene.add_shape(road_edge_right)
+
+# Create the sky
+sky = Rectangle(width=800, height=300, color='#87CEEB')
+sky.place_shape_global((400, 150))
+scene.add_shape(sky)
+
+# Create the clouds
+cloud1 = Circle(radius=30, color='white')
+cloud1.place_shape_global((100, 100))
+scene.add_shape(cloud1)
+
+cloud2 = Circle(radius=40, color='white')
+cloud2.place_shape_global((300, 50))
+scene.add_shape(cloud2)
+
+cloud3 = Circle(radius=35, color='white')
+cloud3.place_shape_global((550, 80))
+scene.add_shape(cloud3)
+
+cloud4 = Circle(radius=25, color='white')
+cloud4.place_shape_global((700, 120))
+scene.add_shape(cloud4)
+
+# Create the road center line
+road_center_line = Rectangle(width=600, height=10, color='black')
+road_center_line.place_shape_global((400, 350))
+scene.add_shape(road_center_line)
+
+# Create the cars
+# Red car
+red_car_body = Rectangle(width=150, height=70, color='red')
+red_car_body.place_shape_global((200, 400))
+scene.add_shape(red_car_body)
+
+red_car_wheel1 = Circle(radius=20, color='black')
+red_car_wheel1.place_shape_local(red_car_body, 'below', offset=(-40, 0))
+scene.add_shape(red_car_wheel1)
+
+red_car_wheel2 = Circle(radius=20, color='black')
+red_car_wheel2.place_shape_local(red_car_body, 'below', offset=(40, 0))
+scene.add_shape(red_car_wheel2)
+
+red_car_grille = Rectangle(width=20, height=30, color='black')
+red_car_grille.place_shape_local(red_car_body, 'right')
+scene.add_shape(red_car_grille)
+
+red_car_roof = Rectangle(width=50, height=10, color='white')
+red_car_roof.place_shape_local(red_car_body, 'above')
+scene.add_shape(red_car_roof)
+
+red_car_door1 = Rectangle(width=30, height=40, color='white')
+red_car_door1.place_shape_local(red_car_body, 'left', offset=(0, -10))
+scene.add_shape(red_car_door1)
+
+red_car_door2 = Rectangle(width=30, height=40, color='white')
+red_car_door2.place_shape_local(red_car_body, 'right', offset=(0, -10))
+scene.add_shape(red_car_door2)
+
+red_car_headlight = Circle(radius=10, color='yellow')
+red_car_headlight.place_shape_local(red_car_body, 'right', offset=(-20, 0))
+scene.add_shape(red_car_headlight)
+
+# Blue car
+blue_car_body = Rectangle(width=150, height=70, color='blue')
+blue_car_body.place_shape_global((400, 400))
+scene.add_shape(blue_car_body)
+
+blue_car_wheel1 = Circle(radius=20, color='black')
+blue_car_wheel1.place_shape_local(blue_car_body, 'below', offset=(-40, 0))
+scene.add_shape(blue_car_wheel1)
+
+blue_car_wheel2 = Circle(radius=20, color='black')
+blue_car_wheel2.place_shape_local(blue_car_body, 'below', offset=(40, 0))
+scene.add_shape(blue_car_wheel2)
+
+blue_car_grille = Rectangle(width=20, height=30, color='black')
+blue_car_grille.place_shape_local(blue_car_body, 'right')
+scene.add_shape(blue_car_grille)
+
+blue_car_roof = Rectangle(width=50, height=10, color='white')
+blue_car_roof.place_shape_local(blue_car_body, 'above')
+scene.add_shape(blue_car_roof)
+
+blue_car_door1 = Rectangle(width=30, height=40, color='white')
+blue_car_door1.place_shape_local(blue_car_body, 'left', offset=(0, -10))
+scene.add_shape(blue_car_door1)
+
+blue_car_door2 = Rectangle(width=30, height=40, color='white')
+blue_car_door2.place_shape_local(blue_car_body, 'right', offset=(0, -10))
+scene.add_shape(blue_car_door2)
+
+blue_car_headlight = Circle(radius=10, color='yellow')
+blue_car_headlight.place_shape_local(blue_car_body, 'right', offset=(-20, 0))
+scene.add_shape(blue_car_headlight)
+
+# Green car
+green_car_body = Rectangle(width=150, height=70, color='green')
+green_car_body.place_shape_global((600, 400))
+scene.add_shape(green_car_body)
+
+green_car_wheel1 = Circle(radius=20, color='black')
+green_car_wheel1.place_shape_local(green_car_body, 'below', offset=(-40, 0))
+scene.add_shape(green_car_wheel1)
+
+green_car_wheel2 = Circle(radius=20, color='black')
+green_car_wheel2.place_shape_local(green_car_body, 'below', offset=(40, 0))
+scene.add_shape(green_car_wheel2)
+
+green_car_grille = Rectangle(width=20, height=30, color='black')
+green_car_grille.place_shape_local(green_car_body, 'right')
+scene.add_shape(green_car_grille)
+
+green_car_roof = Rectangle(width=50, height=10, color='white')
+green_car_roof.place_shape_local(green_car_body, 'above')
+scene.add_shape(green_car_roof)
+
+green_car_door1 = Rectangle(width=30, height=40, color='white')
+green_car_door1.place_shape_local(green_car_body, 'left', offset=(0, -10))
+scene.add_shape(green_car_door1)
+
+green_car_door2 = Rectangle(width=30, height=40, color='white')
+green_car_door2.place_shape_local(green_car_body, 'right', offset=(0, -10))
+scene.add_shape(green_car_door2)
+
+green_car_headlight = Circle(radius=10, color='yellow')
+green_car_headlight.place_shape_local(green_car_body, 'right', offset=(-20, 0))
+scene.add_shape(green_car_headlight)
+
+# Render the scene
+scene.render(filename='output.png')
+scene.render(filename='output.png')

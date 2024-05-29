@@ -1,0 +1,5 @@
+1. A large yellow circle is placed in the upper-right quadrant of the scene (sun).
+2. Three white, fluffy cloud-like shapes are placed in the upper-left and upper-center parts of the scene (clouds).
+3. A smaller white, fluffy cloud-like shape is placed in the upper-right part of the scene, to the left of the sun (cloud).
+4. A medium-sized white, fluffy cloud-like shape is placed in the center-left part of the scene (cloud).
+5. Two small white, fluffy cloud-like shapes are placed in the lower-right part of the scene (clouds).

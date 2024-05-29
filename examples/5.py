@@ -16,8 +16,5 @@ scene.add_shape(trunk)
 
 # Create the crown of the tree
 crown = Circle(radius=100, color='green')
-crown.place_shape_local(trunk, 'above', offset=(0, 50))  # Positioned above the trunk
+crown.place_shape_local(trunk, 'above')  # Positioned above the trunk
 scene.add_shape(crown)
-
-# Render the scene to an image file
-scene.render(filename='tree_scene.png')

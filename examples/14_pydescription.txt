@@ -1,0 +1,3 @@
+1. A large green rectangle is placed in the center of the scene (grassy field).
+2. A light blue rectangle is placed above the grassy field, covering the top half of the scene (sky).
+3. Several white circles of varying sizes are placed randomly across the top half of the sky (fluffy clouds).

@@ -28,6 +28,3 @@ scene.add_shape(right_leg)
 backrest = Rectangle(width=10, height=200, color='brown')
 backrest.place_shape_local(seat, 'above', offset=(-95, 0))  # Positioned on top of the seat
 scene.add_shape(backrest)
-
-# Render the scene to an image file
-scene.render(filename='chair_scene.png')

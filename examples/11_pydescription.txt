@@ -1,0 +1,3 @@
+1. A large light blue rectangle is placed in the center of the scene (sky).
+2. Several small white circles are scattered randomly across the sky (clouds).
+3. The edges of the light blue rectangle are extended to the top and bottom of the scene (sky).

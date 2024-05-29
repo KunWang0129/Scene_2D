@@ -1,0 +1,7 @@
+1. A long, gray rectangle is placed horizontally in the center of the scene (road).
+2. Three smaller rectangles in different colors (red, blue, and green) are placed in a row on the road, slightly overlapping each other (cars).
+3. A black rectangle is placed at the front of each car, representing the headlights (headlights).
+4. A smaller rectangle in a contrasting color is placed at the rear of each car, representing the taillights (taillights).
+5. Circular shapes in black are placed on the four corners of each car, representing the wheels (wheels).
+6. A thin, elongated rectangle in a contrasting color is placed on the top of each car, representing the roof (roof).
+7. Smaller rectangular shapes in a contrasting color are placed on the sides of each car, representing the doors (doors).

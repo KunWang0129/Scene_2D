@@ -1,0 +1,7 @@
+1. A large yellow circle is placed in the upper portion of the scene (sun).
+2. A gray rectangle is placed in the lower portion of the scene, spanning the width of the canvas (road).
+3. Three smaller rectangles in different colors (red, blue, and green) are placed on the road, evenly spaced from left to right (cars).
+4. Two smaller black rectangles are placed on the front of each car, near the top (headlights).
+5. A smaller rectangle in a contrasting color is placed on the front of each car, near the bottom (grille).
+6. A smaller circle in a contrasting color is placed on the side of each car, near the middle (wheels).
+7. A smaller rectangle in a contrasting color is placed on the top of each car (roof).

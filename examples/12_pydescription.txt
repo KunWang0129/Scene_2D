@@ -1,0 +1,6 @@
+1. A large green circle is placed in the center of the scene (tree canopy).
+2. A brown rectangle is placed at the bottom center of the green circle (tree trunk).
+3. Three smaller green circles are placed above the brown rectangle, evenly spaced (tree branches).
+4. A large green rectangle is placed below the tree, covering the bottom half of the scene (grassy field).
+5. Two smaller green triangles are placed on either side of the tree, near the bottom of the scene (grass tufts).
+6. Repeat steps 1-3 two more times, placing the additional trees to the left and right of the first tree (additional trees).

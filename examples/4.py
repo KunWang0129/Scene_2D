@@ -23,6 +23,3 @@ scene.add_shape(left_leg)
 right_leg = Rectangle(width=20, height=200, color='brown')
 right_leg.place_shape_local(tabletop, 'below', offset=(190, 0))  # Positioned at the right edge of the tabletop
 scene.add_shape(right_leg)
-
-# Render the scene to an image file
-scene.render(filename='table_scene.png')

@@ -6,41 +6,38 @@ Scene Setup:
 - Dimensions: Configured upon scene initialization with width and height.
 - Colors: Background color is set during scene initialization.
 Create scene with scene = Scene(size=(WIDTH, HEIGHT), bg_color='COLOR'). Manage objects by their shape types such as 'circle1', 'rectangle2', etc.
-
+ 
 API for Adding Shapes:
 - scene.add_shape(shape): Add shapes to the scene. Supported shapes include Circle, Rectangle, Triangle.
-- scene.remove_shape(shape): Remove a shape from the scene.
-
+ 
 Shape Classes and Initialization:
-- Circle(radius, color='black', rotation=0): Initialize a circle with radius, color, and rotation.
-- Rectangle(width, height, color='black', rotation=0): Initialize a rectangle with width, height, color, and rotation.
-- Triangle(size, color='black', rotation=0): Initialize a triangle with side size, color, and rotation.
-
+- Circle(radius, color='black'): Initialize a circle with radius, color.
+- Rectangle(width, height, color='black'): Initialize a rectangle with width, height, color.
+- Triangle(size, color='black'): Initialize a triangle with side size, color.
+ 
 Shape Positioning:
 - shape.place_shape_global(position): Set global position of the shape.
-- shape.place_shape_local(reference_shape, position, offset): Position the shape relative to another shape (positions include 'left', 'right', 'above', 'below').
-
+- shape.place_shape_local(reference_shape, position, offset): Position the shape relative to another shape (position can be 'left', 'right', 'above', 'below', 'center').
+ 
 Rendering and Visual Setup:
-- scene.create_background(): Creates a background image for the scene.
 - scene.render(filename='scene.png'): Renders the entire scene to an image file with specified filename.
 - Draw functions for each shape are internal methods used during the rendering process to depict shapes on the canvas.
-
+ 
 Object Access and Manipulation:
 - Direct scene.shapes for accessing list of shapes.
-- Properties for shapes include color, position, and rotation.
-- Methods for moving and rotating shapes are provided to adjust their positions and orientations within the scene.
-
+- Properties for shapes include color, position.
+- Methods for moving is provided to adjust their positions and orientations within the scene.
+ 
 The general structure of the program is as follows:
 1. Initialize scene with dimensions.
 2. Add shapes (circles, rectangles, triangles)
 3. Place objects in the scene.
-
+ 
 Note: Make sure you follow the above APIs, and structure of the program and add necessary amount of objects to make it look full. 
 """
 Here is the full implementation of the API for your reference:
 from PIL import Image, ImageDraw
 from utils.Shape import Circle, Rectangle, Triangle
-
 
 class Scene:
     """
@@ -76,27 +73,6 @@ class Scene:
         """
         self.shapes.append(shape)
 
-    def remove_shape(self, shape):
-        """
-        This method removes a shape from the scene.
-
-        Parameters:
-        shape (Shape): The shape to be removed from the scene.
-
-        Returns:
-        None
-        """
-        self.shapes.remove(shape)
-
-    def create_background(self):
-        """
-        This method creates a new image with the size and background color of the scene.
-
-        Returns:
-        Image: A new image with the size and background color of the scene.
-        """
-        return Image.new("RGB", self.size, self.bg_color)
-
     def render(self, filename="scene.png"):
         """
         This method renders the scene into an image file.
@@ -107,7 +83,7 @@ class Scene:
         Returns:
         None
         """
-        image = self.create_background()
+        image = Image.new("RGB", self.size, self.bg_color)
         draw = ImageDraw.Draw(image)
 
         for shape in self.shapes:
@@ -157,7 +133,7 @@ class Scene:
         # Calculate half of the width and height
         half_width, half_height = width / 2, height / 2
 
-        # Calculate the coordinates of the rectangle (non-rotated) from the center
+        # Calculate the coordinates of the rectangle from the center
         coords = [
             cx - half_width,
             cy - half_height,  # Top-left
@@ -168,10 +144,6 @@ class Scene:
             cx - half_width,
             cy + half_height,  # Bottom-left
         ]
-
-        if rectangle.rotation != 0:
-            # If rotation is applied, calculate the new coordinates
-            coords = self.rotate_coords(coords, rectangle.rotation, (cx, cy))
 
         draw.polygon(coords, outline=rectangle.color, fill=rectangle.color)
 
@@ -187,59 +159,11 @@ class Scene:
             (cx + size / 2, cy + 1 / 3 * height),  # Bottom right vertex
         ]
 
-        if triangle.rotation != 0:
-            # Convert list of tuples to a flat list for rotation
-            flat_coords = [coord for point in coords for coord in point]
-            # If rotation is applied, calculate the new coordinates
-            flat_coords = self.rotate_coords(flat_coords, triangle.rotation, (cx, cy))
-            # Convert flat list back to list of tuples
-            coords = [
-                (flat_coords[i], flat_coords[i + 1])
-                for i in range(0, len(flat_coords), 2)
-            ]
-
         # Draw the triangle using the polygon method with three points
-        draw.polygon(coords, outline=triangle.color, fill=triangle.color)
-
-    def rotate_coords(self, coords, angle, center):
-        """
-        This method rotates a set of coordinates around a center point.
-
-        Parameters:
-        cx (float): The x-coordinate of the center point.
-        cy (float): The y-coordinate of the center point.
-        coords (list): A list of tuples representing the coordinates to be rotated.
-        angle (float): The angle of rotation in degrees.
-
-        Returns:
-        list: A list of tuples representing the rotated coordinates.
-        """
-        from math import radians, sin, cos
-
-        angle = radians(
-            -angle
-        )  # Convert angle from degrees to radians, negate for clockwise rotation
-        cx, cy = center
-        new_coords = []
-
-        # Assuming coords is a flat list [x0, y0, x1, y1, ..., xn, yn]
-        for i in range(0, len(coords), 2):
-            x, y = coords[i], coords[i + 1]
-            # Translate point to origin
-            temp_x, temp_y = x - cx, y - cy
-            # Rotate point
-            rotated_x = temp_x * cos(angle) - temp_y * sin(angle)
-            rotated_y = temp_x * sin(angle) + temp_y * cos(angle)
-            # Translate point back
-            new_x, new_y = rotated_x + cx, rotated_y + cy
-            new_coords.extend([new_x, new_y])
-
-        return new_coords
-class Shape:
-    def __init__(self, color="black", rotation=0):
+        draw.polygon(coords, outline=triangle.color, fill=triangle.color)class Shape:
+    def __init__(self, color="black"):
         self.position = (0, 0)
         self.color = color
-        self.rotation = rotation  # Rotation in degrees
 
     def place_shape_global(self, position):
         """
@@ -251,36 +175,46 @@ class Shape:
         Returns:
         None
         """
+
         self.position = position
         return None
 
     def place_shape_local(self, reference_shape, position, offset=(0, 0)):
         """
         Place the shape adjacent to a reference shape.
-        It can be adjacent in four directions controlled by the position parameter.
 
         Parameters:
         reference_shape : Shape
-            The shape to use as the reference for positioning. It must have `position` and `dimension` attributes.
+            The shape to use as the reference for positioning.
         position : str
-            The desired position relative to the reference shape. It can be one of the following:
-            - "left": to place the shape to the left of the reference shape.
-            - "right": to place the shape to the right of the reference shape.
-            - "above": to place the shape above the reference shape.
-            - "below": to place the shape below the reference shape.
+            The desired position adjacent to the reference shape. Can only be one of: "left", "right", "above", "below", "center".
         offset : tuple of int, optional
             A tuple (x_offset, y_offset) that specifies additional offset to apply to the final position.
             A positive x value moves the shape to the right, a negative x value moves the shape to the left.
             A positive y value moves the shape down, a negative y value moves the shape up.
-            For example, setting position "below" and offset (0, 10) would move this shape upwards inside reference shape.
-            The default value is (0, 0).
 
         Returns:
         None
         """
+
         ref_x, ref_y = reference_shape.position
-        offset_x = (self.dimension[0] + reference_shape.dimension[0]) // 2
-        offset_y = (self.dimension[1] + reference_shape.dimension[1]) // 2
+
+        self_dim = self.dimension
+        ref_dim = reference_shape.dimension
+        # TODO: replace with simpler code
+        if self.__class__.__name__ == "Triangle":
+            if position == "above":
+                self_dim = (self_dim[0], self_dim[1]/(3**0.5))
+            elif position == "below":
+                self_dim = (self_dim[0], 2*self_dim[1]/(3**0.5))
+        if reference_shape.__class__.__name__ == "Triangle":
+            if position == "above":
+                ref_dim = (ref_dim[0], 2*ref_dim[1]/(3**0.5))
+            elif position == "below":
+                ref_dim = (ref_dim[0], ref_dim[1]/(3**0.5))
+        
+        offset_x = (self_dim[0] + ref_dim[0]) // 2
+        offset_y = (self_dim[1] + ref_dim[1]) // 2
 
         if position == "left":
             new_x = ref_x - offset_x
@@ -294,6 +228,9 @@ class Shape:
         elif position == "below":
             new_y = ref_y + offset_y
             new_x = ref_x
+        elif position == "center":
+            new_x = ref_x
+            new_y = ref_y
 
         new_x += offset[0]
         new_y += offset[1]
@@ -301,22 +238,21 @@ class Shape:
 
 
 class Circle(Shape):
-    def __init__(self, radius, color="black", rotation=0):
+    def __init__(self, radius, color="black"):
         """
         This is a constructor for the Circle class which inherits from the Shape class.
 
         Parameters:
         radius (float): The radius of the circle.
         color (str, optional): The color of the circle. Defaults to 'black'.
-        rotation (int, optional): The rotation of the circle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.radius = radius
         self.dimension = (radius * 2, radius * 2)
 
 
 class Rectangle(Shape):
-    def __init__(self, width, height, color="black", rotation=0):
+    def __init__(self, width, height, color="black"):
         """
         This is a constructor for the Rectangle class which inherits from the Shape class.
 
@@ -324,16 +260,15 @@ class Rectangle(Shape):
         width (float): The width of the rectangle.
         height (float): The height of the rectangle.
         color (str, optional): The color of the rectangle. Defaults to 'black'.
-        rotation (int, optional): The rotation of the rectangle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.width = width
         self.height = height
         self.dimension = (width, height)
 
 
 class Triangle(Shape):
-    def __init__(self, size, color="black", rotation=0):
+    def __init__(self, size, color="black"):
         """
         This is a constructor for the Triangle class which inherits from the Shape class.
 
@@ -342,12 +277,10 @@ class Triangle(Shape):
         color (str, optional): The color of the triangle. Defaults to 'black'.
         rotation (int, optional): The rotation of the triangle in degrees. Defaults to 0.
         """
-        super().__init__(color, rotation)
+        super().__init__(color)
         self.size = size
         self.dimension = (size, size)
-        # self.height = size * (3 ** 0.5) / 2
-
-Following is a simple example of how to write code in your response:
+Following are a few simple examples of how to write code in your response:
 
 
 
@@ -356,65 +289,98 @@ from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
 # Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='white')
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the car body
-car_body = Rectangle(width=300, height=100, color='brown')
-car_body.place_shape_global((400, 300))  # Center of the scene
-scene.add_shape(car_body)
+# Create the sun
+sun = Circle(radius=100, color='yellow')
+sun.place_shape_global((650, 150))
+scene.add_shape(sun)
 
-# Create the wheels
-front_wheel = Circle(radius=25, color='black')
-front_wheel.place_shape_local(car_body, 'below', offset=(-90, 0))
-scene.add_shape(front_wheel)
+# Create the clouds
+# Large cloud in the upper-left
+cloud1 = Circle(radius=120, color='white')
+cloud1.place_shape_global((200, 150))
+scene.add_shape(cloud1)
 
-rear_wheel = Circle(radius=25, color='black')
-rear_wheel.place_shape_local(car_body, 'below', offset=(90, 0))
-scene.add_shape(rear_wheel)
+# Medium cloud in the upper-center
+cloud2 = Circle(radius=100, color='white')
+cloud2.place_shape_global((400, 200))
+scene.add_shape(cloud2)
 
-# Create the front bumper
-front_bumper = Rectangle(width=10, height=50, color='black')
-front_bumper.place_shape_local(car_body, 'right')
-scene.add_shape(front_bumper)
+# Small cloud in the upper-right, to the left of the sun
+cloud3 = Circle(radius=80, color='white')
+cloud3.place_shape_global((550, 150))
+scene.add_shape(cloud3)
 
-# Create the rear bumper
-rear_bumper = Rectangle(width=10, height=50, color='black')
-rear_bumper.place_shape_local(car_body, 'left')
-scene.add_shape(rear_bumper)
+# Medium cloud in the center-left
+cloud4 = Circle(radius=90, color='white')
+cloud4.place_shape_global((200, 300))
+scene.add_shape(cloud4)
 
-# Create the windshield
-windshield = Rectangle(width=60, height=30, color='lightblue')
-windshield.place_shape_local(car_body, 'above', offset=(50, 50))
-scene.add_shape(windshield)
+# Two small clouds in the lower-right
+cloud5 = Circle(radius=70, color='white')
+cloud5.place_shape_global((600, 450))
+scene.add_shape(cloud5)
 
-# Create the rear window
-rear_window = Rectangle(width=60, height=30, color='lightblue')
-rear_window.place_shape_local(car_body, 'above', offset=(-50, 50))
-scene.add_shape(rear_window)
+cloud6 = Circle(radius=60, color='white')
+cloud6.place_shape_global((700, 500))
+scene.add_shape(cloud6)
 
-# Create the roof
-roof = Rectangle(width=80, height=10, color='brown')
-roof.place_shape_local(car_body, 'above')
-scene.add_shape(roof)
-
-# Create the headlight
-headlight = Circle(radius=10, color='yellow')
-headlight.place_shape_local(car_body, 'right')
-scene.add_shape(headlight)
-
-# Create the taillight
-taillight = Circle(radius=10, color='red')
-taillight.place_shape_local(car_body, 'left')
-scene.add_shape(taillight)
-
-# Render the scene to an image file
-scene.render(filename='car_scene.png')
+# Render the scene
+scene.render('scene.png')
+scene.render(filename='output.png')
+scene.render(filename='output.png')
 
 
-Now write code to Create a scene with a house with a door, roof, and windows.
+
+# Import necessary classes from the provided API
+from utils.Shape import Circle, Rectangle, Triangle
+from utils.Scene import Scene
+
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='skyblue')
+
+# Create the sky
+sky = Rectangle(width=800, height=600, color='lightblue')
+sky.place_shape_global((400, 300))
+scene.add_shape(sky)
+
+# Create the clouds
+cloud1 = Circle(radius=50, color='white')
+cloud1.place_shape_global((100, 150))
+scene.add_shape(cloud1)
+
+cloud2 = Circle(radius=70, color='white')
+cloud2.place_shape_global((550, 100))
+scene.add_shape(cloud2)
+
+cloud3 = Circle(radius=60, color='white')
+cloud3.place_shape_global((300, 250))
+scene.add_shape(cloud3)
+
+cloud4 = Circle(radius=40, color='white')
+cloud4.place_shape_global((650, 350))
+scene.add_shape(cloud4)
+
+cloud5 = Circle(radius=45, color='white')
+cloud5.place_shape_global((200, 400))
+scene.add_shape(cloud5)
+
+cloud6 = Circle(radius=55, color='white')
+cloud6.place_shape_global((450, 450))
+scene.add_shape(cloud6)
+
+# Render the scene
+scene.render('scene.png')
+scene.render(filename='output.png')
+
+Now write code to Create a scene with a sailing boat on the sea in a sunny day:.
 You should follow these drawing steps:
-1. A large gray rectangle is placed in the center of the scene (building).
-2. A red triangle is placed above the building, with its base aligned to the top edge of the building (roof).
-3. A smaller dark brown rectangle is placed at the bottom center of the building (door).
-4. Two small blue rectangles are placed symmetrically on either side of the door, near the middle of the building (windows).
-5. A thin, elongated black rectangle is placed vertically in the center of the door (door handle).
+1. A large blue rectangle is placed in the center of the scene, representing the sea (sea).
+2. A smaller light blue rectangle is placed at the top of the scene, representing the sky (sky).
+3. A white irregular polygon is placed in the center of the sea, representing the sailing boat (sailing boat).
+4. A triangular shape in shades of gray is placed at the top of the sailing boat, representing the sail (sail).
+5. Two small brown rectangles are placed at the bottom of the sailing boat, representing the hull (hull).
+6. A small yellow circle is placed in the top right corner of the scene, representing the sun (sun).
+7. Several small white irregular shapes are placed on the sea, representing waves (waves).
+8. A thin brown rectangle is placed at the bottom of the sailing boat, representing the mast (mast).

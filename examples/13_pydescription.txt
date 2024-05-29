@@ -1,0 +1,8 @@
+1. A large green circle is placed in the center of the scene (tree canopy).
+2. A brown rectangle is placed at the bottom center of the green circle (tree trunk).
+3. Three smaller brown rectangles are placed at the base of the tree trunk, slightly overlapping (tree roots).
+4. Two gray rectangles are placed to the left and right of the tree, with their longer sides parallel to the bottom of the scene (parked cars).
+5. A smaller gray rectangle is placed in front of each of the larger gray rectangles (car bodies).
+6. Two smaller black rectangles are placed at the top of each car body (car windows).
+7. A smaller black rectangle is placed at the front of each car body (car headlights).
+8. A smaller black circle is placed at the center of each car body (car wheels).

@@ -1,38 +1,55 @@
 
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
+import math
 
 # Initialize the scene
-scene = Scene(size=(800, 600), bg_color='white')
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the building
-building = Rectangle(width=400, height=300, color='gray')
-building.place_shape_global((400, 300))
-scene.add_shape(building)
+# Create the sea
+sea = Rectangle(width=800, height=400, color='blue')
+sea.place_shape_global((400, 300))
+scene.add_shape(sea)
 
-# Create the roof
-roof = Triangle(size=400, color='red')
-roof.place_shape_local(building, 'above')
-scene.add_shape(roof)
+# Create the sky
+sky = Rectangle(width=800, height=200, color='lightblue')
+sky.place_shape_global((400, 100))
+scene.add_shape(sky)
 
-# Create the door
-door = Rectangle(width=100, height=150, color='brown')
-door.place_shape_local(building, 'below', offset=(0, -50))
-scene.add_shape(door)
+# Create the sailing boat
+boat = Rectangle(width=200, height=100, color='white')
+boat.place_shape_global((400, 400))
+scene.add_shape(boat)
 
-# Create the windows
-window1 = Rectangle(width=50, height=75, color='blue')
-window1.place_shape_local(building, 'right', offset=(-100, 50))
-scene.add_shape(window1)
+# Create the sail
+sail = Triangle(size=150, color='gray')
+sail.place_shape_local(boat, 'above', offset=(0, -50))
+scene.add_shape(sail)
 
-window2 = Rectangle(width=50, height=75, color='blue')
-window2.place_shape_local(building, 'left', offset=(100, 50))
-scene.add_shape(window2)
+# Create the hull
+hull1 = Rectangle(width=50, height=30, color='brown')
+hull1.place_shape_local(boat, 'below', offset=(-50, 20))
+scene.add_shape(hull1)
 
-# Create the door handle
-door_handle = Rectangle(width=10, height=50, color='black')
-door_handle.place_shape_local(door, 'right', offset=(-20, 0))
-scene.add_shape(door_handle)
+hull2 = Rectangle(width=50, height=30, color='brown')
+hull2.place_shape_local(boat, 'below', offset=(50, 20))
+scene.add_shape(hull2)
+
+# Create the sun
+sun = Circle(radius=50, color='yellow')
+sun.place_shape_global((700, 100))
+scene.add_shape(sun)
+
+# Create the waves
+for i in range(10):
+    wave = Rectangle(width=80, height=20, color='white')
+    wave.place_shape_global((i * 80 + 40, 500 + 20 * math.sin(i * 0.5)))
+    scene.add_shape(wave)
+
+# Create the mast
+mast = Rectangle(width=10, height=100, color='brown')
+mast.place_shape_local(boat, 'above', offset=(0, -50))
+scene.add_shape(mast)
 
 # Render the scene
-scene.render(filename='house_scene.png')
+scene.render('scene.png')
