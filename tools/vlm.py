@@ -1,6 +1,14 @@
 import anthropic
 from assets.key import api_key
 import base64
+import os
+
+import torch
+
+from PIL import Image
+
+from lavis.models import load_model_and_preprocess
+from lavis.processors import load_processor
 
 class VLM:
     def __init__(self):
@@ -10,7 +18,7 @@ class VLM:
     def reset(self):
         self.history = []
         
-    def run(self, images, description):
+    def run(self, images, description, file_name):
         
         content = []
 
@@ -71,8 +79,8 @@ defined criteria, and document your thought process within <thinking> tags."""
 
         _, after = response.split("<answer>")
         best_rank = int(after.split(",")[0])
-
-        return images[best_rank - 1]
+        print(images)
+        return images[best_rank-1]
 
         # return response
 
@@ -85,3 +93,38 @@ defined criteria, and document your thought process within <thinking> tags."""
 # vlm = VLM()
 # response = vlm.run(query=image)
 # print(response)
+
+class BLIP:
+    def __init__(self):
+        self.client = anthropic.Anthropic(api_key=api_key)        
+        self.device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
+        self.load_model()
+    
+    def load_model(self, model_name='blip2_image_text_matching', model_type = 'pretrain'):
+        self.model, self.viz_processor, self.text_processor = load_model_and_preprocess(model_name, model_type, device=self.device, is_eval=True)
+
+    def display_images_in_folder(self, image_paths):
+        viz_processor = self.viz_processor
+        device = self.device
+
+        images = []
+        names = []
+
+
+        for path in image_paths:
+            images.append(viz_processor["eval"](Image.open(path).convert('RGB')).unsqueeze(0).to(device))
+        return images
+        
+    def run(self, image_paths, caption, file_name, print_results=False):
+        text_processors = self.text_processor
+        images = self.display_images_in_folder(image_paths)
+        results = []
+
+        txt = text_processors["eval"](caption)
+        for img in images:
+            result = self.model({"image": img, "text_input": txt}, match_head="itm")
+            results.append(torch.nn.functional.softmax(result, dim=1)[:, 1].item())
+        if print_results:
+            for i in range(len(results)):
+                print(f'The {i}th {file_name} image matches the caption "{caption}" with a probability of {results[i]:.3%}')
+        return image_paths[results.index(max(results))]
