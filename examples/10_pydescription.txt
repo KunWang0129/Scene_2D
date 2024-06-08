@@ -1,2 +1,6 @@
-1. A large light blue rectangle is placed in the center of the scene (sky).
-2. Several small, irregular-shaped white circles are scattered across the sky (clouds).
+1. A large yellow circle is placed at the top center of the scene (sun).
+2. Several white circles of varying sizes are placed in the upper half of the scene (clouds).
+3. The clouds are arranged in a scattered, fluffy pattern across the sky.
+4. The largest cloud is placed towards the top right of the scene.
+5. Smaller clouds are placed around the larger ones, creating a layered effect.
+6. The clouds are positioned to create a sense of depth and movement in the sky.

@@ -1,87 +1,61 @@
 ##@##
-description =Create a scene with three cars parked under a large tree.
+description = 'Create a scene with a lake and some fish swimming in it.'
 ##@##
 
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
 # Initialize the scene
-scene = Scene(size=(800, 600), bg_color='white')
+scene = Scene(size=(800, 600), bg_color='lightblue')
 
-# Create the ground
-ground = Rectangle(width=800, height=300, color='#00b300')
-ground.place_shape_global((400, 450))
-scene.add_shape(ground)
+# Create the lake
+lake = Rectangle(width=800, height=400, color='blue')
+lake.place_shape_global((400, 400))
+scene.add_shape(lake)
+
+# Create the sky
+sky = Rectangle(width=800, height=200, color='lightblue')
+sky.place_shape_global((400, 100))
+scene.add_shape(sky)
+
+# Create the fish
+fish_size = 50
+fish1 = Triangle(size=fish_size, color='orange')
+fish1.place_shape_global((200, 500))
+scene.add_shape(fish1)
+
+fish2 = Triangle(size=fish_size, color='orange')
+fish2.place_shape_global((300, 500))
+scene.add_shape(fish2)
+
+fish3 = Triangle(size=fish_size, color='orange')
+fish3.place_shape_global((400, 500))
+scene.add_shape(fish3)
+
+fish4 = Triangle(size=fish_size, color='orange')
+fish4.place_shape_global((500, 550))
+scene.add_shape(fish4)
+
+fish5 = Triangle(size=fish_size, color='orange')
+fish5.place_shape_global((600, 550))
+scene.add_shape(fish5)
 
 # Create the tree
-tree_canopy = Circle(radius=150, color='#006600')
-tree_canopy.place_shape_global((400, 200))
-scene.add_shape(tree_canopy)
-
-tree_trunk = Rectangle(width=100, height=250, color='#663300')
-tree_trunk.place_shape_local(tree_canopy, 'below')
+tree_width = 100
+tree_height = 200
+tree_trunk = Rectangle(width=50, height=tree_height, color='brown')
+tree_trunk.place_shape_global((700, 400))
 scene.add_shape(tree_trunk)
 
-tree_root1 = Rectangle(width=120, height=30, color='#663300')
-tree_root1.place_shape_local(tree_trunk, 'below', offset=(-50, 0))
-scene.add_shape(tree_root1)
+tree_canopy = Rectangle(width=tree_width, height=tree_height, color='green')
+tree_canopy.place_shape_local(tree_trunk, 'above')
+scene.add_shape(tree_canopy)
 
-tree_root2 = Rectangle(width=120, height=30, color='#663300')
-tree_root2.place_shape_local(tree_trunk, 'below', offset=(50, 0))
-scene.add_shape(tree_root2)
-
-# Create the cars
-# Car 1
-car1_body = Rectangle(width=150, height=70, color='#808080')
-car1_body.place_shape_global((200, 500))
-scene.add_shape(car1_body)
-
-car1_window = Rectangle(width=100, height=20, color='#000000')
-car1_window.place_shape_local(car1_body, 'above')
-scene.add_shape(car1_window)
-
-car1_wheel1 = Circle(radius=20, color='#000000')
-car1_wheel1.place_shape_local(car1_body, 'below', offset=(-40, 0))
-scene.add_shape(car1_wheel1)
-
-car1_wheel2 = Circle(radius=20, color='#000000')
-car1_wheel2.place_shape_local(car1_body, 'below', offset=(40, 0))
-scene.add_shape(car1_wheel2)
-
-# Car 2
-car2_body = Rectangle(width=150, height=70, color='#808080')
-car2_body.place_shape_global((400, 520))
-scene.add_shape(car2_body)
-
-car2_window = Rectangle(width=100, height=20, color='#000000')
-car2_window.place_shape_local(car2_body, 'above')
-scene.add_shape(car2_window)
-
-car2_wheel1 = Circle(radius=20, color='#000000')
-car2_wheel1.place_shape_local(car2_body, 'below', offset=(-40, 0))
-scene.add_shape(car2_wheel1)
-
-car2_wheel2 = Circle(radius=20, color='#000000')
-car2_wheel2.place_shape_local(car2_body, 'below', offset=(40, 0))
-scene.add_shape(car2_wheel2)
-
-# Car 3
-car3_body = Rectangle(width=150, height=70, color='#808080')
-car3_body.place_shape_global((600, 500))
-scene.add_shape(car3_body)
-
-car3_window = Rectangle(width=100, height=20, color='#000000')
-car3_window.place_shape_local(car3_body, 'above')
-scene.add_shape(car3_window)
-
-car3_wheel1 = Circle(radius=20, color='#000000')
-car3_wheel1.place_shape_local(car3_body, 'below', offset=(-40, 0))
-scene.add_shape(car3_wheel1)
-
-car3_wheel2 = Circle(radius=20, color='#000000')
-car3_wheel2.place_shape_local(car3_body, 'below', offset=(40, 0))
-scene.add_shape(car3_wheel2)
+# Create the sun
+sun = Circle(radius=50, color='yellow')
+sun.place_shape_global((100, 100))
+scene.add_shape(sun)
 
 # Render the scene
-scene.render(filename='output.png')
+scene.render('lake_with_fish.png')
 scene.render(filename='output.png')

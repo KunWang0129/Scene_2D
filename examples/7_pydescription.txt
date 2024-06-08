@@ -1,8 +1,3 @@
-1. A large gray rectangle is placed in the center of the scene to represent the road (road).
-2. Three smaller rectangles in different colors (red, blue, and green) are placed along the road, representing the cars (cars).
-3. The red car is placed on the left side of the road, the blue car is in the center, and the green car is on the right side (car arrangement).
-4. Each car is composed of a larger rectangle for the body and two smaller circles for the wheels (car shape).
-5. A thin, black rectangle is placed at the front of each car to represent the grille (car grille).
-6. A smaller rectangle in a contrasting color is placed on the top of each car to represent the roof (car roof).
-7. Two smaller rectangles are placed on the sides of each car to represent the doors (car doors).
-8. A small circle is placed on the front of each car to represent the headlight (car headlight).
+1. A light blue rectangle is placed in the top half of the scene (sky).
+2. A large white circle is placed in the top right portion of the scene (cloud).
+3. A smaller yellow circle is placed in the top left portion of the scene (sun).

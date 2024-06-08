@@ -36,7 +36,22 @@ mountain,trees,bird
 
 class SeedRetriever:
     def __init__(self):
-        self.examples = [f'{x}.py' for x in range(1, 6)]
+
+        self.use_expanded = True
+        if self.use_expanded:
+            self.embd_path = './assets/rag_embeddings_expanded.json'
+        else:
+            self.embd_path = './assets/rag_embeddings.json'
+
+        if os.path.exists(self.embd_path):
+            with open(self.embd_path, 'r') as f:
+                self.embeddings = json.load(f)
+            self.num_examples = len(self.embeddings)
+            self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
+        else:
+            self.num_examples = 25
+            self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
+        
         self.collector = SeedCollector()
         self.data_path = './examples/'
         self.seed_path = './assets/seed_words.json'
@@ -72,6 +87,7 @@ class SeedRetriever:
         return self.seeds
     
     def add_seed(self, description):
+        self.num_examples += 1
         seeds = self.collector.run(description)
         seed_list = seeds.split(',')
         for seed in seed_list:

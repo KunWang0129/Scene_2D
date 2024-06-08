@@ -1,2 +1,1 @@
-# api_key = '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'
-api_key = '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'
+api_key = ""

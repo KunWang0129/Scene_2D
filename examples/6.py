@@ -1,5 +1,5 @@
 ##@##
-description =Create a scene with three fluffy white clouds floating in a blue sky.
+description = 'Create a scene with a rainbow arching over a cloud.'
 ##@##
 
 # Import necessary classes from the provided API
@@ -9,24 +9,29 @@ from utils.Scene import Scene
 # Initialize the scene with dimensions and background color
 scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the sky
-sky = Rectangle(width=800, height=600, color='lightblue')
-sky.place_shape_global((400, 300))
-scene.add_shape(sky)
+# Create the cloud
+cloud_width = 500
+cloud_height = 200
+cloud = Circle(radius=cloud_height/2, color='white')
+cloud.place_shape_global((400, 400))
+scene.add_shape(cloud)
 
-# Create the clouds
-cloud1 = Circle(radius=80, color='white')
-cloud1.place_shape_global((200, 200))
-scene.add_shape(cloud1)
+# Create the rainbow
+rainbow_width = 600
+rainbow_height = 300
+rainbow_y = 150
+rainbow_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+for i, color in enumerate(rainbow_colors):
+    rainbow_rect = Rectangle(width=rainbow_width, height=rainbow_height/7, color=color)
+    rainbow_rect.place_shape_global((100, rainbow_y + i * rainbow_height/7))
+    scene.add_shape(rainbow_rect)
 
-cloud2 = Circle(radius=100, color='white')
-cloud2.place_shape_global((500, 150))
-scene.add_shape(cloud2)
-
-cloud3 = Circle(radius=90, color='white')
-cloud3.place_shape_global((400, 250))
-scene.add_shape(cloud3)
+# Create the ground
+ground_height = 150
+ground = Rectangle(width=800, height=ground_height, color='grey')
+ground.place_shape_global((400, 600 - ground_height/2))
+scene.add_shape(ground)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('rainbow_cloud.png')
 scene.render(filename='output.png')

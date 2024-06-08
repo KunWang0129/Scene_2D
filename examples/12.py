@@ -1,100 +1,99 @@
 ##@##
-description =Create a scene with a group of three trees in a grassy field.
+description = 'Create a scene with a car driving down a winding road.'
 ##@##
 
-# Import necessary classes from the provided API
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
-# Initialize the scene with dimensions and background color
+# Initialize the scene
 scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the grassy field
-field = Rectangle(width=800, height=300, color='green')
-field.place_shape_global((400, 450))
-scene.add_shape(field)
+# Create the road
+road_width = 800
+road_height = 200
+road = Rectangle(width=road_width, height=road_height, color='grey')
+road.place_shape_global((400, 500))
+scene.add_shape(road)
 
-# Create the first tree
-# Tree canopy
-tree1_canopy = Circle(radius=100, color='green')
-tree1_canopy.place_shape_global((200, 300))
-scene.add_shape(tree1_canopy)
+# Create the winding road curves
+curve_width = 100
+curve_height = 50
+curve_spacing = 50
+for i in range(10):
+    curve = Rectangle(width=curve_width, height=curve_height, color='grey')
+    curve.place_shape_global((i * curve_width + curve_spacing, 500 - curve_height/2))
+    scene.add_shape(curve)
 
-# Tree trunk
-tree1_trunk = Rectangle(width=30, height=200, color='brown')
-tree1_trunk.place_shape_local(tree1_canopy, 'below')
-scene.add_shape(tree1_trunk)
+# Create the car
+car_width = 200
+car_height = 100
+car_body = Rectangle(width=car_width, height=car_height, color='brown')
+car_body.place_shape_global((400, 400))
+scene.add_shape(car_body)
 
-# Tree branches
-tree1_branch1 = Circle(radius=30, color='green')
-tree1_branch1.place_shape_local(tree1_trunk, 'above', offset=(0, -50))
-scene.add_shape(tree1_branch1)
+# Create the wheels
+wheel_radius = car_height/4
+front_wheel = Circle(radius=wheel_radius, color='black')
+front_wheel.place_shape_local(car_body, 'below', offset=(-car_width/3, 0))
+scene.add_shape(front_wheel)
 
-tree1_branch2 = Circle(radius=30, color='green')
-tree1_branch2.place_shape_local(tree1_trunk, 'above', offset=(-50, -25))
-scene.add_shape(tree1_branch2)
+rear_wheel = Circle(radius=wheel_radius, color='black')
+rear_wheel.place_shape_local(car_body, 'below', offset=(car_width/3, 0))
+scene.add_shape(rear_wheel)
 
-tree1_branch3 = Circle(radius=30, color='green')
-tree1_branch3.place_shape_local(tree1_trunk, 'above', offset=(50, -25))
-scene.add_shape(tree1_branch3)
+# Create the front and rear bumpers
+bumper_width = 50
+bumper_height = 20
+front_bumper = Rectangle(width=bumper_width, height=bumper_height, color='black')
+front_bumper.place_shape_local(car_body, 'left')
+scene.add_shape(front_bumper)
 
-# Create the second tree
-# Tree canopy
-tree2_canopy = Circle(radius=100, color='green')
-tree2_canopy.place_shape_global((600, 300))
-scene.add_shape(tree2_canopy)
+rear_bumper = Rectangle(width=bumper_width, height=bumper_height, color='black')
+rear_bumper.place_shape_local(car_body, 'right')
+scene.add_shape(rear_bumper)
 
-# Tree trunk
-tree2_trunk = Rectangle(width=30, height=200, color='brown')
-tree2_trunk.place_shape_local(tree2_canopy, 'below')
-scene.add_shape(tree2_trunk)
+# Create the windshield and rear window
+window_width = 100
+window_height = 50
+windshield = Rectangle(width=window_width, height=window_height, color='lightblue')
+windshield.place_shape_local(car_body, 'above', offset=(0, -car_height/4))
+scene.add_shape(windshield)
 
-# Tree branches
-tree2_branch1 = Circle(radius=30, color='green')
-tree2_branch1.place_shape_local(tree2_trunk, 'above', offset=(0, -50))
-scene.add_shape(tree2_branch1)
+rear_window = Rectangle(width=window_width, height=window_height, color='lightblue')
+rear_window.place_shape_local(car_body, 'above', offset=(0, car_height/4))
+scene.add_shape(rear_window)
 
-tree2_branch2 = Circle(radius=30, color='green')
-tree2_branch2.place_shape_local(tree2_trunk, 'above', offset=(-50, -25))
-scene.add_shape(tree2_branch2)
+# Create the roof
+roof_width = 150
+roof_height = 30
+roof = Rectangle(width=roof_width, height=roof_height, color='brown')
+roof.place_shape_local(car_body, 'above')
+scene.add_shape(roof)
 
-tree2_branch3 = Circle(radius=30, color='green')
-tree2_branch3.place_shape_local(tree2_trunk, 'above', offset=(50, -25))
-scene.add_shape(tree2_branch3)
+# Create the headlight and taillight
+headlight_radius = 10
+headlight = Circle(radius=headlight_radius, color='yellow')
+headlight.place_shape_local(car_body, 'left', offset=(-bumper_width, 0))
+scene.add_shape(headlight)
 
-# Create the third tree
-# Tree canopy
-tree3_canopy = Circle(radius=100, color='green')
-tree3_canopy.place_shape_global((400, 300))
-scene.add_shape(tree3_canopy)
+taillight_radius = 10
+taillight = Circle(radius=taillight_radius, color='red')
+taillight.place_shape_local(car_body, 'right', offset=(bumper_width, 0))
+scene.add_shape(taillight)
 
-# Tree trunk
-tree3_trunk = Rectangle(width=30, height=200, color='brown')
-tree3_trunk.place_shape_local(tree3_canopy, 'below')
-scene.add_shape(tree3_trunk)
+# Create the landscape
+landscape_height = 100
+landscape_spacing = 50
+for i in range(10):
+    landscape = Triangle(size=landscape_height, color='green')
+    landscape.place_shape_global((i * landscape_height + landscape_spacing, 600))
+    scene.add_shape(landscape)
 
-# Tree branches
-tree3_branch1 = Circle(radius=30, color='green')
-tree3_branch1.place_shape_local(tree3_trunk, 'above', offset=(0, -50))
-scene.add_shape(tree3_branch1)
-
-tree3_branch2 = Circle(radius=30, color='green')
-tree3_branch2.place_shape_local(tree3_trunk, 'above', offset=(-50, -25))
-scene.add_shape(tree3_branch2)
-
-tree3_branch3 = Circle(radius=30, color='green')
-tree3_branch3.place_shape_local(tree3_trunk, 'above', offset=(50, -25))
-scene.add_shape(tree3_branch3)
-
-# Create the grass tufts
-grass_tuft1 = Triangle(size=50, color='green')
-grass_tuft1.place_shape_global((150, 550))
-scene.add_shape(grass_tuft1)
-
-grass_tuft2 = Triangle(size=50, color='green')
-grass_tuft2.place_shape_global((650, 550))
-scene.add_shape(grass_tuft2)
+# Create the sky
+sky = Rectangle(width=800, height=300, color='lightblue')
+sky.place_shape_global((400, 150))
+scene.add_shape(sky)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('car_on_road.png')
 scene.render(filename='output.png')

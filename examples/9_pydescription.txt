@@ -1,4 +1,5 @@
-1. Three large white circles are placed in the upper half of the scene, evenly spaced apart (clouds).
-2. Each cloud is slightly overlapping with the others, creating a sense of depth and volume (clouds).
-3. The clouds are positioned in a diagonal arrangement, with the leftmost cloud being the highest and the rightmost cloud being the lowest (clouds).
-4. The background is filled with a light blue color, representing the clear sky (sky).
+1. A large green rectangle is placed in the bottom of the scene (field).
+2. A brown rectangle is placed in the center of the scene (tree trunk).
+3. A large green triangle is placed at the top of the tree trunk (tree canopy).
+4. Several small yellow circles are scattered throughout the green rectangle (flowers).
+5. A blue rectangle is placed in the top portion of the scene (sky).

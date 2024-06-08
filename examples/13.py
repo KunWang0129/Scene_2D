@@ -1,77 +1,73 @@
 ##@##
-description =Create a scene with a tree next to several parked cars.
+description = 'Create a scene with two chairs and a table in a grassy field.'
 ##@##
 
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
 # Initialize the scene
-scene = Scene(size=(800, 600), bg_color='white')
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the tree
-tree_canopy = Circle(radius=100, color='green')
-tree_canopy.place_shape_global((400, 300))
-scene.add_shape(tree_canopy)
+# Create the grassy field
+field = Rectangle(width=800, height=400, color='green')
+field.place_shape_global((400, 400))
+scene.add_shape(field)
 
-tree_trunk = Rectangle(width=50, height=150, color='brown')
-tree_trunk.place_shape_local(tree_canopy, 'below')
-scene.add_shape(tree_trunk)
+# Create the table
+table_width = 200
+table_height = 100
+table = Rectangle(width=table_width, height=table_height, color='brown')
+table.place_shape_global((400, 400))
+scene.add_shape(table)
 
-tree_root1 = Rectangle(width=80, height=20, color='brown')
-tree_root1.place_shape_local(tree_trunk, 'below', offset=(-40, 0))
-scene.add_shape(tree_root1)
+# Create the chair seats
+chair_seat_width = 100
+chair_seat_height = 50
+chair_seat_left = Rectangle(width=chair_seat_width, height=chair_seat_height, color='grey')
+chair_seat_left.place_shape_local(table, 'left', offset=(-50, 0))
+scene.add_shape(chair_seat_left)
 
-tree_root2 = Rectangle(width=80, height=20, color='brown')
-tree_root2.place_shape_local(tree_trunk, 'below', offset=(0, 0))
-scene.add_shape(tree_root2)
+chair_seat_right = Rectangle(width=chair_seat_width, height=chair_seat_height, color='grey')
+chair_seat_right.place_shape_local(table, 'right', offset=(50, 0))
+scene.add_shape(chair_seat_right)
 
-tree_root3 = Rectangle(width=80, height=20, color='brown')
-tree_root3.place_shape_local(tree_trunk, 'below', offset=(40, 0))
-scene.add_shape(tree_root3)
+# Create the chair backs
+chair_back_width = 80
+chair_back_height = 80
+chair_back_left = Rectangle(width=chair_back_width, height=chair_back_height, color='grey')
+chair_back_left.place_shape_local(chair_seat_left, 'above', offset=(0, 20))
+scene.add_shape(chair_back_left)
 
-# Create the parked cars
-# Car 1
-car1_body = Rectangle(width=150, height=70, color='gray')
-car1_body.place_shape_global((200, 500))
-scene.add_shape(car1_body)
+chair_back_right = Rectangle(width=chair_back_width, height=chair_back_height, color='grey')
+chair_back_right.place_shape_local(chair_seat_right, 'above', offset=(0, 20))
+scene.add_shape(chair_back_right)
 
-car1_window = Rectangle(width=100, height=20, color='black')
-car1_window.place_shape_local(car1_body, 'above')
-scene.add_shape(car1_window)
+# Create the chair legs
+chair_leg_width = 20
+chair_leg_height = 150
+chair_leg_left_1 = Rectangle(width=chair_leg_width, height=chair_leg_height, color='brown')
+chair_leg_left_1.place_shape_local(chair_seat_left, 'below', offset=(-25, 0))
+scene.add_shape(chair_leg_left_1)
 
-car1_headlight = Rectangle(width=20, height=10, color='black')
-car1_headlight.place_shape_local(car1_body, 'right')
-scene.add_shape(car1_headlight)
+chair_leg_left_2 = Rectangle(width=chair_leg_width, height=chair_leg_height, color='brown')
+chair_leg_left_2.place_shape_local(chair_seat_left, 'below', offset=(25, 0))
+scene.add_shape(chair_leg_left_2)
 
-car1_wheel = Circle(radius=20, color='black')
-car1_wheel.place_shape_local(car1_body, 'below', offset=(-40, 0))
-scene.add_shape(car1_wheel)
+chair_leg_right_1 = Rectangle(width=chair_leg_width, height=chair_leg_height, color='brown')
+chair_leg_right_1.place_shape_local(chair_seat_right, 'below', offset=(-25, 0))
+scene.add_shape(chair_leg_right_1)
 
-car1_wheel2 = Circle(radius=20, color='black')
-car1_wheel2.place_shape_local(car1_body, 'below', offset=(40, 0))
-scene.add_shape(car1_wheel2)
+chair_leg_right_2 = Rectangle(width=chair_leg_width, height=chair_leg_height, color='brown')
+chair_leg_right_2.place_shape_local(chair_seat_right, 'below', offset=(25, 0))
+scene.add_shape(chair_leg_right_2)
 
-# Car 2
-car2_body = Rectangle(width=150, height=70, color='gray')
-car2_body.place_shape_global((600, 500))
-scene.add_shape(car2_body)
-
-car2_window = Rectangle(width=100, height=20, color='black')
-car2_window.place_shape_local(car2_body, 'above')
-scene.add_shape(car2_window)
-
-car2_headlight = Rectangle(width=20, height=10, color='black')
-car2_headlight.place_shape_local(car2_body, 'right')
-scene.add_shape(car2_headlight)
-
-car2_wheel = Circle(radius=20, color='black')
-car2_wheel.place_shape_local(car2_body, 'below', offset=(-40, 0))
-scene.add_shape(car2_wheel)
-
-car2_wheel2 = Circle(radius=20, color='black')
-car2_wheel2.place_shape_local(car2_body, 'below', offset=(40, 0))
-scene.add_shape(car2_wheel2)
+# Create the tabletop
+tabletop_width = 150
+tabletop_height = 20
+tabletop = Rectangle(width=tabletop_width, height=tabletop_height, color='brown')
+tabletop.place_shape_local(table, 'above', offset=(0, 20))
+scene.add_shape(tabletop)
 
 # Render the scene
-scene.render(filename='output.png')
+scene.render('table_and_chairs.png')
 scene.render(filename='output.png')

@@ -1,5 +1,7 @@
-1. A large yellow circle is placed in the upper-right quadrant of the scene (sun).
-2. Three white, fluffy cloud-like shapes are placed in the upper-left and upper-center parts of the scene (clouds).
-3. A smaller white, fluffy cloud-like shape is placed in the upper-right part of the scene, to the left of the sun (cloud).
-4. A medium-sized white, fluffy cloud-like shape is placed in the center-left part of the scene (cloud).
-5. Two small white, fluffy cloud-like shapes are placed in the lower-right part of the scene (clouds).
+1. A dark blue rectangle is placed in the background of the scene (night sky).
+2. A crescent-shaped white arc is placed in the upper right corner of the scene (crescent moon).
+3. Several small white circles are scattered throughout the scene (twinkling stars).
+4. The white circles vary in size to create the illusion of depth and distance (twinkling stars).
+5. The crescent moon is positioned to appear as if it is floating in the night sky (crescent moon).
+6. The twinkling stars are arranged in a random, yet visually appealing pattern across the night sky (twinkling stars).
+7. The dark blue rectangle fills the entire background, creating a sense of depth and atmosphere (night sky).

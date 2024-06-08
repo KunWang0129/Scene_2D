@@ -22,7 +22,7 @@ class LLM:
                 response = self.client.messages.create(
                     model="claude-3-haiku-20240307",
                     max_tokens=4096,
-                    temperature=0.3,
+                    temperature=0.2,
                     system="You are a large language model based assistant, expert at writing code for drawing 2D scene layouts. Respond only Python code, nothing else",
                     messages=self.history
                 )
@@ -48,7 +48,7 @@ class LLM:
                 response = self.client.messages.create(
                     model="claude-3-haiku-20240307",
                     max_tokens=4096,
-                    temperature=0.2,
+                    temperature=0.3,
                     system="You are a large language model based assistant, expert at designing 2D layouts scenes.",
                     messages=self.history
                 )
@@ -74,7 +74,7 @@ class LLM:
                 response = self.client.messages.create(
                     model="claude-3-haiku-20240307",
                     max_tokens=4096,
-                    temperature=0.2,
+                    temperature=0.1,
                     system="You are a large language model based assistant, expert at extracting seed words from a given scene description.",
                     messages=self.history
                 )
@@ -100,7 +100,7 @@ class LLM:
                 response = self.client.messages.create(
                     model="claude-3-haiku-20240307",
                     max_tokens=4096,
-                    temperature=0.2,
+                    temperature=0.3,
                     system="You are a large language model based assistant, expert at generating simple prompts for scene generation.",
                     messages=self.history
                 )

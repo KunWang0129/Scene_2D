@@ -1,5 +1,7 @@
-1. A large green rectangle is placed in the center of the scene (field).
-2. Three brown rectangles are placed at equal intervals along the top edge of the green rectangle (tree trunks).
-3. Above each tree trunk, a green triangle is placed with its base aligned to the top of the trunk (tree canopy).
-4. Within each tree canopy, a smaller green triangle is placed, slightly overlapping the larger triangle (inner foliage).
-5. A few small yellow circles are scattered throughout the green rectangle (flowers).
+1. A large green rectangle is placed in the bottom of the scene (grassy field).
+2. A grey rectangle is placed in the center of the scene (table).
+3. Three brown rectangles are placed in a row in the foreground of the scene (chair seats).
+4. Three smaller brown rectangles are placed on top of the chair seats (chair backs).
+5. Three small grey circles are placed at the bottom of each chair seat (chair legs).
+6. A grey rectangle is placed on top of the table (table top).
+7. Four small grey circles are placed at the corners of the table top (table legs).

@@ -33,8 +33,8 @@ To write the code, you should refer to the following API:
             self.prompt += file.read()
 
     def _sanitize_output(self, text: str):
-        _, after = text.split("```python")
-        return after.split("```")[0]
+        _, after = text.split("<code>")
+        return after.split("</code>")[0]
 
     def evaluate(self, prompt, code):
         approval = False
@@ -69,9 +69,14 @@ To write the code, you should refer to the following API:
     def run(self):
         self.init()
         seeds = self.seed_retriever.get_seed()
-        chosen_seed = random.sample(seeds, 2)
+        chosen_seed = seeds
         print(f"Seed word chosen: {chosen_seed}")
-        input = self.prompt_generator.run(chosen_seed)
+
+        prompt_generate_mode = ['explore', 'diverse']
+        prompt_gen_mode = prompt_generate_mode[random.randrange(0, 10)%2]
+        print(f"Prompt generation mode: {prompt_gen_mode}")
+
+        input = self.prompt_generator.run(chosen_seed, prompt_gen_mode)
         # new_prompt = self.prompt
         for i in range(self.num_tries):
             new_prompt = self.prompt
@@ -82,16 +87,18 @@ To write the code, you should refer to the following API:
                 new_prompt += f"\n{example_codes[i]}\n"
 
             new_prompt += f"""
-    Now write code to {input}.
-    You should follow these drawing steps:
-    {description}
-    """
+Now write code to {input}.
+You should follow these drawing steps:
+{description}
+Write your code within <code> tags.
+"""
             with open('prompt.txt', 'w') as f:
                 f.write(new_prompt)
         
             llm = LLM()
             response = llm.run(new_prompt)
             code = self._sanitize_output(response)
+            code = "##@##\n" + f"description = '{input}'" + "\n##@##\n" + code
             code += "scene.render(filename='output.png')"
             approval = self.evaluate(input, code)
             if approval:

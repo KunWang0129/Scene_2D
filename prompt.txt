@@ -284,103 +284,125 @@ Following are a few simple examples of how to write code in your response:
 
 
 
-# Import necessary classes from the provided API
-from utils.Shape import Circle, Rectangle, Triangle
+from utils.Shape import Circle, Rectangle
 from utils.Scene import Scene
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='lightblue')
 
 # Create the sun
-sun = Circle(radius=100, color='yellow')
-sun.place_shape_global((650, 150))
+sun_radius = 150
+sun = Circle(radius=sun_radius, color='yellow')
+sun.place_shape_global((400, 150))
 scene.add_shape(sun)
 
 # Create the clouds
-# Large cloud in the upper-left
-cloud1 = Circle(radius=120, color='white')
-cloud1.place_shape_global((200, 150))
-scene.add_shape(cloud1)
+cloud_radius_1 = 100
+cloud_1 = Circle(radius=cloud_radius_1, color='white')
+cloud_1.place_shape_global((600, 250))
+scene.add_shape(cloud_1)
 
-# Medium cloud in the upper-center
-cloud2 = Circle(radius=100, color='white')
-cloud2.place_shape_global((400, 200))
-scene.add_shape(cloud2)
+cloud_radius_2 = 80
+cloud_2 = Circle(radius=cloud_radius_2, color='white')
+cloud_2.place_shape_local(cloud_1, 'left', offset=(-50, 50))
+scene.add_shape(cloud_2)
 
-# Small cloud in the upper-right, to the left of the sun
-cloud3 = Circle(radius=80, color='white')
-cloud3.place_shape_global((550, 150))
-scene.add_shape(cloud3)
+cloud_radius_3 = 90
+cloud_3 = Circle(radius=cloud_radius_3, color='white')
+cloud_3.place_shape_local(cloud_1, 'right', offset=(50, 30))
+scene.add_shape(cloud_3)
 
-# Medium cloud in the center-left
-cloud4 = Circle(radius=90, color='white')
-cloud4.place_shape_global((200, 300))
-scene.add_shape(cloud4)
+cloud_radius_4 = 70
+cloud_4 = Circle(radius=cloud_radius_4, color='white')
+cloud_4.place_shape_local(cloud_1, 'above', offset=(0, -50))
+scene.add_shape(cloud_4)
 
-# Two small clouds in the lower-right
-cloud5 = Circle(radius=70, color='white')
-cloud5.place_shape_global((600, 450))
-scene.add_shape(cloud5)
+cloud_radius_5 = 60
+cloud_5 = Circle(radius=cloud_radius_5, color='white')
+cloud_5.place_shape_local(cloud_4, 'right', offset=(50, 0))
+scene.add_shape(cloud_5)
 
-cloud6 = Circle(radius=60, color='white')
-cloud6.place_shape_global((700, 500))
-scene.add_shape(cloud6)
+# Create the ground
+ground = Rectangle(width=800, height=200, color='green')
+ground.place_shape_global((400, 500))
+scene.add_shape(ground)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('sky_with_clouds_and_sun.png')
 scene.render(filename='output.png')
-scene.render(filename='output.png')
 
 
 
-# Import necessary classes from the provided API
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='lightblue')
+
+# Create the lake
+lake = Rectangle(width=800, height=400, color='blue')
+lake.place_shape_global((400, 400))
+scene.add_shape(lake)
 
 # Create the sky
-sky = Rectangle(width=800, height=600, color='lightblue')
-sky.place_shape_global((400, 300))
+sky = Rectangle(width=800, height=200, color='lightblue')
+sky.place_shape_global((400, 100))
 scene.add_shape(sky)
 
-# Create the clouds
-cloud1 = Circle(radius=50, color='white')
-cloud1.place_shape_global((100, 150))
-scene.add_shape(cloud1)
+# Create the fish
+fish_size = 50
+fish1 = Triangle(size=fish_size, color='orange')
+fish1.place_shape_global((200, 500))
+scene.add_shape(fish1)
 
-cloud2 = Circle(radius=70, color='white')
-cloud2.place_shape_global((550, 100))
-scene.add_shape(cloud2)
+fish2 = Triangle(size=fish_size, color='orange')
+fish2.place_shape_global((300, 500))
+scene.add_shape(fish2)
 
-cloud3 = Circle(radius=60, color='white')
-cloud3.place_shape_global((300, 250))
-scene.add_shape(cloud3)
+fish3 = Triangle(size=fish_size, color='orange')
+fish3.place_shape_global((400, 500))
+scene.add_shape(fish3)
 
-cloud4 = Circle(radius=40, color='white')
-cloud4.place_shape_global((650, 350))
-scene.add_shape(cloud4)
+fish4 = Triangle(size=fish_size, color='orange')
+fish4.place_shape_global((500, 550))
+scene.add_shape(fish4)
 
-cloud5 = Circle(radius=45, color='white')
-cloud5.place_shape_global((200, 400))
-scene.add_shape(cloud5)
+fish5 = Triangle(size=fish_size, color='orange')
+fish5.place_shape_global((600, 550))
+scene.add_shape(fish5)
 
-cloud6 = Circle(radius=55, color='white')
-cloud6.place_shape_global((450, 450))
-scene.add_shape(cloud6)
+# Create the tree
+tree_width = 100
+tree_height = 200
+tree_trunk = Rectangle(width=50, height=tree_height, color='brown')
+tree_trunk.place_shape_global((700, 400))
+scene.add_shape(tree_trunk)
+
+tree_canopy = Rectangle(width=tree_width, height=tree_height, color='green')
+tree_canopy.place_shape_local(tree_trunk, 'above')
+scene.add_shape(tree_canopy)
+
+# Create the sun
+sun = Circle(radius=50, color='yellow')
+sun.place_shape_global((100, 100))
+scene.add_shape(sun)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('lake_with_fish.png')
 scene.render(filename='output.png')
 
-Now write code to Create a scene with a sailing boat on the sea in a sunny day:.
+Now write code to Create a scene with a sailing boat on the sea in a sunny day.
 You should follow these drawing steps:
-1. A large blue rectangle is placed in the center of the scene, representing the sea (sea).
-2. A smaller light blue rectangle is placed at the top of the scene, representing the sky (sky).
-3. A white irregular polygon is placed in the center of the sea, representing the sailing boat (sailing boat).
-4. A triangular shape in shades of gray is placed at the top of the sailing boat, representing the sail (sail).
-5. Two small brown rectangles are placed at the bottom of the sailing boat, representing the hull (hull).
-6. A small yellow circle is placed in the top right corner of the scene, representing the sun (sun).
-7. Several small white irregular shapes are placed on the sea, representing waves (waves).
-8. A thin brown rectangle is placed at the bottom of the sailing boat, representing the mast (mast).
+Here are the drawing steps for the scene with a sailing boat on the sea in a sunny day:
+
+1. A large blue rectangle is placed in the bottom of the scene (sea).
+2. A light blue rectangle is placed in the top half of the scene (sky).
+3. A yellow circle is placed in the top right corner of the sky (sun).
+4. A white rectangle is placed in the center of the sea (sailing boat body).
+5. A white triangle is placed at the top of the boat body (sail).
+6. Two small black rectangles are placed at the bottom of the boat body (boat keel).
+7. A small brown rectangle is placed at the center of the boat body (mast).
+8. Two small white triangles are placed on either side of the mast (sails).
+9. A small white rectangle is placed at the front of the boat body (bow).
+10. A small white rectangle is placed at the rear of the boat body (stern).
+Write your code within <code> tags.

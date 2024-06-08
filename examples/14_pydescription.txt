@@ -1,3 +1,6 @@
-1. A large green rectangle is placed in the center of the scene (grassy field).
-2. A light blue rectangle is placed above the grassy field, covering the top half of the scene (sky).
-3. Several white circles of varying sizes are placed randomly across the top half of the sky (fluffy clouds).
+1. A large light blue rectangle is placed in the bottom of the scene (lake).
+2. A dark blue rectangle is placed in the top half of the scene (night sky).
+3. A large white circle is placed in the top right corner of the dark blue rectangle (full moon).
+4. A smaller white circle is placed in the center of the light blue rectangle, slightly overlapping the edge (moon's reflection on the lake).
+5. Several small white triangles are placed around the edges of the light blue rectangle (ripples on the lake).
+6. A few small white triangles are placed around the edges of the dark blue rectangle (stars in the night sky).

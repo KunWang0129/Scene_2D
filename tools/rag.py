@@ -16,19 +16,24 @@ class Embedder:
         # Subject to change
         self.template = """Describe the 2D layout of the shapes as a paragraph based on the following description.
 Especially focus on the shape arrangement and describe the drawing steps using only circles, triangles, and rectangles.
+You should first draw the background objects and then the more detailed objects.
 If you are asked to describe a complex object, drawing steps should start go the more general outer shape to the more inner details.
-Feel free to add as many steps as necessary to make the final drawing look realistic.
 Your answer should have only a numbered list of steps and each line ends with what the shapes represent enclosed in parentheses.
 Here is an example:
 <example>
 Description:
-Create a scene with a house.
+Create a scene with a car in a field.
 Your expected response:
-1. A large gray rectangle is placed in the center of the scene (building).
-2. A red triangle is placed above the building, with its base aligned to the top edge of the building (roof).
-3. A smaller dark brown rectangle is placed at the bottom center of the building (door).
-4. Two small blue rectangles are placed symmetrically on either side of the door, near the middle of the building (windows).
-5. A thin, elongated black rectangle is placed vertically in the center of the door (door handle).
+1. A large grey rectangle is placed in the bottom of the scene (field).
+2. A brown rectangle is placed in the center of the scene (car body).
+3. Two black circles are placed at the bottom of the car body, one on each side (wheels).
+4. A smaller black rectangle is placed at the front of the car body (front bumper).
+5. A smaller black rectangle is placed at the rear of the car body (rear bumper).
+6. A lightblue rectangle is placed at the top front of the car body (windshield).
+7. A lightblue rectangle is placed at the top rear of the car body (rear window).
+8. A small brown rectangle is placed at the center top of the car body (roof).
+9. A small yellow circle is placed on the front of the car body (headlight).
+10. A small red circle is placed on the rear of the car body (taillight).
 </example>
 """
 
@@ -79,14 +84,11 @@ class CodeRetriever:
             self.num_examples = len(self.embeddings)
             self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
         else:
-            self.num_examples = 5
+            self.num_examples = 25
             self.examples = [f'{x}.py' for x in range(1, self.num_examples + 1)]
             self.build()
 
-        
-        
-
-    def build(self):
+    def build(self, num=None):
         print('Building code embeddings')
         self.embeddings = {}
         for ex in tqdm(self.examples):
@@ -122,12 +124,10 @@ class CodeRetriever:
         self.num_examples += 1
         ex = f'{self.num_examples}.py'
         # if os.path.exists(self.data_path + ex) == False:
-        code = "##@##\n" + "description =" + input + "\n##@##\n" + code
         with open(self.data_path + ex, "w") as file:
             file.write(code)
         description = desc
-        # code = desc[second+5:]
-        # code = desc
+
         outfile = f'{self.data_path}{ex.replace(".", "_")}description.txt'
         vector, _ = self.embd.run(description, outfile, generate=False)
         self.embeddings[ex] = vector

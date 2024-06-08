@@ -26,8 +26,8 @@ To write the code, you should refer to the following API:
             self.prompt += file.read()
 
     def _sanitize_output(self, text: str):
-        _, after = text.split("```python")
-        return after.split("```")[0]
+        _, after = text.split("<code>")
+        return after.split("</code>")[0]
 
     def run(self, input):
         self.init()
@@ -41,6 +41,7 @@ To write the code, you should refer to the following API:
 Now write code to {input}.
 You should follow these drawing steps:
 {description}
+Write your code within <code> tags.
 """
         with open('prompt.txt', 'w') as f:
             f.write(self.prompt)

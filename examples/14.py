@@ -1,50 +1,57 @@
 ##@##
-description =Create a scene with a grassy field and a blue sky with fluffy clouds.
+description = 'Create a scene with a full moon reflecting on a still lake.'
 ##@##
 
-# Import necessary classes from the provided API
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
+import random
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='navy')
 
-# Create the grassy field
-grass = Rectangle(width=800, height=300, color='green')
-grass.place_shape_global((400, 450))
-scene.add_shape(grass)
+# Create the lake
+lake = Rectangle(width=800, height=300, color='lightblue')
+lake.place_shape_global((400, 450))
+scene.add_shape(lake)
 
-# Create the sky
-sky = Rectangle(width=800, height=300, color='lightblue')
+# Create the night sky
+sky = Rectangle(width=800, height=300, color='navy')
 sky.place_shape_global((400, 150))
 scene.add_shape(sky)
 
-# Create the clouds
-cloud1 = Circle(radius=50, color='white')
-cloud1.place_shape_global((100, 100))
-scene.add_shape(cloud1)
+# Create the full moon
+moon_radius = 100
+moon = Circle(radius=moon_radius, color='white')
+moon.place_shape_global((700, 100))
+scene.add_shape(moon)
 
-cloud2 = Circle(radius=70, color='white')
-cloud2.place_shape_global((300, 150))
-scene.add_shape(cloud2)
+# Create the moon's reflection
+reflection_radius = 75
+reflection = Circle(radius=reflection_radius, color='white')
+reflection.place_shape_global((400, 450))
+scene.add_shape(reflection)
 
-cloud3 = Circle(radius=60, color='white')
-cloud3.place_shape_global((500, 120))
-scene.add_shape(cloud3)
+# Create the ripples on the lake
+num_ripples = 20
+for _ in range(num_ripples):
+    ripple_size = random.uniform(10, 30)
+    ripple_x = random.uniform(50, 750)
+    ripple_y = random.uniform(400, 600)
+    ripple = Triangle(size=ripple_size, color='white')
+    ripple.place_shape_global((ripple_x, ripple_y))
+    scene.add_shape(ripple)
 
-cloud4 = Circle(radius=40, color='white')
-cloud4.place_shape_global((650, 180))
-scene.add_shape(cloud4)
-
-cloud5 = Circle(radius=45, color='white')
-cloud5.place_shape_global((200, 200))
-scene.add_shape(cloud5)
-
-cloud6 = Circle(radius=55, color='white')
-cloud6.place_shape_global((400, 250))
-scene.add_shape(cloud6)
+# Create the stars in the night sky
+num_stars = 50
+for _ in range(num_stars):
+    star_size = random.uniform(5, 15)
+    star_x = random.uniform(50, 750)
+    star_y = random.uniform(50, 300)
+    star = Triangle(size=star_size, color='white')
+    star.place_shape_global((star_x, star_y))
+    scene.add_shape(star)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('full_moon_lake.png')
 scene.render(filename='output.png')
 scene.render(filename='output.png')

@@ -1,8 +1,10 @@
-1. A large green rectangle is placed in the center of the scene, representing the ground (ground).
-2. A brown irregular shape with a rounded top is placed above the green rectangle, representing the tree canopy (tree).
-3. Three gray rectangles are placed in a row at the bottom of the scene, representing the three cars (cars).
-4. Each car is composed of a larger rectangle for the body, a smaller rectangle for the windshield, and two smaller circles for the wheels (car body, windshield, wheels).
-5. The cars are arranged in a slightly staggered pattern, with the middle car slightly forward of the other two (car arrangement).
-6. The tree canopy extends over the cars, creating a shaded area (tree shading).
-7. The ground beneath the cars is a slightly darker shade of green, suggesting the presence of grass or vegetation (ground texture).
-8. A few small, irregular shapes are scattered around the base of the tree, representing fallen leaves or branches (tree litter).
+Here are the drawing steps for the scene with a lake and some fish swimming in it:
+
+1. A large blue rectangle is placed in the bottom of the scene (lake).
+2. A light blue rectangle is placed above the blue rectangle (sky).
+3. Three small orange triangles are placed in the blue rectangle, arranged in a row (fish).
+4. Two small orange triangles are placed in the blue rectangle, arranged side by side (fish).
+5. One small orange triangle is placed in the blue rectangle (fish).
+6. A small green rectangle is placed at the top of the light blue rectangle (tree).
+7. A small brown rectangle is placed at the bottom of the green rectangle (tree trunk).
+8. A small yellow circle is placed at the top of the green rectangle (sun).

@@ -1,118 +1,43 @@
 ##@##
-description =Create a scene with three cars parked on a road.
+description = 'Create a scene with a rainbow arching over a cloudy sky.'
 ##@##
 
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
 
-# Initialize the scene
-scene = Scene(size=(800, 600), bg_color='white')
+# Initialize the scene with dimensions and background color
+scene = Scene(size=(800, 600), bg_color='skyblue')
 
-# Create the road
-road = Rectangle(width=600, height=300, color='gray')
-road.place_shape_global((400, 300))
-scene.add_shape(road)
+# Create the cloudy sky
+sky_height = 400
+sky = Rectangle(width=800, height=sky_height, color='lightblue')
+sky.place_shape_global((400, sky_height/2))
+scene.add_shape(sky)
 
-# Create the cars
-# Red car
-red_car_body = Rectangle(width=150, height=70, color='red')
-red_car_body.place_shape_global((200, 400))
-scene.add_shape(red_car_body)
+# Create the clouds
+cloud_width = 500
+cloud_height = 200
+cloud = Rectangle(width=cloud_width, height=cloud_height, color='white')
+cloud.place_shape_global((400, 400))
+scene.add_shape(cloud)
 
-red_car_wheel1 = Circle(radius=20, color='black')
-red_car_wheel1.place_shape_local(red_car_body, 'below', offset=(-40, 0))
-scene.add_shape(red_car_wheel1)
+# Create the rainbow
+rainbow_width = 600
+rainbow_height = 300
+rainbow_y = 150
+rainbow_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+for i, color in enumerate(rainbow_colors):
+    rainbow_rect = Rectangle(width=rainbow_width, height=rainbow_height/7, color=color)
+    rainbow_rect.place_shape_global((100, rainbow_y + i * rainbow_height/7))
+    scene.add_shape(rainbow_rect)
 
-red_car_wheel2 = Circle(radius=20, color='black')
-red_car_wheel2.place_shape_local(red_car_body, 'below', offset=(40, 0))
-scene.add_shape(red_car_wheel2)
-
-red_car_headlight = Rectangle(width=20, height=10, color='black')
-red_car_headlight.place_shape_local(red_car_body, 'right')
-scene.add_shape(red_car_headlight)
-
-red_car_taillight = Rectangle(width=20, height=10, color='red')
-red_car_taillight.place_shape_local(red_car_body, 'left')
-scene.add_shape(red_car_taillight)
-
-red_car_roof = Rectangle(width=50, height=10, color='white')
-red_car_roof.place_shape_local(red_car_body, 'above')
-scene.add_shape(red_car_roof)
-
-red_car_door1 = Rectangle(width=30, height=40, color='white')
-red_car_door1.place_shape_local(red_car_body, 'left', offset=(0, -10))
-scene.add_shape(red_car_door1)
-
-red_car_door2 = Rectangle(width=30, height=40, color='white')
-red_car_door2.place_shape_local(red_car_body, 'right', offset=(0, -10))
-scene.add_shape(red_car_door2)
-
-# Blue car
-blue_car_body = Rectangle(width=150, height=70, color='blue')
-blue_car_body.place_shape_global((400, 400))
-scene.add_shape(blue_car_body)
-
-blue_car_wheel1 = Circle(radius=20, color='black')
-blue_car_wheel1.place_shape_local(blue_car_body, 'below', offset=(-40, 0))
-scene.add_shape(blue_car_wheel1)
-
-blue_car_wheel2 = Circle(radius=20, color='black')
-blue_car_wheel2.place_shape_local(blue_car_body, 'below', offset=(40, 0))
-scene.add_shape(blue_car_wheel2)
-
-blue_car_headlight = Rectangle(width=20, height=10, color='black')
-blue_car_headlight.place_shape_local(blue_car_body, 'right')
-scene.add_shape(blue_car_headlight)
-
-blue_car_taillight = Rectangle(width=20, height=10, color='blue')
-blue_car_taillight.place_shape_local(blue_car_body, 'left')
-scene.add_shape(blue_car_taillight)
-
-blue_car_roof = Rectangle(width=50, height=10, color='white')
-blue_car_roof.place_shape_local(blue_car_body, 'above')
-scene.add_shape(blue_car_roof)
-
-blue_car_door1 = Rectangle(width=30, height=40, color='white')
-blue_car_door1.place_shape_local(blue_car_body, 'left', offset=(0, -10))
-scene.add_shape(blue_car_door1)
-
-blue_car_door2 = Rectangle(width=30, height=40, color='white')
-blue_car_door2.place_shape_local(blue_car_body, 'right', offset=(0, -10))
-scene.add_shape(blue_car_door2)
-
-# Green car
-green_car_body = Rectangle(width=150, height=70, color='green')
-green_car_body.place_shape_global((600, 400))
-scene.add_shape(green_car_body)
-
-green_car_wheel1 = Circle(radius=20, color='black')
-green_car_wheel1.place_shape_local(green_car_body, 'below', offset=(-40, 0))
-scene.add_shape(green_car_wheel1)
-
-green_car_wheel2 = Circle(radius=20, color='black')
-green_car_wheel2.place_shape_local(green_car_body, 'below', offset=(40, 0))
-scene.add_shape(green_car_wheel2)
-
-green_car_headlight = Rectangle(width=20, height=10, color='black')
-green_car_headlight.place_shape_local(green_car_body, 'right')
-scene.add_shape(green_car_headlight)
-
-green_car_taillight = Rectangle(width=20, height=10, color='green')
-green_car_taillight.place_shape_local(green_car_body, 'left')
-scene.add_shape(green_car_taillight)
-
-green_car_roof = Rectangle(width=50, height=10, color='white')
-green_car_roof.place_shape_local(green_car_body, 'above')
-scene.add_shape(green_car_roof)
-
-green_car_door1 = Rectangle(width=30, height=40, color='white')
-green_car_door1.place_shape_local(green_car_body, 'left', offset=(0, -10))
-scene.add_shape(green_car_door1)
-
-green_car_door2 = Rectangle(width=30, height=40, color='white')
-green_car_door2.place_shape_local(green_car_body, 'right', offset=(0, -10))
-scene.add_shape(green_car_door2)
+# Create the sun
+sun_radius = 50
+sun = Circle(radius=sun_radius, color='yellow')
+sun.place_shape_global((600, 200))
+scene.add_shape(sun)
 
 # Render the scene
+scene.render('rainbow_cloud.png')
 scene.render(filename='output.png')
 scene.render(filename='output.png')

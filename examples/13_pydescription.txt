@@ -1,8 +1,6 @@
-1. A large green circle is placed in the center of the scene (tree canopy).
-2. A brown rectangle is placed at the bottom center of the green circle (tree trunk).
-3. Three smaller brown rectangles are placed at the base of the tree trunk, slightly overlapping (tree roots).
-4. Two gray rectangles are placed to the left and right of the tree, with their longer sides parallel to the bottom of the scene (parked cars).
-5. A smaller gray rectangle is placed in front of each of the larger gray rectangles (car bodies).
-6. Two smaller black rectangles are placed at the top of each car body (car windows).
-7. A smaller black rectangle is placed at the front of each car body (car headlights).
-8. A smaller black circle is placed at the center of each car body (car wheels).
+1. A large green rectangle is placed in the bottom of the scene (grassy field).
+2. A brown rectangle is placed in the center of the scene (table).
+3. Two grey rectangles are placed on either side of the table, slightly elevated (chair seats).
+4. Two smaller grey rectangles are placed on top of the chair seats (chair backs).
+5. Two brown rectangles are placed beneath the chair seats (chair legs).
+6. A small brown rectangle is placed on top of the table (tabletop).

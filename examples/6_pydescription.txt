@@ -1,4 +1,6 @@
-1. A large light blue rectangle is placed in the center of the scene (sky).
-2. Three white circles are placed in the upper half of the sky, evenly spaced apart (clouds).
-3. The circles are slightly overlapping and have varying sizes to create a sense of depth (clouds).
-4. The edges of the circles are slightly blurred to give them a soft, fluffy appearance (clouds).
+1. A large grey rectangle is placed in the bottom of the scene (cloud).
+2. A semicircle of different colored rectangles is placed in the top half of the scene (rainbow).
+3. The rainbow is composed of 7 rectangles in the following order from top to bottom: red, orange, yellow, green, blue, indigo, violet.
+4. The rainbow arches over the cloud, with the ends of the rainbow touching the edges of the scene.
+5. The cloud is represented by a fluffy white shape, with a slightly irregular top edge.
+6. The cloud is centered horizontally within the grey rectangle.

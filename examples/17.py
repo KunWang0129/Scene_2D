@@ -1,50 +1,38 @@
 ##@##
-description =Create a scene with a sun in the sky and several clouds.
+description = 'Create a scene with a crescent moon and twinkling stars in the night sky.'
 ##@##
 
-# Import necessary classes from the provided API
-from utils.Shape import Circle, Rectangle, Triangle
+from utils.Shape import Circle, Rectangle
 from utils.Scene import Scene
+import random
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='navy')
 
-# Create the sun
-sun = Circle(radius=100, color='yellow')
-sun.place_shape_global((650, 150))
-scene.add_shape(sun)
+# Create the night sky
+sky = Rectangle(width=800, height=600, color='navy')
+sky.place_shape_global((400, 300))
+scene.add_shape(sky)
 
-# Create the clouds
-# Large cloud in the upper-left
-cloud1 = Circle(radius=120, color='white')
-cloud1.place_shape_global((200, 150))
-scene.add_shape(cloud1)
+# Create the crescent moon
+moon_radius = 100
+moon_x = 650
+moon_y = 150
+moon = Circle(radius=moon_radius, color='lightgrey')
+moon.place_shape_global((moon_x, moon_y))
+scene.add_shape(moon)
 
-# Medium cloud in the upper-center
-cloud2 = Circle(radius=100, color='white')
-cloud2.place_shape_global((400, 200))
-scene.add_shape(cloud2)
-
-# Small cloud in the upper-right, to the left of the sun
-cloud3 = Circle(radius=80, color='white')
-cloud3.place_shape_global((550, 150))
-scene.add_shape(cloud3)
-
-# Medium cloud in the center-left
-cloud4 = Circle(radius=90, color='white')
-cloud4.place_shape_global((200, 300))
-scene.add_shape(cloud4)
-
-# Two small clouds in the lower-right
-cloud5 = Circle(radius=70, color='white')
-cloud5.place_shape_global((600, 450))
-scene.add_shape(cloud5)
-
-cloud6 = Circle(radius=60, color='white')
-cloud6.place_shape_global((700, 500))
-scene.add_shape(cloud6)
+# Create the stars
+num_stars = 100
+for _ in range(num_stars):
+    star_radius = random.uniform(2, 5)
+    star_x = random.uniform(50, 750)
+    star_y = random.uniform(50, 550)
+    star = Circle(radius=star_radius, color='white')
+    star.place_shape_global((star_x, star_y))
+    scene.add_shape(star)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('crescent_moon.png')
 scene.render(filename='output.png')
 scene.render(filename='output.png')

@@ -1,44 +1,37 @@
 ##@##
-description =Create a scene with a blue sky and scattered white clouds.
+description = 'Create a scene with a crescent moon in the night sky.'
 ##@##
 
-# Import necessary classes from the provided API
-from utils.Shape import Circle, Rectangle, Triangle
+from utils.Shape import Circle, Rectangle
 from utils.Scene import Scene
+import random
 
-# Initialize the scene with dimensions and background color
-scene = Scene(size=(800, 600), bg_color='skyblue')
+# Initialize the scene
+scene = Scene(size=(800, 600), bg_color='navy')
 
-# Create the sky
-sky = Rectangle(width=800, height=600, color='lightblue')
+# Create the night sky
+sky = Rectangle(width=800, height=600, color='navy')
 sky.place_shape_global((400, 300))
 scene.add_shape(sky)
 
-# Create the clouds
-cloud1 = Circle(radius=50, color='white')
-cloud1.place_shape_global((100, 150))
-scene.add_shape(cloud1)
+# Create the crescent moon
+moon_radius = 100
+moon_x = 650
+moon_y = 150
+moon = Circle(radius=moon_radius, color='lightgrey')
+moon.place_shape_global((moon_x, moon_y))
+scene.add_shape(moon)
 
-cloud2 = Circle(radius=70, color='white')
-cloud2.place_shape_global((550, 100))
-scene.add_shape(cloud2)
-
-cloud3 = Circle(radius=60, color='white')
-cloud3.place_shape_global((300, 250))
-scene.add_shape(cloud3)
-
-cloud4 = Circle(radius=40, color='white')
-cloud4.place_shape_global((650, 350))
-scene.add_shape(cloud4)
-
-cloud5 = Circle(radius=45, color='white')
-cloud5.place_shape_global((200, 400))
-scene.add_shape(cloud5)
-
-cloud6 = Circle(radius=55, color='white')
-cloud6.place_shape_global((450, 450))
-scene.add_shape(cloud6)
+# Create the stars
+num_stars = 100
+for _ in range(num_stars):
+    star_radius = random.uniform(2, 5)
+    star_x = random.uniform(50, 750)
+    star_y = random.uniform(50, 550)
+    star = Circle(radius=star_radius, color='white')
+    star.place_shape_global((star_x, star_y))
+    scene.add_shape(star)
 
 # Render the scene
-scene.render('scene.png')
+scene.render('crescent_moon.png')
 scene.render(filename='output.png')

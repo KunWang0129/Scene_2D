@@ -1,55 +1,69 @@
 
 from utils.Shape import Circle, Rectangle, Triangle
 from utils.Scene import Scene
-import math
 
 # Initialize the scene
-scene = Scene(size=(800, 600), bg_color='skyblue')
+scene = Scene(size=(800, 600), bg_color='lightblue')
 
 # Create the sea
 sea = Rectangle(width=800, height=400, color='blue')
-sea.place_shape_global((400, 300))
+sea.place_shape_global((400, 500))
 scene.add_shape(sea)
 
 # Create the sky
-sky = Rectangle(width=800, height=200, color='lightblue')
-sky.place_shape_global((400, 100))
+sky = Rectangle(width=800, height=300, color='lightblue')
+sky.place_shape_global((400, 150))
 scene.add_shape(sky)
-
-# Create the sailing boat
-boat = Rectangle(width=200, height=100, color='white')
-boat.place_shape_global((400, 400))
-scene.add_shape(boat)
-
-# Create the sail
-sail = Triangle(size=150, color='gray')
-sail.place_shape_local(boat, 'above', offset=(0, -50))
-scene.add_shape(sail)
-
-# Create the hull
-hull1 = Rectangle(width=50, height=30, color='brown')
-hull1.place_shape_local(boat, 'below', offset=(-50, 20))
-scene.add_shape(hull1)
-
-hull2 = Rectangle(width=50, height=30, color='brown')
-hull2.place_shape_local(boat, 'below', offset=(50, 20))
-scene.add_shape(hull2)
 
 # Create the sun
 sun = Circle(radius=50, color='yellow')
 sun.place_shape_global((700, 100))
 scene.add_shape(sun)
 
-# Create the waves
-for i in range(10):
-    wave = Rectangle(width=80, height=20, color='white')
-    wave.place_shape_global((i * 80 + 40, 500 + 20 * math.sin(i * 0.5)))
-    scene.add_shape(wave)
+# Create the sailing boat
+# Boat body
+boat_body = Rectangle(width=200, height=100, color='white')
+boat_body.place_shape_global((400, 450))
+scene.add_shape(boat_body)
 
-# Create the mast
-mast = Rectangle(width=10, height=100, color='brown')
-mast.place_shape_local(boat, 'above', offset=(0, -50))
+# Sail
+sail = Triangle(size=150, color='white')
+sail.place_shape_local(boat_body, 'above', offset=(0, -50))
+scene.add_shape(sail)
+
+# Boat keel
+keel_1 = Rectangle(width=20, height=50, color='black')
+keel_1.place_shape_local(boat_body, 'below', offset=(-40, 0))
+scene.add_shape(keel_1)
+
+keel_2 = Rectangle(width=20, height=50, color='black')
+keel_2.place_shape_local(boat_body, 'below', offset=(40, 0))
+scene.add_shape(keel_2)
+
+# Mast
+mast = Rectangle(width=20, height=100, color='brown')
+mast.place_shape_local(boat_body, 'above', offset=(0, -50))
 scene.add_shape(mast)
 
+# Sails
+sail_1 = Triangle(size=50, color='white')
+sail_1.place_shape_local(mast, 'left', offset=(-10, 0))
+scene.add_shape(sail_1)
+
+sail_2 = Triangle(size=50, color='white')
+sail_2.place_shape_local(mast, 'right', offset=(10, 0))
+scene.add_shape(sail_2)
+
+# Bow
+bow = Rectangle(width=20, height=50, color='white')
+bow.place_shape_local(boat_body, 'left', offset=(-100, 0))
+scene.add_shape(bow)
+
+# Stern
+stern = Rectangle(width=20, height=50, color='white')
+stern.place_shape_local(boat_body, 'right', offset=(100, 0))
+scene.add_shape(stern)
+
 # Render the scene
-scene.render('scene.png')
+scene.render('sailing_boat_scene.png')
+scene.render(filename='output.png')
