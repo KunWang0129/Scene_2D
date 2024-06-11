@@ -4,7 +4,6 @@ from utils.Shape import Circle, Rectangle, Triangle
 
 # Get a list of all files in the 'examples' directory
 example_files = [f for f in os.listdir('examples') if f.endswith('.py') and f != '__init__.py']
-example_files = ['chair.py']
 
 # Loop through each file
 for file_name in example_files:
