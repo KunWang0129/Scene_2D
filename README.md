@@ -1,6 +1,6 @@
 # Scene_2D
 
-## Get Anthropic API Keys
+## Get API Keys
 
 - Add your Anthropic API key to `assets/key.py`
 - Add your Voyage AI API key to `assets/key_embed.py`
