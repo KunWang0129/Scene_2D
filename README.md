@@ -7,6 +7,12 @@
 
 ## Run Human Evaluation 
 
+Run the following for expansion and inference
+
+```python
+python3 main.py
+```
+
 ## Render Examples
 
 Run the following and you'll see the example codes rendered in `examples/rendered_scene`

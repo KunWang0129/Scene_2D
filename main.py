@@ -1,9 +1,10 @@
 from utils.generator import SceneGenerator
 from utils.expand import Expand
-# print("Expanding the scene ....")
-# Expand().run()
+# Code for Expanding the scene
+print("Expanding the scene ....")
+Expand().run()
 
-
+# Code for Inference
 print("Coming up with candidate scenes ....")
 SceneGenerator().run("Create a scene with a sailing boat on the sea in a sunny day")
 
